@@ -1,152 +1,95 @@
-import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  TouchableOpacity,
-  SafeAreaView,
-  StatusBar,
-} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { StatusBar } from 'expo-status-bar';
+
+// Screens
+import LoginScreen from './src/screens/auth/LoginScreen';
+import BiometricSetupScreen from './src/screens/auth/BiometricSetupScreen';
+import TourSetupWizard from './src/screens/setup/TourSetupWizard';
+import MainAppScreen from './src/screens/MainAppScreen';
+import LoadingScreen from './src/components/common/LoadingScreen';
+
+const Stack = createStackNavigator();
 
 export default function App() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [tourSetupComplete, setTourSetupComplete] = useState(false);
+  const [biometricSetupComplete, setBiometricSetupComplete] = useState(false);
+
+  useEffect(() => {
+    checkAppState();
+  }, []);
+
+  const checkAppState = async () => {
+    try {
+      // Check if user is authenticated
+      const authToken = await AsyncStorage.getItem('authToken');
+      const biometricEnabled = await AsyncStorage.getItem('biometricEnabled');
+      const tourSetup = await AsyncStorage.getItem('tourSetupComplete');
+
+      setIsAuthenticated(!!authToken);
+      setBiometricSetupComplete(!!biometricEnabled);
+      setTourSetupComplete(!!tourSetup);
+    } catch (error) {
+      console.error('Error checking app state:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
+
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="light-content" backgroundColor="#1a1a2e" />
+    <NavigationContainer>
+      <StatusBar style="light" backgroundColor="#1a1a2e" />
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+          gestureEnabled: false, // Prevent going back during setup
+        }}
+        initialRouteName={
+          !isAuthenticated
+            ? "Login"
+            : !biometricSetupComplete
+              ? "BiometricSetup"
+              : !tourSetupComplete
+                ? "TourSetup"
+                : "MainApp"
+        }
+      >
+        {/* Authentication Flow */}
+        <Stack.Screen
+          name="Login"
+          component={LoginScreen}
+          options={{ gestureEnabled: false }}
+        />
 
-      <View style={styles.header}>
-        <Text style={styles.title}>Tour Manager</Text>
-        <Text style={styles.subtitle}>Professional Tour Management</Text>
-      </View>
+        {/* Biometric Setup Flow */}
+        <Stack.Screen
+          name="BiometricSetup"
+          component={BiometricSetupScreen}
+          options={{ gestureEnabled: false }}
+        />
 
-      <ScrollView style={styles.content}>
-        <View style={styles.welcomeCard}>
-          <Text style={styles.welcomeTitle}>Welcome to Tour Manager</Text>
-          <Text style={styles.welcomeText}>
-            Your comprehensive solution for managing band tours, schedules,
-            finances, and team communication.
-          </Text>
-        </View>
+        {/* Tour Setup Flow */}
+        <Stack.Screen
+          name="TourSetup"
+          component={TourSetupWizard}
+          options={{ gestureEnabled: false }}
+        />
 
-        <View style={styles.featuresGrid}>
-          <TouchableOpacity style={styles.featureCard}>
-            <Text style={styles.featureIcon}>📅</Text>
-            <Text style={styles.featureTitle}>Day Sheets</Text>
-            <Text style={styles.featureDesc}>Manage daily tour operations</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.featureCard}>
-            <Text style={styles.featureIcon}>💰</Text>
-            <Text style={styles.featureTitle}>Financial</Text>
-            <Text style={styles.featureDesc}>Track expenses and profits</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.featureCard}>
-            <Text style={styles.featureIcon}>📦</Text>
-            <Text style={styles.featureTitle}>Merchandise</Text>
-            <Text style={styles.featureDesc}>Inventory and sales tracking</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.featureCard}>
-            <Text style={styles.featureIcon}>👥</Text>
-            <Text style={styles.featureTitle}>Team</Text>
-            <Text style={styles.featureDesc}>Crew communication hub</Text>
-          </TouchableOpacity>
-        </View>
-
-        <TouchableOpacity style={styles.setupButton}>
-          <Text style={styles.setupButtonText}>Start Tour Setup</Text>
-        </TouchableOpacity>
-      </ScrollView>
-    </SafeAreaView>
+        {/* Main App */}
+        <Stack.Screen
+          name="MainApp"
+          component={MainAppScreen}
+          options={{ gestureEnabled: true }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#0a0a0a',
-  },
-  header: {
-    backgroundColor: '#1a1a2e',
-    padding: 20,
-    paddingTop: 40,
-    alignItems: 'center',
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#ffffff',
-    marginBottom: 5,
-  },
-  subtitle: {
-    fontSize: 16,
-    color: '#b0b0b0',
-  },
-  content: {
-    flex: 1,
-    padding: 20,
-  },
-  welcomeCard: {
-    backgroundColor: '#1a1a1a',
-    padding: 20,
-    borderRadius: 12,
-    marginBottom: 30,
-    borderLeftWidth: 4,
-    borderLeftColor: '#4CAF50',
-  },
-  welcomeTitle: {
-    fontSize: 20,
-    fontWeight: '600',
-    color: '#ffffff',
-    marginBottom: 10,
-  },
-  welcomeText: {
-    fontSize: 16,
-    color: '#b0b0b0',
-    lineHeight: 24,
-  },
-  featuresGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    marginBottom: 30,
-  },
-  featureCard: {
-    backgroundColor: '#1a1a1a',
-    width: '48%',
-    padding: 20,
-    borderRadius: 12,
-    marginBottom: 15,
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#333',
-  },
-  featureIcon: {
-    fontSize: 32,
-    marginBottom: 10,
-  },
-  featureTitle: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#ffffff',
-    marginBottom: 5,
-  },
-  featureDesc: {
-    fontSize: 12,
-    color: '#b0b0b0',
-    textAlign: 'center',
-  },
-  setupButton: {
-    backgroundColor: '#4CAF50',
-    padding: 18,
-    borderRadius: 12,
-    alignItems: 'center',
-    marginTop: 20,
-  },
-  setupButtonText: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#ffffff',
-  },
-});
