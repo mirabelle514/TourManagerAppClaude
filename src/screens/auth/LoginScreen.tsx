@@ -4,13 +4,15 @@ import {
     Text,
     TextInput,
     TouchableOpacity,
-    StyleSheet,
     Alert,
     KeyboardAvoidingView,
     Platform,
 } from 'react-native';
 import { NavigationProp, CommonActions } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { CommonStyles } from '../../styles/CommonStyles';
+import { FormStyles } from '../../styles/FormStyles';
+import { Colors } from '../../styles/theme';
 
 interface LoginScreenProps {
     navigation: NavigationProp<any>;
@@ -95,18 +97,18 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, onAuthStateChange
 
     return (
         <KeyboardAvoidingView
-            style={styles.container}
+            style={CommonStyles.container}
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         >
-            <View style={styles.content}>
-                <Text style={styles.title}>Tour Manager</Text>
-                <Text style={styles.subtitle}>Sign in to your account</Text>
+            <View style={CommonStyles.content}>
+                <Text style={CommonStyles.title}>Tour Manager</Text>
+                <Text style={CommonStyles.subtitle}>Sign in to your account</Text>
 
-                <View style={styles.inputContainer}>
+                <View style={FormStyles.inputContainer}>
                     <TextInput
-                        style={styles.input}
+                        style={FormStyles.input}
                         placeholder="Email"
-                        placeholderTextColor="#666"
+                        placeholderTextColor={Colors.text.secondary}
                         value={email}
                         onChangeText={setEmail}
                         keyboardType="email-address"
@@ -115,9 +117,9 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, onAuthStateChange
                     />
 
                     <TextInput
-                        style={styles.input}
+                        style={FormStyles.input}
                         placeholder="Password"
-                        placeholderTextColor="#666"
+                        placeholderTextColor={Colors.text.secondary}
                         value={password}
                         onChangeText={setPassword}
                         secureTextEntry
@@ -126,102 +128,31 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, onAuthStateChange
                 </View>
 
                 <TouchableOpacity
-                    style={[styles.loginButton, loading && styles.loginButtonDisabled]}
+                    style={[CommonStyles.primaryButton, loading && CommonStyles.disabledButton]}
                     onPress={handleLogin}
                     disabled={loading}
                 >
-                    <Text style={styles.loginButtonText}>
+                    <Text style={CommonStyles.primaryButtonText}>
                         {loading ? 'Signing In...' : 'Sign In'}
                     </Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                    style={styles.forgotPasswordButton}
+                    style={CommonStyles.secondaryButton}
                     onPress={handleForgotPassword}
                 >
-                    <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+                    <Text style={CommonStyles.secondaryButtonText}>Forgot Password?</Text>
                 </TouchableOpacity>
 
                 {/* Development/Demo Helper */}
                 {__DEV__ && (
-                    <View style={styles.devHelper}>
-                        <Text style={styles.devHelperText}>Demo: Use any email with @ and password 6+ chars</Text>
+                    <View style={CommonStyles.devHelper}>
+                        <Text style={CommonStyles.devHelperText}>Demo: Use any email with @ and password 6+ chars</Text>
                     </View>
                 )}
             </View>
         </KeyboardAvoidingView>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#1a1a2e',
-    },
-    content: {
-        flex: 1,
-        justifyContent: 'center',
-        paddingHorizontal: 24,
-    },
-    title: {
-        fontSize: 32,
-        fontWeight: 'bold',
-        color: '#fff',
-        textAlign: 'center',
-        marginBottom: 8,
-    },
-    subtitle: {
-        fontSize: 16,
-        color: '#888',
-        textAlign: 'center',
-        marginBottom: 32,
-    },
-    inputContainer: {
-        marginBottom: 24,
-    },
-    input: {
-        backgroundColor: '#16213e',
-        borderRadius: 8,
-        padding: 16,
-        fontSize: 16,
-        color: '#fff',
-        marginBottom: 16,
-        borderWidth: 1,
-        borderColor: '#0f3460',
-    },
-    loginButton: {
-        backgroundColor: '#007AFF',
-        borderRadius: 8,
-        padding: 16,
-        alignItems: 'center',
-        marginBottom: 16,
-    },
-    loginButtonDisabled: {
-        backgroundColor: '#555',
-    },
-    loginButtonText: {
-        color: '#fff',
-        fontSize: 16,
-        fontWeight: '600',
-    },
-    forgotPasswordButton: {
-        alignItems: 'center',
-    },
-    forgotPasswordText: {
-        color: '#007AFF',
-        fontSize: 14,
-    },
-    devHelper: {
-        marginTop: 32,
-        padding: 12,
-        backgroundColor: '#333',
-        borderRadius: 8,
-    },
-    devHelperText: {
-        color: '#888',
-        fontSize: 12,
-        textAlign: 'center',
-    },
-});
 
 export default LoginScreen;

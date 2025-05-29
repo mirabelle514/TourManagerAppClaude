@@ -9,8 +9,8 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { CommonStyles } from '../../../styles';
 import { Colors } from '../../../styles/theme/color';
-import { FormStyles } from '../../../styles/components/forms';
-import { CommonStyles as InfoCard } from '../../../styles/components/common';
+import { FormStyles } from '../../../styles/FormStyles';
+import { CommonStyles as InfoCard } from '../../../styles/CommonStyles';
 
 interface Step2TourDetailsProps {
     data: any;
