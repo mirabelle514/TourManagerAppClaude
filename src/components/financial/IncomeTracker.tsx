@@ -3,9 +3,8 @@ import { View, Text, TouchableOpacity, TextInput } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { CommonStyles } from '../../styles/CommonStyles';
 import { Colors } from '../../styles/theme';
-import { FinancialStyles } from '../../styles/FinancialStyles';
 
-interface Expense {
+interface Income {
     id: string;
     date: string;
     venue: string;
@@ -13,53 +12,52 @@ interface Expense {
     description: string;
     amount: number;
     currency: string;
-    taxCategory: 'business' | 'meals' | 'travel' | 'equipment' | 'other';
-    receipt?: string;
-    paidBy: string;
+    paymentMethod: 'cash' | 'card' | 'transfer' | 'other';
+    receivedBy: string;
 }
 
-interface ExpenseTrackerProps {
-    expenses: Expense[];
-    onAddExpense: (expense: Omit<Expense, 'id'>) => void;
-    onDeleteExpense: (id: string) => void;
+interface IncomeTrackerProps {
+    income: Income[];
+    onAddIncome: (income: Omit<Income, 'id'>) => void;
+    onDeleteIncome: (id: string) => void;
 }
 
-export const ExpenseTracker: React.FC<ExpenseTrackerProps> = ({
-    expenses,
-    onAddExpense,
-    onDeleteExpense
+export const IncomeTracker: React.FC<IncomeTrackerProps> = ({
+    income,
+    onAddIncome,
+    onDeleteIncome
 }) => {
     const [showAddForm, setShowAddForm] = React.useState(false);
-    const [newExpense, setNewExpense] = React.useState({
+    const [newIncome, setNewIncome] = React.useState({
         description: '',
         amount: '',
         category: '',
-        taxCategory: 'business' as const,
+        paymentMethod: 'cash' as const,
         venue: '',
-        paidBy: ''
+        receivedBy: ''
     });
 
-    const handleAddExpense = () => {
-        if (!newExpense.description || !newExpense.amount) return;
+    const handleAddIncome = () => {
+        if (!newIncome.description || !newIncome.amount) return;
 
-        onAddExpense({
+        onAddIncome({
             date: new Date().toISOString().split('T')[0],
-            description: newExpense.description,
-            amount: parseFloat(newExpense.amount),
-            category: newExpense.category,
-            taxCategory: newExpense.taxCategory,
-            venue: newExpense.venue,
+            description: newIncome.description,
+            amount: parseFloat(newIncome.amount),
+            category: newIncome.category,
+            paymentMethod: newIncome.paymentMethod,
+            venue: newIncome.venue,
             currency: 'USD',
-            paidBy: newExpense.paidBy
+            receivedBy: newIncome.receivedBy
         });
 
-        setNewExpense({
+        setNewIncome({
             description: '',
             amount: '',
             category: '',
-            taxCategory: 'business',
+            paymentMethod: 'cash',
             venue: '',
-            paidBy: ''
+            receivedBy: ''
         });
         setShowAddForm(false);
     };
@@ -67,9 +65,9 @@ export const ExpenseTracker: React.FC<ExpenseTrackerProps> = ({
     return (
         <View style={CommonStyles.card}>
             <View style={CommonStyles.cardHeader}>
-                <Text style={CommonStyles.cardTitle}>Expenses</Text>
+                <Text style={CommonStyles.cardTitle}>Income</Text>
                 <TouchableOpacity
-                    style={FinancialStyles.addButton}
+                    style={CommonStyles.addButton}
                     onPress={() => setShowAddForm(true)}
                 >
                     <Ionicons name="add" size={24} color={Colors.text.primary} />
@@ -81,33 +79,33 @@ export const ExpenseTracker: React.FC<ExpenseTrackerProps> = ({
                     <TextInput
                         style={CommonStyles.input}
                         placeholder="Description"
-                        value={newExpense.description}
-                        onChangeText={(text) => setNewExpense({ ...newExpense, description: text })}
+                        value={newIncome.description}
+                        onChangeText={(text) => setNewIncome({ ...newIncome, description: text })}
                     />
                     <TextInput
                         style={CommonStyles.input}
                         placeholder="Amount"
-                        value={newExpense.amount}
-                        onChangeText={(text) => setNewExpense({ ...newExpense, amount: text })}
+                        value={newIncome.amount}
+                        onChangeText={(text) => setNewIncome({ ...newIncome, amount: text })}
                         keyboardType="numeric"
                     />
                     <TextInput
                         style={CommonStyles.input}
                         placeholder="Category"
-                        value={newExpense.category}
-                        onChangeText={(text) => setNewExpense({ ...newExpense, category: text })}
+                        value={newIncome.category}
+                        onChangeText={(text) => setNewIncome({ ...newIncome, category: text })}
                     />
                     <TextInput
                         style={CommonStyles.input}
                         placeholder="Venue"
-                        value={newExpense.venue}
-                        onChangeText={(text) => setNewExpense({ ...newExpense, venue: text })}
+                        value={newIncome.venue}
+                        onChangeText={(text) => setNewIncome({ ...newIncome, venue: text })}
                     />
                     <TextInput
                         style={CommonStyles.input}
-                        placeholder="Paid By"
-                        value={newExpense.paidBy}
-                        onChangeText={(text) => setNewExpense({ ...newExpense, paidBy: text })}
+                        placeholder="Received By"
+                        value={newIncome.receivedBy}
+                        onChangeText={(text) => setNewIncome({ ...newIncome, receivedBy: text })}
                     />
                     <View style={CommonStyles.buttonRow}>
                         <TouchableOpacity
@@ -118,7 +116,7 @@ export const ExpenseTracker: React.FC<ExpenseTrackerProps> = ({
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={[CommonStyles.button, CommonStyles.saveButton]}
-                            onPress={handleAddExpense}
+                            onPress={handleAddIncome}
                         >
                             <Text style={CommonStyles.buttonText}>Save</Text>
                         </TouchableOpacity>
@@ -126,29 +124,29 @@ export const ExpenseTracker: React.FC<ExpenseTrackerProps> = ({
                 </View>
             )}
 
-            {expenses.map((expense) => (
-                <View key={expense.id} style={FinancialStyles.expenseItem}>
-                    <View style={FinancialStyles.expenseHeader}>
-                        <Text style={FinancialStyles.expenseDescription}>{expense.description}</Text>
-                        <Text style={[FinancialStyles.expenseAmount, { color: Colors.status.error }]}>
-                            -${expense.amount.toFixed(2)}
+            {income.map((item) => (
+                <View key={item.id} style={CommonStyles.incomeItem}>
+                    <View style={CommonStyles.incomeHeader}>
+                        <Text style={CommonStyles.incomeDescription}>{item.description}</Text>
+                        <Text style={[CommonStyles.incomeAmount, { color: Colors.status.success }]}>
+                            +${item.amount.toFixed(2)}
                         </Text>
                     </View>
-                    <View style={FinancialStyles.expenseDetails}>
-                        <Text style={FinancialStyles.expenseDate}>{expense.date} • {expense.venue}</Text>
-                        <View style={[FinancialStyles.categoryBadge, {
-                            backgroundColor: getTaxCategoryColor(expense.taxCategory) + '20'
+                    <View style={CommonStyles.incomeDetails}>
+                        <Text style={CommonStyles.incomeDate}>{item.date} • {item.venue}</Text>
+                        <View style={[CommonStyles.categoryBadge, {
+                            backgroundColor: getPaymentMethodColor(item.paymentMethod) + '20'
                         }]}>
-                            <Text style={[FinancialStyles.categoryText, {
-                                color: getTaxCategoryColor(expense.taxCategory)
+                            <Text style={[CommonStyles.categoryText, {
+                                color: getPaymentMethodColor(item.paymentMethod)
                             }]}>
-                                {expense.taxCategory.charAt(0).toUpperCase() + expense.taxCategory.slice(1)}
+                                {item.paymentMethod.charAt(0).toUpperCase() + item.paymentMethod.slice(1)}
                             </Text>
                         </View>
                     </View>
                     <TouchableOpacity
                         style={CommonStyles.deleteButton}
-                        onPress={() => onDeleteExpense(expense.id)}
+                        onPress={() => onDeleteIncome(item.id)}
                     >
                         <Ionicons name="trash-outline" size={20} color={Colors.status.error} />
                     </TouchableOpacity>
@@ -158,17 +156,15 @@ export const ExpenseTracker: React.FC<ExpenseTrackerProps> = ({
     );
 };
 
-const getTaxCategoryColor = (category: string) => {
-    switch (category) {
-        case 'business':
+const getPaymentMethodColor = (method: string) => {
+    switch (method) {
+        case 'cash':
             return Colors.status.success;
-        case 'meals':
-            return Colors.status.warning;
-        case 'travel':
+        case 'card':
             return Colors.status.info;
-        case 'equipment':
-            return Colors.status.error;
+        case 'transfer':
+            return Colors.status.warning;
         default:
             return Colors.text.secondary;
     }
-};
+}; 

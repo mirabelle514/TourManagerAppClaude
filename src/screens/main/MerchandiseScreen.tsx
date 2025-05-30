@@ -16,6 +16,7 @@ import { Ionicons, MaterialIcons, FontAwesome5 } from '@expo/vector-icons';
 import { LineChart, BarChart, PieChart } from 'react-native-chart-kit';
 import { CommonStyles, FormStyles } from '../../styles';
 import { Colors } from '../../styles/theme/color';
+import { Header } from '../../components/common/Header';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -688,562 +689,565 @@ const MerchandiseScreen: React.FC = () => {
     const lowStockItems = getLowStockItems();
 
     return (
-        <SafeAreaView style={styles.container}>
-            <View style={styles.header}>
-                <Text style={styles.headerTitle}>Merchandise</Text>
-                <View style={styles.headerActions}>
-                    <TouchableOpacity
-                        style={styles.headerButton}
-                        onPress={() => setShowInventoryAdjust(true)}
-                    >
-                        <MaterialIcons name="inventory" size={20} color="#3498db" />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={styles.headerButton}
-                        onPress={() => setShowAddSale(true)}
-                    >
-                        <Ionicons name="add" size={24} color="#3498db" />
-                    </TouchableOpacity>
-                </View>
-            </View>
-
-            {/* Stats Overview */}
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.statsRow}>
-                <View style={[styles.statCard, { backgroundColor: '#3498db' }]}>
-                    <MaterialIcons name="inventory-2" size={24} color="#fff" />
-                    <Text style={styles.statAmount}>${stats.totalValue.toLocaleString()}</Text>
-                    <Text style={styles.statLabel}>Inventory Value</Text>
-                </View>
-                <View style={[styles.statCard, { backgroundColor: '#2ecc71' }]}>
-                    <Ionicons name="trending-up" size={24} color="#fff" />
-                    <Text style={styles.statAmount}>${stats.totalSalesValue.toLocaleString()}</Text>
-                    <Text style={styles.statLabel}>Total Sales</Text>
-                </View>
-                <View style={[styles.statCard, { backgroundColor: '#f39c12' }]}>
-                    <MaterialIcons name="attach-money" size={24} color="#fff" />
-                    <Text style={styles.statAmount}>${stats.totalProfit.toLocaleString()}</Text>
-                    <Text style={styles.statLabel}>Total Profit</Text>
-                </View>
-                <View style={[styles.statCard, { backgroundColor: '#e74c3c' }]}>
-                    <Ionicons name="warning" size={24} color="#fff" />
-                    <Text style={styles.statAmount}>{stats.lowStockItems}</Text>
-                    <Text style={styles.statLabel}>Low Stock</Text>
-                </View>
-            </ScrollView>
-
-            {/* Tab Navigation */}
-            <View style={styles.tabContainer}>
-                {[
-                    { key: 'inventory', label: 'Inventory', icon: 'cube-outline' },
-                    { key: 'sales', label: 'Sales', icon: 'receipt-outline' },
-                    { key: 'analytics', label: 'Analytics', icon: 'analytics-outline' },
-                ].map((tab) => (
-                    <TouchableOpacity
-                        key={tab.key}
-                        style={[styles.tab, activeTab === tab.key && styles.activeTab]}
-                        onPress={() => setActiveTab(tab.key as any)}
-                    >
-                        <Ionicons
-                            name={tab.icon as any}
-                            size={20}
-                            color={activeTab === tab.key ? '#3498db' : '#666'}
-                        />
-                        <Text style={[
-                            styles.tabLabel,
-                            { color: activeTab === tab.key ? '#3498db' : '#666' }
-                        ]}>
-                            {tab.label}
-                        </Text>
-                    </TouchableOpacity>
-                ))}
-            </View>
-
-            {/* Tab Content */}
-            <ScrollView
-                style={styles.tabContent}
-                refreshControl={
-                    <ScrollView
-                        refreshing={refreshing}
-                        onRefresh={onRefresh}
-                    />
-                }
-            >
-                {activeTab === 'inventory' && (
-                    <>
-                        {lowStockItems.length > 0 && (
-                            <ReorderAlert items={lowStockItems} />
-                        )}
-                        <FlatList
-                            data={merchandiseItems}
-                            renderItem={renderInventoryItem}
-                            keyExtractor={(item) => item.id}
-                            scrollEnabled={false}
-                        />
-                    </>
-                )}
-
-                {activeTab === 'sales' && (
-                    <View style={styles.salesContent}>
-                        <SalesTracker sales={recentSales} />
-                        <Text style={styles.sectionTitle}>Recent Sales</Text>
-                        <FlatList
-                            data={recentSales}
-                            renderItem={renderSaleItem}
-                            keyExtractor={(item) => item.id}
-                            scrollEnabled={false}
-                        />
-                    </View>
-                )}
-
-                {activeTab === 'analytics' && (
-                    <View style={styles.analyticsContent}>
-                        {renderCategoryChart()}
-                        <Text style={styles.sectionTitle}>Venue Performance</Text>
-                        {venueSales.map((venue, index) => (
-                            <VenuePerformance key={index} venueData={venue} />
-                        ))}
-                    </View>
-                )}
-            </ScrollView>
-
-            {/* Add Sale Modal */}
-            <Modal
-                visible={showAddSale}
-                animationType="slide"
-                presentationStyle="pageSheet"
-            >
-                <SafeAreaView style={styles.modalContainer}>
-                    <View style={styles.modalHeader}>
-                        <TouchableOpacity onPress={() => setShowAddSale(false)}>
-                            <Ionicons name="close" size={24} color="#666" />
+        <SafeAreaView style={CommonStyles.container}>
+            <Header title="Merchandise" />
+            <View style={styles.container}>
+                <View style={styles.header}>
+                    <Text style={styles.headerTitle}>Merchandise</Text>
+                    <View style={styles.headerActions}>
+                        <TouchableOpacity
+                            style={styles.headerButton}
+                            onPress={() => setShowInventoryAdjust(true)}
+                        >
+                            <MaterialIcons name="inventory" size={20} color="#3498db" />
                         </TouchableOpacity>
-                        <Text style={styles.modalTitle}>Record Sale</Text>
-                        <TouchableOpacity onPress={handleAddSale}>
-                            <Text style={styles.saveButton}>Save</Text>
+                        <TouchableOpacity
+                            style={styles.headerButton}
+                            onPress={() => setShowAddSale(true)}
+                        >
+                            <Ionicons name="add" size={24} color="#3498db" />
                         </TouchableOpacity>
                     </View>
+                </View>
 
-                    <ScrollView style={styles.modalContent}>
-                        <View style={styles.inputGroup}>
-                            <Text style={styles.inputLabel}>Item *</Text>
-                            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                                {merchandiseItems.map((item) => (
-                                    <TouchableOpacity
-                                        key={item.id}
-                                        style={[
-                                            styles.itemSelector,
-                                            newSale.itemId === item.id && styles.selectedItemSelector
-                                        ]}
-                                        onPress={() => setNewSale({ ...newSale, itemId: item.id })}
-                                    >
-                                        <View style={[styles.itemSelectorIcon, { backgroundColor: getCategoryColor(item.category) }]}>
-                                            <Ionicons
-                                                name={getCategoryIcon(item.category) as any}
-                                                size={16}
-                                                color="#fff"
-                                            />
-                                        </View>
-                                        <Text style={[
-                                            styles.itemSelectorText,
-                                            { color: newSale.itemId === item.id ? '#fff' : '#333' }
-                                        ]}>
-                                            {item.name}
-                                        </Text>
-                                        <Text style={[
-                                            styles.itemSelectorPrice,
-                                            { color: newSale.itemId === item.id ? '#fff' : '#666' }
-                                        ]}>
-                                            ${item.price} • {item.currentStock} in stock
-                                        </Text>
-                                    </TouchableOpacity>
-                                ))}
-                            </ScrollView>
-                        </View>
+                {/* Stats Overview */}
+                <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.statsRow}>
+                    <View style={[styles.statCard, { backgroundColor: '#3498db' }]}>
+                        <MaterialIcons name="inventory-2" size={24} color="#fff" />
+                        <Text style={styles.statAmount}>${stats.totalValue.toLocaleString()}</Text>
+                        <Text style={styles.statLabel}>Inventory Value</Text>
+                    </View>
+                    <View style={[styles.statCard, { backgroundColor: '#2ecc71' }]}>
+                        <Ionicons name="trending-up" size={24} color="#fff" />
+                        <Text style={styles.statAmount}>${stats.totalSalesValue.toLocaleString()}</Text>
+                        <Text style={styles.statLabel}>Total Sales</Text>
+                    </View>
+                    <View style={[styles.statCard, { backgroundColor: '#f39c12' }]}>
+                        <MaterialIcons name="attach-money" size={24} color="#fff" />
+                        <Text style={styles.statAmount}>${stats.totalProfit.toLocaleString()}</Text>
+                        <Text style={styles.statLabel}>Total Profit</Text>
+                    </View>
+                    <View style={[styles.statCard, { backgroundColor: '#e74c3c' }]}>
+                        <Ionicons name="warning" size={24} color="#fff" />
+                        <Text style={styles.statAmount}>{stats.lowStockItems}</Text>
+                        <Text style={styles.statLabel}>Low Stock</Text>
+                    </View>
+                </ScrollView>
 
-                        <View style={styles.inputGroup}>
-                            <Text style={styles.inputLabel}>Quantity *</Text>
-                            <View style={styles.quantityContainer}>
-                                <TouchableOpacity
-                                    style={styles.quantityButton}
-                                    onPress={() => setNewSale({
-                                        ...newSale,
-                                        quantity: Math.max(1, parseInt(newSale.quantity) - 1).toString()
-                                    })}
-                                >
-                                    <Ionicons name="remove" size={20} color="#666" />
-                                </TouchableOpacity>
-                                <TextInput
-                                    style={styles.quantityInput}
-                                    value={newSale.quantity}
-                                    onChangeText={(text) => setNewSale({ ...newSale, quantity: text })}
-                                    keyboardType="numeric"
-                                />
-                                <TouchableOpacity
-                                    style={styles.quantityButton}
-                                    onPress={() => setNewSale({
-                                        ...newSale,
-                                        quantity: (parseInt(newSale.quantity) + 1).toString()
-                                    })}
-                                >
-                                    <Ionicons name="add" size={20} color="#666" />
-                                </TouchableOpacity>
-                            </View>
-                        </View>
+                {/* Tab Navigation */}
+                <View style={styles.tabContainer}>
+                    {[
+                        { key: 'inventory', label: 'Inventory', icon: 'cube-outline' },
+                        { key: 'sales', label: 'Sales', icon: 'receipt-outline' },
+                        { key: 'analytics', label: 'Analytics', icon: 'analytics-outline' },
+                    ].map((tab) => (
+                        <TouchableOpacity
+                            key={tab.key}
+                            style={[styles.tab, activeTab === tab.key && styles.activeTab]}
+                            onPress={() => setActiveTab(tab.key as any)}
+                        >
+                            <Ionicons
+                                name={tab.icon as any}
+                                size={20}
+                                color={activeTab === tab.key ? '#3498db' : '#666'}
+                            />
+                            <Text style={[
+                                styles.tabLabel,
+                                { color: activeTab === tab.key ? '#3498db' : '#666' }
+                            ]}>
+                                {tab.label}
+                            </Text>
+                        </TouchableOpacity>
+                    ))}
+                </View>
 
-                        {(() => {
-                            const selectedItemData = merchandiseItems.find(i => i.id === newSale.itemId);
-                            return selectedItemData?.sizes && (
-                                <View style={styles.inputGroup}>
-                                    <Text style={styles.inputLabel}>Size</Text>
-                                    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                                        {selectedItemData.sizes.map((size) => (
-                                            <TouchableOpacity
-                                                key={size}
-                                                style={[
-                                                    styles.sizeButton,
-                                                    newSale.size === size && styles.selectedSizeButton
-                                                ]}
-                                                onPress={() => setNewSale({ ...newSale, size })}
-                                            >
-                                                <Text style={[
-                                                    styles.sizeButtonText,
-                                                    { color: newSale.size === size ? '#fff' : '#333' }
-                                                ]}>
-                                                    {size}
-                                                </Text>
-                                            </TouchableOpacity>
-                                        ))}
-                                    </ScrollView>
-                                </View>
-                            );
-                        })()}
+                {/* Tab Content */}
+                <ScrollView
+                    style={styles.tabContent}
+                    refreshControl={
+                        <ScrollView
+                            refreshing={refreshing}
+                            onRefresh={onRefresh}
+                        />
+                    }
+                >
+                    {activeTab === 'inventory' && (
+                        <>
+                            {lowStockItems.length > 0 && (
+                                <ReorderAlert items={lowStockItems} />
+                            )}
+                            <FlatList
+                                data={merchandiseItems}
+                                renderItem={renderInventoryItem}
+                                keyExtractor={(item) => item.id}
+                                scrollEnabled={false}
+                            />
+                        </>
+                    )}
 
-                        {(() => {
-                            const selectedItemData = merchandiseItems.find(i => i.id === newSale.itemId);
-                            return selectedItemData?.colors && (
-                                <View style={styles.inputGroup}>
-                                    <Text style={styles.inputLabel}>Color</Text>
-                                    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                                        {selectedItemData.colors.map((color) => (
-                                            <TouchableOpacity
-                                                key={color}
-                                                style={[
-                                                    styles.colorButton,
-                                                    newSale.color === color && styles.selectedColorButton
-                                                ]}
-                                                onPress={() => setNewSale({ ...newSale, color })}
-                                            >
-                                                <Text style={[
-                                                    styles.colorButtonText,
-                                                    { color: newSale.color === color ? '#fff' : '#333' }
-                                                ]}>
-                                                    {color}
-                                                </Text>
-                                            </TouchableOpacity>
-                                        ))}
-                                    </ScrollView>
-                                </View>
-                            );
-                        })()}
-
-                        <View style={styles.inputGroup}>
-                            <Text style={styles.inputLabel}>Custom Price (Optional)</Text>
-                            <TextInput
-                                style={styles.textInput}
-                                value={newSale.customPrice}
-                                onChangeText={(text) => setNewSale({ ...newSale, customPrice: text })}
-                                keyboardType="numeric"
-                                placeholder="Leave blank for regular price"
+                    {activeTab === 'sales' && (
+                        <View style={styles.salesContent}>
+                            <SalesTracker sales={recentSales} />
+                            <Text style={styles.sectionTitle}>Recent Sales</Text>
+                            <FlatList
+                                data={recentSales}
+                                renderItem={renderSaleItem}
+                                keyExtractor={(item) => item.id}
+                                scrollEnabled={false}
                             />
                         </View>
+                    )}
 
-                        {(() => {
-                            const selectedItemData = merchandiseItems.find(i => i.id === newSale.itemId);
-                            const quantity = parseInt(newSale.quantity) || 1;
-                            const price = newSale.customPrice ? parseFloat(newSale.customPrice) : selectedItemData?.price || 0;
-                            const total = quantity * price;
+                    {activeTab === 'analytics' && (
+                        <View style={styles.analyticsContent}>
+                            {renderCategoryChart()}
+                            <Text style={styles.sectionTitle}>Venue Performance</Text>
+                            {venueSales.map((venue, index) => (
+                                <VenuePerformance key={index} venueData={venue} />
+                            ))}
+                        </View>
+                    )}
+                </ScrollView>
 
-                            return selectedItemData && (
-                                <View style={styles.salePreview}>
-                                    <Text style={styles.salePreviewTitle}>Sale Preview</Text>
-                                    <View style={styles.salePreviewRow}>
-                                        <Text style={styles.salePreviewLabel}>Item:</Text>
-                                        <Text style={styles.salePreviewValue}>{selectedItemData.name}</Text>
-                                    </View>
-                                    <View style={styles.salePreviewRow}>
-                                        <Text style={styles.salePreviewLabel}>Quantity:</Text>
-                                        <Text style={styles.salePreviewValue}>{quantity}</Text>
-                                    </View>
-                                    <View style={styles.salePreviewRow}>
-                                        <Text style={styles.salePreviewLabel}>Price:</Text>
-                                        <Text style={styles.salePreviewValue}>${price.toFixed(2)}</Text>
-                                    </View>
-                                    <View style={[styles.salePreviewRow, styles.salePreviewTotal]}>
-                                        <Text style={styles.salePreviewTotalLabel}>Total:</Text>
-                                        <Text style={styles.salePreviewTotalValue}>${total.toFixed(2)}</Text>
-                                    </View>
-                                </View>
-                            );
-                        })()}
-                    </ScrollView>
-                </SafeAreaView>
-            </Modal>
+                {/* Add Sale Modal */}
+                <Modal
+                    visible={showAddSale}
+                    animationType="slide"
+                    presentationStyle="pageSheet"
+                >
+                    <SafeAreaView style={styles.modalContainer}>
+                        <View style={styles.modalHeader}>
+                            <TouchableOpacity onPress={() => setShowAddSale(false)}>
+                                <Ionicons name="close" size={24} color="#666" />
+                            </TouchableOpacity>
+                            <Text style={styles.modalTitle}>Record Sale</Text>
+                            <TouchableOpacity onPress={handleAddSale}>
+                                <Text style={styles.saveButton}>Save</Text>
+                            </TouchableOpacity>
+                        </View>
 
-            {/* Inventory Adjustment Modal */}
-            <Modal
-                visible={showInventoryAdjust}
-                animationType="slide"
-                presentationStyle="pageSheet"
-            >
-                <SafeAreaView style={styles.modalContainer}>
-                    <View style={styles.modalHeader}>
-                        <TouchableOpacity onPress={() => setShowInventoryAdjust(false)}>
-                            <Ionicons name="close" size={24} color="#666" />
-                        </TouchableOpacity>
-                        <Text style={styles.modalTitle}>Adjust Inventory</Text>
-                        <TouchableOpacity onPress={handleInventoryAdjustment}>
-                            <Text style={styles.saveButton}>Save</Text>
-                        </TouchableOpacity>
-                    </View>
+                        <ScrollView style={styles.modalContent}>
+                            <View style={styles.inputGroup}>
+                                <Text style={styles.inputLabel}>Item *</Text>
+                                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                                    {merchandiseItems.map((item) => (
+                                        <TouchableOpacity
+                                            key={item.id}
+                                            style={[
+                                                styles.itemSelector,
+                                                newSale.itemId === item.id && styles.selectedItemSelector
+                                            ]}
+                                            onPress={() => setNewSale({ ...newSale, itemId: item.id })}
+                                        >
+                                            <View style={[styles.itemSelectorIcon, { backgroundColor: getCategoryColor(item.category) }]}>
+                                                <Ionicons
+                                                    name={getCategoryIcon(item.category) as any}
+                                                    size={16}
+                                                    color="#fff"
+                                                />
+                                            </View>
+                                            <Text style={[
+                                                styles.itemSelectorText,
+                                                { color: newSale.itemId === item.id ? '#fff' : '#333' }
+                                            ]}>
+                                                {item.name}
+                                            </Text>
+                                            <Text style={[
+                                                styles.itemSelectorPrice,
+                                                { color: newSale.itemId === item.id ? '#fff' : '#666' }
+                                            ]}>
+                                                ${item.price} • {item.currentStock} in stock
+                                            </Text>
+                                        </TouchableOpacity>
+                                    ))}
+                                </ScrollView>
+                            </View>
 
-                    <ScrollView style={styles.modalContent}>
-                        <View style={styles.inputGroup}>
-                            <Text style={styles.inputLabel}>Item *</Text>
-                            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                                {merchandiseItems.map((item) => (
+                            <View style={styles.inputGroup}>
+                                <Text style={styles.inputLabel}>Quantity *</Text>
+                                <View style={styles.quantityContainer}>
                                     <TouchableOpacity
-                                        key={item.id}
-                                        style={[
-                                            styles.itemSelector,
-                                            inventoryAdjustment.itemId === item.id && styles.selectedItemSelector
-                                        ]}
-                                        onPress={() => setInventoryAdjustment({
-                                            ...inventoryAdjustment,
-                                            itemId: item.id
+                                        style={styles.quantityButton}
+                                        onPress={() => setNewSale({
+                                            ...newSale,
+                                            quantity: Math.max(1, parseInt(newSale.quantity) - 1).toString()
                                         })}
                                     >
-                                        <View style={[styles.itemSelectorIcon, { backgroundColor: getCategoryColor(item.category) }]}>
+                                        <Ionicons name="remove" size={20} color="#666" />
+                                    </TouchableOpacity>
+                                    <TextInput
+                                        style={styles.quantityInput}
+                                        value={newSale.quantity}
+                                        onChangeText={(text) => setNewSale({ ...newSale, quantity: text })}
+                                        keyboardType="numeric"
+                                    />
+                                    <TouchableOpacity
+                                        style={styles.quantityButton}
+                                        onPress={() => setNewSale({
+                                            ...newSale,
+                                            quantity: (parseInt(newSale.quantity) + 1).toString()
+                                        })}
+                                    >
+                                        <Ionicons name="add" size={20} color="#666" />
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+
+                            {(() => {
+                                const selectedItemData = merchandiseItems.find(i => i.id === newSale.itemId);
+                                return selectedItemData?.sizes && (
+                                    <View style={styles.inputGroup}>
+                                        <Text style={styles.inputLabel}>Size</Text>
+                                        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                                            {selectedItemData.sizes.map((size) => (
+                                                <TouchableOpacity
+                                                    key={size}
+                                                    style={[
+                                                        styles.sizeButton,
+                                                        newSale.size === size && styles.selectedSizeButton
+                                                    ]}
+                                                    onPress={() => setNewSale({ ...newSale, size })}
+                                                >
+                                                    <Text style={[
+                                                        styles.sizeButtonText,
+                                                        { color: newSale.size === size ? '#fff' : '#333' }
+                                                    ]}>
+                                                        {size}
+                                                    </Text>
+                                                </TouchableOpacity>
+                                            ))}
+                                        </ScrollView>
+                                    </View>
+                                );
+                            })()}
+
+                            {(() => {
+                                const selectedItemData = merchandiseItems.find(i => i.id === newSale.itemId);
+                                return selectedItemData?.colors && (
+                                    <View style={styles.inputGroup}>
+                                        <Text style={styles.inputLabel}>Color</Text>
+                                        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                                            {selectedItemData.colors.map((color) => (
+                                                <TouchableOpacity
+                                                    key={color}
+                                                    style={[
+                                                        styles.colorButton,
+                                                        newSale.color === color && styles.selectedColorButton
+                                                    ]}
+                                                    onPress={() => setNewSale({ ...newSale, color })}
+                                                >
+                                                    <Text style={[
+                                                        styles.colorButtonText,
+                                                        { color: newSale.color === color ? '#fff' : '#333' }
+                                                    ]}>
+                                                        {color}
+                                                    </Text>
+                                                </TouchableOpacity>
+                                            ))}
+                                        </ScrollView>
+                                    </View>
+                                );
+                            })()}
+
+                            <View style={styles.inputGroup}>
+                                <Text style={styles.inputLabel}>Custom Price (Optional)</Text>
+                                <TextInput
+                                    style={styles.textInput}
+                                    value={newSale.customPrice}
+                                    onChangeText={(text) => setNewSale({ ...newSale, customPrice: text })}
+                                    keyboardType="numeric"
+                                    placeholder="Leave blank for regular price"
+                                />
+                            </View>
+
+                            {(() => {
+                                const selectedItemData = merchandiseItems.find(i => i.id === newSale.itemId);
+                                const quantity = parseInt(newSale.quantity) || 1;
+                                const price = newSale.customPrice ? parseFloat(newSale.customPrice) : selectedItemData?.price || 0;
+                                const total = quantity * price;
+
+                                return selectedItemData && (
+                                    <View style={styles.salePreview}>
+                                        <Text style={styles.salePreviewTitle}>Sale Preview</Text>
+                                        <View style={styles.salePreviewRow}>
+                                            <Text style={styles.salePreviewLabel}>Item:</Text>
+                                            <Text style={styles.salePreviewValue}>{selectedItemData.name}</Text>
+                                        </View>
+                                        <View style={styles.salePreviewRow}>
+                                            <Text style={styles.salePreviewLabel}>Quantity:</Text>
+                                            <Text style={styles.salePreviewValue}>{quantity}</Text>
+                                        </View>
+                                        <View style={styles.salePreviewRow}>
+                                            <Text style={styles.salePreviewLabel}>Price:</Text>
+                                            <Text style={styles.salePreviewValue}>${price.toFixed(2)}</Text>
+                                        </View>
+                                        <View style={[styles.salePreviewRow, styles.salePreviewTotal]}>
+                                            <Text style={styles.salePreviewTotalLabel}>Total:</Text>
+                                            <Text style={styles.salePreviewTotalValue}>${total.toFixed(2)}</Text>
+                                        </View>
+                                    </View>
+                                );
+                            })()}
+                        </ScrollView>
+                    </SafeAreaView>
+                </Modal>
+
+                {/* Inventory Adjustment Modal */}
+                <Modal
+                    visible={showInventoryAdjust}
+                    animationType="slide"
+                    presentationStyle="pageSheet"
+                >
+                    <SafeAreaView style={styles.modalContainer}>
+                        <View style={styles.modalHeader}>
+                            <TouchableOpacity onPress={() => setShowInventoryAdjust(false)}>
+                                <Ionicons name="close" size={24} color="#666" />
+                            </TouchableOpacity>
+                            <Text style={styles.modalTitle}>Adjust Inventory</Text>
+                            <TouchableOpacity onPress={handleInventoryAdjustment}>
+                                <Text style={styles.saveButton}>Save</Text>
+                            </TouchableOpacity>
+                        </View>
+
+                        <ScrollView style={styles.modalContent}>
+                            <View style={styles.inputGroup}>
+                                <Text style={styles.inputLabel}>Item *</Text>
+                                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                                    {merchandiseItems.map((item) => (
+                                        <TouchableOpacity
+                                            key={item.id}
+                                            style={[
+                                                styles.itemSelector,
+                                                inventoryAdjustment.itemId === item.id && styles.selectedItemSelector
+                                            ]}
+                                            onPress={() => setInventoryAdjustment({
+                                                ...inventoryAdjustment,
+                                                itemId: item.id
+                                            })}
+                                        >
+                                            <View style={[styles.itemSelectorIcon, { backgroundColor: getCategoryColor(item.category) }]}>
+                                                <Ionicons
+                                                    name={getCategoryIcon(item.category) as any}
+                                                    size={16}
+                                                    color="#fff"
+                                                />
+                                            </View>
+                                            <Text style={[
+                                                styles.itemSelectorText,
+                                                { color: inventoryAdjustment.itemId === item.id ? '#fff' : '#333' }
+                                            ]}>
+                                                {item.name}
+                                            </Text>
+                                            <Text style={[
+                                                styles.itemSelectorPrice,
+                                                { color: inventoryAdjustment.itemId === item.id ? '#fff' : '#666' }
+                                            ]}>
+                                                Current: {item.currentStock}
+                                            </Text>
+                                        </TouchableOpacity>
+                                    ))}
+                                </ScrollView>
+                            </View>
+
+                            <View style={styles.inputGroup}>
+                                <Text style={styles.inputLabel}>Adjustment (+/-) *</Text>
+                                <TextInput
+                                    style={styles.textInput}
+                                    value={inventoryAdjustment.adjustment}
+                                    onChangeText={(text) => setInventoryAdjustment({
+                                        ...inventoryAdjustment,
+                                        adjustment: text
+                                    })}
+                                    keyboardType="numeric"
+                                    placeholder="e.g. +10 or -5"
+                                />
+                            </View>
+
+                            <View style={styles.inputGroup}>
+                                <Text style={styles.inputLabel}>Reason *</Text>
+                                <TextInput
+                                    style={[styles.textInput, styles.textArea]}
+                                    value={inventoryAdjustment.reason}
+                                    onChangeText={(text) => setInventoryAdjustment({
+                                        ...inventoryAdjustment,
+                                        reason: text
+                                    })}
+                                    placeholder="Reason for adjustment"
+                                    multiline
+                                    numberOfLines={3}
+                                />
+                            </View>
+
+                            {(() => {
+                                const selectedItemData = merchandiseItems.find(i => i.id === inventoryAdjustment.itemId);
+                                const adjustment = parseInt(inventoryAdjustment.adjustment) || 0;
+                                const newStock = selectedItemData ? Math.max(0, selectedItemData.currentStock + adjustment) : 0;
+
+                                return selectedItemData && (
+                                    <View style={styles.adjustmentPreview}>
+                                        <Text style={styles.adjustmentPreviewTitle}>Adjustment Preview</Text>
+                                        <View style={styles.adjustmentPreviewRow}>
+                                            <Text style={styles.adjustmentPreviewLabel}>Current Stock:</Text>
+                                            <Text style={styles.adjustmentPreviewValue}>{selectedItemData.currentStock}</Text>
+                                        </View>
+                                        <View style={styles.adjustmentPreviewRow}>
+                                            <Text style={styles.adjustmentPreviewLabel}>Adjustment:</Text>
+                                            <Text style={[
+                                                styles.adjustmentPreviewValue,
+                                                { color: adjustment >= 0 ? '#2ecc71' : '#e74c3c' }
+                                            ]}>
+                                                {adjustment >= 0 ? '+' : ''}{adjustment}
+                                            </Text>
+                                        </View>
+                                        <View style={[styles.adjustmentPreviewRow, styles.adjustmentPreviewTotal]}>
+                                            <Text style={styles.adjustmentPreviewTotalLabel}>New Stock:</Text>
+                                            <Text style={styles.adjustmentPreviewTotalValue}>{newStock}</Text>
+                                        </View>
+                                    </View>
+                                );
+                            })()}
+                        </ScrollView>
+                    </SafeAreaView>
+                </Modal>
+
+                {/* Item Detail Modal */}
+                <Modal
+                    visible={showItemDetail}
+                    animationType="slide"
+                    presentationStyle="pageSheet"
+                >
+                    <SafeAreaView style={styles.modalContainer}>
+                        <View style={styles.modalHeader}>
+                            <TouchableOpacity onPress={() => setShowItemDetail(false)}>
+                                <Ionicons name="close" size={24} color="#666" />
+                            </TouchableOpacity>
+                            <Text style={styles.modalTitle}>Item Details</Text>
+                            <TouchableOpacity>
+                                <Ionicons name="create" size={24} color="#3498db" />
+                            </TouchableOpacity>
+                        </View>
+
+                        {selectedItem && (
+                            <ScrollView style={styles.modalContent}>
+                                <View style={styles.itemDetailCard}>
+                                    <View style={styles.itemDetailHeader}>
+                                        <View style={[styles.itemDetailIcon, { backgroundColor: getCategoryColor(selectedItem.category) }]}>
                                             <Ionicons
-                                                name={getCategoryIcon(item.category) as any}
-                                                size={16}
+                                                name={getCategoryIcon(selectedItem.category) as any}
+                                                size={32}
                                                 color="#fff"
                                             />
                                         </View>
-                                        <Text style={[
-                                            styles.itemSelectorText,
-                                            { color: inventoryAdjustment.itemId === item.id ? '#fff' : '#333' }
-                                        ]}>
-                                            {item.name}
-                                        </Text>
-                                        <Text style={[
-                                            styles.itemSelectorPrice,
-                                            { color: inventoryAdjustment.itemId === item.id ? '#fff' : '#666' }
-                                        ]}>
-                                            Current: {item.currentStock}
-                                        </Text>
-                                    </TouchableOpacity>
-                                ))}
-                            </ScrollView>
-                        </View>
-
-                        <View style={styles.inputGroup}>
-                            <Text style={styles.inputLabel}>Adjustment (+/-) *</Text>
-                            <TextInput
-                                style={styles.textInput}
-                                value={inventoryAdjustment.adjustment}
-                                onChangeText={(text) => setInventoryAdjustment({
-                                    ...inventoryAdjustment,
-                                    adjustment: text
-                                })}
-                                keyboardType="numeric"
-                                placeholder="e.g. +10 or -5"
-                            />
-                        </View>
-
-                        <View style={styles.inputGroup}>
-                            <Text style={styles.inputLabel}>Reason *</Text>
-                            <TextInput
-                                style={[styles.textInput, styles.textArea]}
-                                value={inventoryAdjustment.reason}
-                                onChangeText={(text) => setInventoryAdjustment({
-                                    ...inventoryAdjustment,
-                                    reason: text
-                                })}
-                                placeholder="Reason for adjustment"
-                                multiline
-                                numberOfLines={3}
-                            />
-                        </View>
-
-                        {(() => {
-                            const selectedItemData = merchandiseItems.find(i => i.id === inventoryAdjustment.itemId);
-                            const adjustment = parseInt(inventoryAdjustment.adjustment) || 0;
-                            const newStock = selectedItemData ? Math.max(0, selectedItemData.currentStock + adjustment) : 0;
-
-                            return selectedItemData && (
-                                <View style={styles.adjustmentPreview}>
-                                    <Text style={styles.adjustmentPreviewTitle}>Adjustment Preview</Text>
-                                    <View style={styles.adjustmentPreviewRow}>
-                                        <Text style={styles.adjustmentPreviewLabel}>Current Stock:</Text>
-                                        <Text style={styles.adjustmentPreviewValue}>{selectedItemData.currentStock}</Text>
-                                    </View>
-                                    <View style={styles.adjustmentPreviewRow}>
-                                        <Text style={styles.adjustmentPreviewLabel}>Adjustment:</Text>
-                                        <Text style={[
-                                            styles.adjustmentPreviewValue,
-                                            { color: adjustment >= 0 ? '#2ecc71' : '#e74c3c' }
-                                        ]}>
-                                            {adjustment >= 0 ? '+' : ''}{adjustment}
-                                        </Text>
-                                    </View>
-                                    <View style={[styles.adjustmentPreviewRow, styles.adjustmentPreviewTotal]}>
-                                        <Text style={styles.adjustmentPreviewTotalLabel}>New Stock:</Text>
-                                        <Text style={styles.adjustmentPreviewTotalValue}>{newStock}</Text>
-                                    </View>
-                                </View>
-                            );
-                        })()}
-                    </ScrollView>
-                </SafeAreaView>
-            </Modal>
-
-            {/* Item Detail Modal */}
-            <Modal
-                visible={showItemDetail}
-                animationType="slide"
-                presentationStyle="pageSheet"
-            >
-                <SafeAreaView style={styles.modalContainer}>
-                    <View style={styles.modalHeader}>
-                        <TouchableOpacity onPress={() => setShowItemDetail(false)}>
-                            <Ionicons name="close" size={24} color="#666" />
-                        </TouchableOpacity>
-                        <Text style={styles.modalTitle}>Item Details</Text>
-                        <TouchableOpacity>
-                            <Ionicons name="create" size={24} color="#3498db" />
-                        </TouchableOpacity>
-                    </View>
-
-                    {selectedItem && (
-                        <ScrollView style={styles.modalContent}>
-                            <View style={styles.itemDetailCard}>
-                                <View style={styles.itemDetailHeader}>
-                                    <View style={[styles.itemDetailIcon, { backgroundColor: getCategoryColor(selectedItem.category) }]}>
-                                        <Ionicons
-                                            name={getCategoryIcon(selectedItem.category) as any}
-                                            size={32}
-                                            color="#fff"
-                                        />
-                                    </View>
-                                    <View style={styles.itemDetailInfo}>
-                                        <Text style={styles.itemDetailName}>{selectedItem.name}</Text>
-                                        <Text style={styles.itemDetailCategory}>
-                                            {selectedItem.category.charAt(0).toUpperCase() + selectedItem.category.slice(1)}
-                                        </Text>
-                                        <Text style={styles.itemDetailPrice}>${selectedItem.price}</Text>
-                                    </View>
-                                </View>
-
-                                {selectedItem.description && (
-                                    <Text style={styles.itemDescription}>{selectedItem.description}</Text>
-                                )}
-                            </View>
-
-                            <View style={styles.detailSection}>
-                                <Text style={styles.sectionTitle}>Stock Information</Text>
-                                <View style={styles.detailRow}>
-                                    <Text style={styles.detailLabel}>Current Stock:</Text>
-                                    <Text style={[
-                                        styles.detailValue,
-                                        { color: selectedItem.currentStock <= selectedItem.lowStockThreshold ? '#e74c3c' : '#2ecc71' }
-                                    ]}>
-                                        {selectedItem.currentStock}
-                                    </Text>
-                                </View>
-                                <View style={styles.detailRow}>
-                                    <Text style={styles.detailLabel}>Low Stock Threshold:</Text>
-                                    <Text style={styles.detailValue}>{selectedItem.lowStockThreshold}</Text>
-                                </View>
-                                <View style={styles.detailRow}>
-                                    <Text style={styles.detailLabel}>Total Sold:</Text>
-                                    <Text style={styles.detailValue}>{selectedItem.totalSold}</Text>
-                                </View>
-                            </View>
-
-                            <View style={styles.detailSection}>
-                                <Text style={styles.sectionTitle}>Financials</Text>
-                                <View style={styles.detailRow}>
-                                    <Text style={styles.detailLabel}>Selling Price:</Text>
-                                    <Text style={styles.detailValue}>${selectedItem.price}</Text>
-                                </View>
-                                <View style={styles.detailRow}>
-                                    <Text style={styles.detailLabel}>Cost Price:</Text>
-                                    <Text style={styles.detailValue}>${selectedItem.cost}</Text>
-                                </View>
-                                <View style={styles.detailRow}>
-                                    <Text style={styles.detailLabel}>Profit per Item:</Text>
-                                    <Text style={[styles.detailValue, { color: '#2ecc71' }]}>
-                                        ${(selectedItem.price - selectedItem.cost).toFixed(2)}
-                                    </Text>
-                                </View>
-                                <View style={styles.detailRow}>
-                                    <Text style={styles.detailLabel}>Total Revenue:</Text>
-                                    <Text style={styles.detailValue}>
-                                        ${(selectedItem.price * selectedItem.totalSold).toLocaleString()}
-                                    </Text>
-                                </View>
-                                <View style={styles.detailRow}>
-                                    <Text style={styles.detailLabel}>Total Profit:</Text>
-                                    <Text style={[styles.detailValue, { color: '#2ecc71' }]}>
-                                        ${((selectedItem.price - selectedItem.cost) * selectedItem.totalSold).toLocaleString()}
-                                    </Text>
-                                </View>
-                            </View>
-
-                            {selectedItem.sizes && (
-                                <View style={styles.detailSection}>
-                                    <Text style={styles.sectionTitle}>Available Sizes</Text>
-                                    <View style={styles.sizesList}>
-                                        {selectedItem.sizes.map((size, index) => (
-                                            <View key={index} style={styles.sizeChip}>
-                                                <Text style={styles.sizeChipText}>{size}</Text>
-                                            </View>
-                                        ))}
-                                    </View>
-                                </View>
-                            )}
-
-                            {selectedItem.colors && (
-                                <View style={styles.detailSection}>
-                                    <Text style={styles.sectionTitle}>Available Colors</Text>
-                                    <View style={styles.colorsList}>
-                                        {selectedItem.colors.map((color, index) => (
-                                            <View key={index} style={styles.colorChip}>
-                                                <Text style={styles.colorChipText}>{color}</Text>
-                                            </View>
-                                        ))}
-                                    </View>
-                                </View>
-                            )}
-
-                            <View style={styles.detailSection}>
-                                <Text style={styles.sectionTitle}>Recent Sales</Text>
-                                {recentSales
-                                    .filter(sale => sale.itemId === selectedItem.id)
-                                    .slice(0, 5)
-                                    .map((sale, index) => (
-                                        <View key={index} style={styles.recentSaleItem}>
-                                            <Text style={styles.recentSaleDate}>{sale.date}</Text>
-                                            <Text style={styles.recentSaleVenue}>{sale.venue}</Text>
-                                            <Text style={styles.recentSaleQuantity}>{sale.quantity}x</Text>
-                                            <Text style={styles.recentSaleTotal}>${sale.total}</Text>
+                                        <View style={styles.itemDetailInfo}>
+                                            <Text style={styles.itemDetailName}>{selectedItem.name}</Text>
+                                            <Text style={styles.itemDetailCategory}>
+                                                {selectedItem.category.charAt(0).toUpperCase() + selectedItem.category.slice(1)}
+                                            </Text>
+                                            <Text style={styles.itemDetailPrice}>${selectedItem.price}</Text>
                                         </View>
-                                    ))}
-                            </View>
-                        </ScrollView>
-                    )}
-                </SafeAreaView>
-            </Modal>
+                                    </View>
+
+                                    {selectedItem.description && (
+                                        <Text style={styles.itemDescription}>{selectedItem.description}</Text>
+                                    )}
+                                </View>
+
+                                <View style={styles.detailSection}>
+                                    <Text style={styles.sectionTitle}>Stock Information</Text>
+                                    <View style={styles.detailRow}>
+                                        <Text style={styles.detailLabel}>Current Stock:</Text>
+                                        <Text style={[
+                                            styles.detailValue,
+                                            { color: selectedItem.currentStock <= selectedItem.lowStockThreshold ? '#e74c3c' : '#2ecc71' }
+                                        ]}>
+                                            {selectedItem.currentStock}
+                                        </Text>
+                                    </View>
+                                    <View style={styles.detailRow}>
+                                        <Text style={styles.detailLabel}>Low Stock Threshold:</Text>
+                                        <Text style={styles.detailValue}>{selectedItem.lowStockThreshold}</Text>
+                                    </View>
+                                    <View style={styles.detailRow}>
+                                        <Text style={styles.detailLabel}>Total Sold:</Text>
+                                        <Text style={styles.detailValue}>{selectedItem.totalSold}</Text>
+                                    </View>
+                                </View>
+
+                                <View style={styles.detailSection}>
+                                    <Text style={styles.sectionTitle}>Financials</Text>
+                                    <View style={styles.detailRow}>
+                                        <Text style={styles.detailLabel}>Selling Price:</Text>
+                                        <Text style={styles.detailValue}>${selectedItem.price}</Text>
+                                    </View>
+                                    <View style={styles.detailRow}>
+                                        <Text style={styles.detailLabel}>Cost Price:</Text>
+                                        <Text style={styles.detailValue}>${selectedItem.cost}</Text>
+                                    </View>
+                                    <View style={styles.detailRow}>
+                                        <Text style={styles.detailLabel}>Profit per Item:</Text>
+                                        <Text style={[styles.detailValue, { color: '#2ecc71' }]}>
+                                            ${(selectedItem.price - selectedItem.cost).toFixed(2)}
+                                        </Text>
+                                    </View>
+                                    <View style={styles.detailRow}>
+                                        <Text style={styles.detailLabel}>Total Revenue:</Text>
+                                        <Text style={styles.detailValue}>
+                                            ${(selectedItem.price * selectedItem.totalSold).toLocaleString()}
+                                        </Text>
+                                    </View>
+                                    <View style={styles.detailRow}>
+                                        <Text style={styles.detailLabel}>Total Profit:</Text>
+                                        <Text style={[styles.detailValue, { color: '#2ecc71' }]}>
+                                            ${((selectedItem.price - selectedItem.cost) * selectedItem.totalSold).toLocaleString()}
+                                        </Text>
+                                    </View>
+                                </View>
+
+                                {selectedItem.sizes && (
+                                    <View style={styles.detailSection}>
+                                        <Text style={styles.sectionTitle}>Available Sizes</Text>
+                                        <View style={styles.sizesList}>
+                                            {selectedItem.sizes.map((size, index) => (
+                                                <View key={index} style={styles.sizeChip}>
+                                                    <Text style={styles.sizeChipText}>{size}</Text>
+                                                </View>
+                                            ))}
+                                        </View>
+                                    </View>
+                                )}
+
+                                {selectedItem.colors && (
+                                    <View style={styles.detailSection}>
+                                        <Text style={styles.sectionTitle}>Available Colors</Text>
+                                        <View style={styles.colorsList}>
+                                            {selectedItem.colors.map((color, index) => (
+                                                <View key={index} style={styles.colorChip}>
+                                                    <Text style={styles.colorChipText}>{color}</Text>
+                                                </View>
+                                            ))}
+                                        </View>
+                                    </View>
+                                )}
+
+                                <View style={styles.detailSection}>
+                                    <Text style={styles.sectionTitle}>Recent Sales</Text>
+                                    {recentSales
+                                        .filter(sale => sale.itemId === selectedItem.id)
+                                        .slice(0, 5)
+                                        .map((sale, index) => (
+                                            <View key={index} style={styles.recentSaleItem}>
+                                                <Text style={styles.recentSaleDate}>{sale.date}</Text>
+                                                <Text style={styles.recentSaleVenue}>{sale.venue}</Text>
+                                                <Text style={styles.recentSaleQuantity}>{sale.quantity}x</Text>
+                                                <Text style={styles.recentSaleTotal}>${sale.total}</Text>
+                                            </View>
+                                        ))}
+                                </View>
+                            </ScrollView>
+                        )}
+                    </SafeAreaView>
+                </Modal>
+            </View>
         </SafeAreaView>
     );
 };

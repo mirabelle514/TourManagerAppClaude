@@ -1,5 +1,5 @@
 // src/styles/components/common.ts
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet, Dimensions, ViewStyle, TextStyle } from 'react-native';
 import { Colors, Typography, Spacing } from './theme';
 
 const { width: screenWidth } = Dimensions.get('window');
@@ -69,16 +69,27 @@ export const CommonStyles = StyleSheet.create({
 
     // Cards & Containers
     card: {
-        backgroundColor: Colors.background.primary,
+        backgroundColor: Colors.background.secondary,
         borderRadius: 12,
-        padding: 20,
-        marginHorizontal: 16,
-        marginVertical: 8,
-        shadowColor: '#000',
+        padding: 16,
+        marginBottom: 16,
+        shadowColor: '#000000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
-        shadowRadius: 8,
+        shadowRadius: 4,
         elevation: 3,
+    },
+    cardHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 16,
+    },
+    cardTitle: {
+        fontSize: 18,
+        fontWeight: '600',
+        color: Colors.text.primary,
+        marginBottom: 12,
     },
     welcomeCard: {
         backgroundColor: Colors.background.secondary,
@@ -592,7 +603,6 @@ export const CommonStyles = StyleSheet.create({
     },
 
     // Header Styles
-
     headerTitle: {
         fontSize: 28,
         fontWeight: 'bold',
@@ -612,13 +622,6 @@ export const CommonStyles = StyleSheet.create({
     },
 
     // Card Styles
-    cardTitle: {
-        fontSize: 18,
-        fontWeight: '600',
-        color: Colors.text.primary,
-        marginBottom: 12,
-    },
-
     cardSubtitle: {
         fontSize: 14,
         color: Colors.text.secondary,
@@ -633,21 +636,11 @@ export const CommonStyles = StyleSheet.create({
         paddingHorizontal: 4,
     },
 
-    scheduleIcon: {
-        width: 24,
-        height: 24,
-        marginRight: 8,
-    },
-
     scheduleText: {
         fontSize: 16,
+        color: Colors.text.primary,
+        marginLeft: 12,
         fontWeight: '500',
-    },
-
-    scheduleDescription: {
-        fontSize: 14,
-        color: Colors.text.secondary,
-        marginTop: 2,
     },
 
     // Technical Details
@@ -1160,5 +1153,541 @@ export const CommonStyles = StyleSheet.create({
         fontSize: Typography.sizes.base,
         fontWeight: Typography.weights.medium,
         marginLeft: Spacing.sm,
+    },
+
+    // Header styles
+    backButton: {
+        width: 40,
+        height: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 20,
+    } as ViewStyle,
+
+    headerCenter: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    } as ViewStyle,
+
+    headerRight: {
+        width: 40,
+        alignItems: 'flex-end',
+        justifyContent: 'center',
+    } as ViewStyle,
+
+    // Step indicator styles
+    stepCounter: {
+        fontSize: 14,
+        fontWeight: '500',
+        color: Colors.text.secondary,
+        marginBottom: 4,
+    } as TextStyle,
+
+    stepTitle: {
+        fontSize: 16,
+        fontWeight: '600',
+        color: Colors.text.primary,
+        textAlign: 'center',
+    } as TextStyle,
+
+    // Progress bar styles
+    progressContainer: {
+        marginVertical: 16,
+    } as ViewStyle,
+
+    progressTrack: {
+        height: 4,
+        backgroundColor: Colors.background.tertiary,
+        borderRadius: 2,
+        overflow: 'hidden',
+    } as ViewStyle,
+
+    progressFill: {
+        height: '100%',
+        backgroundColor: Colors.primary,
+        borderRadius: 2,
+    } as ViewStyle,
+
+    progressText: {
+        fontSize: 12,
+        color: Colors.text.secondary,
+        marginTop: 4,
+        textAlign: 'right',
+    } as TextStyle,
+
+    // Footer styles
+    footer: {
+        padding: 16,
+        borderTopWidth: 1,
+        borderTopColor: Colors.border.light,
+        backgroundColor: Colors.background.primary,
+    } as ViewStyle,
+
+    navigationButtons: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    } as ViewStyle,
+
+    navButton: {
+        flex: 1,
+        height: 48,
+        borderRadius: 8,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginHorizontal: 8,
+    } as ViewStyle,
+
+    navButtonText: {
+        fontSize: 16,
+        fontWeight: '600',
+    } as TextStyle,
+
+    // Button styles
+    button: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 8,
+        paddingHorizontal: 16,
+    } as ViewStyle,
+
+    small: {
+        height: 32,
+        paddingHorizontal: 12,
+    } as ViewStyle,
+
+    medium: {
+        height: 40,
+        paddingHorizontal: 16,
+    } as ViewStyle,
+
+    large: {
+        height: 48,
+        paddingHorizontal: 24,
+    } as ViewStyle,
+
+    text: {
+        fontWeight: '600',
+        textAlign: 'center',
+    } as TextStyle,
+
+    smallText: {
+        fontSize: 12,
+    } as TextStyle,
+
+    mediumText: {
+        fontSize: 14,
+    } as TextStyle,
+
+    largeText: {
+        fontSize: 16,
+    } as TextStyle,
+
+    disabled: {
+        backgroundColor: Colors.background.tertiary,
+        borderColor: Colors.border.light,
+    } as ViewStyle,
+
+    // Card variant styles
+    elevated: {
+        shadowColor: Colors.text.primary,
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        elevation: 3,
+    } as ViewStyle,
+
+    outlined: {
+        borderWidth: 1,
+        borderColor: Colors.border.light,
+    } as ViewStyle,
+
+    flat: {
+        backgroundColor: Colors.background.secondary,
+    } as ViewStyle,
+
+    // Empty state styles
+    image: {
+        width: 200,
+        height: 200,
+        marginBottom: 24,
+    } as ViewStyle,
+
+    iconContainer: {
+        marginBottom: 16,
+    } as ViewStyle,
+
+    message: {
+        fontSize: 14,
+        color: Colors.text.secondary,
+        textAlign: 'center',
+        lineHeight: 20,
+    } as TextStyle,
+
+    // Icon and button text styles
+    icon: {
+        marginBottom: 4,
+    } as ViewStyle,
+
+    buttonText: {
+        color: Colors.text.inverse,
+        fontSize: 16,
+        fontWeight: '500',
+    } as TextStyle,
+
+    // Header container styles
+    placeholder: {
+        width: 40,
+    } as ViewStyle,
+
+    iconButton: {
+        width: 40,
+        height: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+    } as ViewStyle,
+
+    rightContainer: {
+        width: 40,
+        alignItems: 'flex-end',
+    } as ViewStyle,
+
+    leftContainer: {
+        width: 40,
+        alignItems: 'flex-start',
+    } as ViewStyle,
+
+    // Input styles
+    inputContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderWidth: 1,
+        borderColor: Colors.border.light,
+        borderRadius: 8,
+        backgroundColor: Colors.background.primary,
+    } as ViewStyle,
+
+    errorContainer: {
+        borderColor: Colors.border.error,
+    } as ViewStyle,
+
+    focusedContainer: {
+        borderColor: Colors.border.focus,
+    } as ViewStyle,
+
+    label: {
+        fontSize: 14,
+        fontWeight: '500',
+        color: Colors.text.primary,
+        marginBottom: 8,
+    } as TextStyle,
+
+    input: {
+        flex: 1,
+        height: 40,
+        paddingHorizontal: 12,
+        fontSize: 14,
+        color: Colors.text.primary,
+        borderWidth: 1,
+        borderColor: Colors.border.light,
+    } as TextStyle,
+
+    inputWithLeftIcon: {
+        paddingLeft: 8,
+    } as TextStyle,
+
+    inputWithRightIcon: {
+        paddingRight: 8,
+    } as TextStyle,
+
+    error: {
+        fontSize: 12,
+        color: Colors.text.error,
+        marginTop: 4,
+    } as TextStyle,
+
+    // Modal styles
+    modal: {
+        backgroundColor: Colors.background.primary,
+        borderRadius: 12,
+    } as ViewStyle,
+
+    centerModal: {
+        width: '90%',
+        maxWidth: 400,
+    } as ViewStyle,
+
+    bottomModal: {
+        width: '100%',
+        borderTopLeftRadius: 12,
+        borderTopRightRadius: 12,
+        position: 'absolute',
+        bottom: 0,
+    } as ViewStyle,
+
+    fullscreenModal: {
+        flex: 1,
+        width: '100%',
+        height: '100%',
+        borderRadius: 0,
+    } as ViewStyle,
+
+    overlay: {
+        flex: 1,
+        backgroundColor: Colors.background.overlay,
+        justifyContent: 'center',
+        alignItems: 'center',
+    } as ViewStyle,
+
+    // Navigation item styles
+    item: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 8,
+    } as ViewStyle,
+
+    closeButton: {
+        position: 'absolute',
+        right: 16,
+        top: 12,
+        padding: 4,
+    } as ViewStyle,
+
+    // Status indicator styles
+    indicator: {
+        width: 8,
+        height: 8,
+        borderRadius: 4,
+        marginRight: 8,
+    } as ViewStyle,
+
+    // Form styles
+    form: {
+        marginTop: 16,
+    },
+    buttonRow: {
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        gap: 12,
+        marginTop: 16,
+    },
+    saveButton: {
+        backgroundColor: Colors.status.success,
+    },
+    cancelButton: {
+        backgroundColor: Colors.status.error,
+    },
+    addButton: {
+        padding: 8,
+        borderRadius: 8,
+        backgroundColor: Colors.background.primary,
+    },
+    exportButton: {
+        padding: 8,
+        borderRadius: 8,
+        backgroundColor: Colors.background.primary,
+    },
+
+    // Income/Expense styles
+    incomeItem: {
+        backgroundColor: Colors.background.primary,
+        borderRadius: 8,
+        padding: 12,
+        marginBottom: 8,
+    },
+    expenseItem: {
+        backgroundColor: Colors.background.primary,
+        borderRadius: 8,
+        padding: 12,
+        marginBottom: 8,
+    },
+    incomeHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 8,
+    },
+    expenseHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 8,
+    },
+    incomeDescription: {
+        fontSize: 16,
+        fontWeight: '500',
+        color: Colors.text.primary,
+    },
+    expenseDescription: {
+        fontSize: 16,
+        fontWeight: '500',
+        color: Colors.text.primary,
+    },
+    incomeAmount: {
+        fontSize: 16,
+        fontWeight: '600',
+    },
+    expenseAmount: {
+        fontSize: 16,
+        fontWeight: '600',
+    },
+    incomeDetails: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    expenseDetails: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    incomeDate: {
+        fontSize: 14,
+        color: Colors.text.secondary,
+    },
+    expenseDate: {
+        fontSize: 14,
+        color: Colors.text.secondary,
+    },
+    deleteButton: {
+        position: 'absolute',
+        right: 12,
+        top: 12,
+        padding: 4,
+    },
+
+    // Financial Summary styles
+    periodSelector: {
+        flexDirection: 'row',
+        gap: 8,
+    },
+    periodButton: {
+        paddingVertical: 4,
+        paddingHorizontal: 12,
+        borderRadius: 16,
+        backgroundColor: Colors.background.primary,
+    },
+    activePeriod: {
+        backgroundColor: Colors.status.info,
+    },
+    periodText: {
+        fontSize: 14,
+        color: Colors.text.primary,
+    },
+    statsContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: 16,
+    },
+    statCard: {
+        flex: 1,
+        backgroundColor: Colors.background.primary,
+        borderRadius: 8,
+        padding: 12,
+        marginHorizontal: 4,
+    },
+    statLabel: {
+        fontSize: 14,
+        color: Colors.text.secondary,
+        marginBottom: 4,
+    },
+    statValue: {
+        fontSize: 18,
+        fontWeight: '600',
+    },
+
+    // Tax Report styles
+    taxSummary: {
+        backgroundColor: Colors.background.primary,
+        borderRadius: 8,
+        padding: 16,
+        marginBottom: 16,
+    },
+    taxTotalLabel: {
+        fontSize: 14,
+        color: Colors.text.secondary,
+        marginBottom: 4,
+    },
+    taxTotalValue: {
+        fontSize: 24,
+        fontWeight: '600',
+        color: Colors.text.primary,
+    },
+    taxCategories: {
+        maxHeight: 300,
+    },
+    taxCategory: {
+        backgroundColor: Colors.background.primary,
+        borderRadius: 8,
+        padding: 12,
+        marginBottom: 8,
+    },
+    taxCategoryInfo: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 8,
+    },
+    taxCategoryName: {
+        fontSize: 16,
+        fontWeight: '500',
+        color: Colors.text.primary,
+    },
+    taxCategoryAmount: {
+        fontSize: 16,
+        fontWeight: '600',
+        color: Colors.text.primary,
+    },
+    taxCategoryProgress: {
+        height: 4,
+        backgroundColor: Colors.background.secondary,
+        borderRadius: 2,
+        position: 'relative',
+    },
+    taxCategoryProgressBar: {
+        height: '100%',
+        backgroundColor: Colors.status.info,
+        borderRadius: 2,
+    },
+    taxCategoryPercentage: {
+        position: 'absolute',
+        right: 0,
+        top: -20,
+        fontSize: 12,
+        color: Colors.text.secondary,
+    },
+    taxNotes: {
+        marginTop: 16,
+        padding: 12,
+        backgroundColor: Colors.background.primary,
+        borderRadius: 8,
+    },
+    taxNoteTitle: {
+        fontSize: 16,
+        fontWeight: '600',
+        color: Colors.text.primary,
+        marginBottom: 8,
+    },
+    taxNoteText: {
+        fontSize: 14,
+        color: Colors.text.secondary,
+        marginBottom: 4,
+    },
+
+    // Category badge styles
+    categoryBadge: {
+        paddingHorizontal: 8,
+        paddingVertical: 4,
+        borderRadius: 12,
+    },
+    categoryText: {
+        fontSize: 12,
+        fontWeight: '500',
     },
 });

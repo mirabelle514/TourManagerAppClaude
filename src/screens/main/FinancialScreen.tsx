@@ -3,7 +3,6 @@ import {
     View,
     Text,
     ScrollView,
-    StyleSheet,
     TouchableOpacity,
     TextInput,
     Alert,
@@ -21,6 +20,8 @@ import { SettlementSummary } from '../components/financial/SettlementSummary';
 import { TaxCategoryFilter } from '../components/financial/TaxCategoryFilter';
 import { Colors } from '../../styles/theme';
 import { CommonStyles } from '../../styles/CommonStyles';
+import { Header } from '../../components/common/Header';
+import { FinancialStyles } from '../../styles/FinancialStyles';
 
 // Types
 interface Expense {
@@ -236,19 +237,19 @@ const FinancialScreen: React.FC = () => {
     };
 
     const renderExpenseItem = ({ item }: { item: Expense }) => (
-        <View style={CommonStyles.expenseItem}>
-            <View style={CommonStyles.expenseHeader}>
-                <Text style={CommonStyles.expenseDescription}>{item.description}</Text>
-                <Text style={[CommonStyles.expenseAmount, { color: Colors.status.error }]}>
+        <View style={FinancialStyles.expenseItem}>
+            <View style={FinancialStyles.expenseHeader}>
+                <Text style={FinancialStyles.expenseDescription}>{item.description}</Text>
+                <Text style={[FinancialStyles.expenseAmount, { color: Colors.status.error }]}>
                     -${item.amount.toFixed(2)}
                 </Text>
             </View>
-            <View style={CommonStyles.expenseDetails}>
-                <Text style={CommonStyles.expenseDate}>{item.date} • {item.venue}</Text>
-                <View style={[CommonStyles.categoryBadge, {
+            <View style={FinancialStyles.expenseDetails}>
+                <Text style={FinancialStyles.expenseDate}>{item.date} • {item.venue}</Text>
+                <View style={[FinancialStyles.categoryBadge, {
                     backgroundColor: taxCategories.find(cat => cat.id === item.taxCategory)?.color + '20'
                 }]}>
-                    <Text style={[CommonStyles.categoryText, {
+                    <Text style={[FinancialStyles.categoryText, {
                         color: taxCategories.find(cat => cat.id === item.taxCategory)?.color
                     }]}>
                         {taxCategories.find(cat => cat.id === item.taxCategory)?.label}
@@ -262,38 +263,27 @@ const FinancialScreen: React.FC = () => {
     const filteredExpenses = getFilteredExpenses();
 
     return (
-        <SafeAreaView style={CommonStyles.container}>
-            <View style={CommonStyles.header}>
-                <Text style={CommonStyles.headerTitle}>Financials</Text>
-                <TouchableOpacity
-                    style={CommonStyles.dateRangeButton}
-                    onPress={() => setShowCalendar(true)}
-                >
-                    <Ionicons name="calendar-outline" size={20} color="#3498db" />
-                    <Text style={CommonStyles.dateRangeText}>
-                        {selectedDateRange.startDate} to {selectedDateRange.endDate}
-                    </Text>
-                </TouchableOpacity>
-            </View>
+        <SafeAreaView style={FinancialStyles.container}>
+            <Header title="Financial Overview" />
 
             {/* Summary Cards */}
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={CommonStyles.summaryRow}>
-                <View style={[CommonStyles.summaryCard, { backgroundColor: Colors.status.success }]}>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={FinancialStyles.summaryRow}>
+                <View style={[FinancialStyles.summaryCard, { backgroundColor: Colors.status.success }]}>
                     <Ionicons name="trending-up" size={24} color={Colors.text.primary} />
-                    <Text style={CommonStyles.summaryAmount}>${totals.income.toLocaleString()}</Text>
-                    <Text style={CommonStyles.summaryLabel}>Total Income</Text>
+                    <Text style={FinancialStyles.summaryAmount}>${totals.income.toLocaleString()}</Text>
+                    <Text style={FinancialStyles.summaryLabel}>Total Income</Text>
                 </View>
-                <View style={[CommonStyles.summaryCard, { backgroundColor: Colors.status.error }]}>
+                <View style={[FinancialStyles.summaryCard, { backgroundColor: Colors.status.error }]}>
                     <Ionicons name="trending-down" size={24} color={Colors.text.primary} />
-                    <Text style={CommonStyles.summaryAmount}>${totals.expenses.toLocaleString()}</Text>
-                    <Text style={CommonStyles.summaryLabel}>Total Expenses</Text>
+                    <Text style={FinancialStyles.summaryAmount}>${totals.expenses.toLocaleString()}</Text>
+                    <Text style={FinancialStyles.summaryLabel}>Total Expenses</Text>
                 </View>
-                <View style={[styles.summaryCard, {
+                <View style={[FinancialStyles.summaryCard, {
                     backgroundColor: totals.profit >= 0 ? '#2ecc71' : '#e74c3c'
                 }]}>
                     <MaterialIcons name="account-balance-wallet" size={24} color="#fff" />
-                    <Text style={styles.summaryAmount}>${totals.profit.toLocaleString()}</Text>
-                    <Text style={styles.summaryLabel}>Net Profit</Text>
+                    <Text style={FinancialStyles.summaryAmount}>${totals.profit.toLocaleString()}</Text>
+                    <Text style={FinancialStyles.summaryLabel}>Net Profit</Text>
                 </View>
             </ScrollView>
 
@@ -305,7 +295,7 @@ const FinancialScreen: React.FC = () => {
             />
 
             {/* Main Content */}
-            <ScrollView style={CommonStyles.mainContent}>
+            <ScrollView style={FinancialStyles.mainContent}>
                 {/* Daily Breakdown */}
                 {financialData.map((day, index) => (
                     <ProfitLossCard
@@ -319,11 +309,11 @@ const FinancialScreen: React.FC = () => {
                 ))}
 
                 {/* Recent Expenses */}
-                <View style={styles.expensesSection}>
-                    <View style={styles.expensesHeader}>
-                        <Text style={styles.sectionTitle}>Recent Expenses</Text>
+                <View style={FinancialStyles.expensesSection}>
+                    <View style={FinancialStyles.expensesHeader}>
+                        <Text style={FinancialStyles.sectionTitle}>Recent Expenses</Text>
                         <TouchableOpacity
-                            style={styles.addButton}
+                            style={FinancialStyles.addButton}
                             onPress={() => setShowAddExpense(true)}
                         >
                             <Ionicons name="add" size={20} color="#fff" />
@@ -345,32 +335,32 @@ const FinancialScreen: React.FC = () => {
                 animationType="slide"
                 presentationStyle="pageSheet"
             >
-                <SafeAreaView style={CommonStyles.modalContainer}>
-                    <View style={CommonStyles.modalHeader}>
+                <SafeAreaView style={FinancialStyles.modalContainer}>
+                    <View style={FinancialStyles.modalHeader}>
                         <TouchableOpacity onPress={() => setShowAddExpense(false)}>
                             <Ionicons name="close" size={24} color="#666" />
                         </TouchableOpacity>
-                        <Text style={CommonStyles.modalTitle}>Add Expense</Text>
+                        <Text style={FinancialStyles.modalTitle}>Add Expense</Text>
                         <TouchableOpacity onPress={handleAddExpense}>
-                            <Text style={CommonStyles.saveButton}>Save</Text>
+                            <Text style={FinancialStyles.saveButton}>Save</Text>
                         </TouchableOpacity>
                     </View>
 
-                    <View style={styles.modalContent}>
-                        <View style={styles.inputGroup}>
-                            <Text style={styles.inputLabel}>Description</Text>
+                    <View style={FinancialStyles.modalContent}>
+                        <View style={FinancialStyles.inputGroup}>
+                            <Text style={FinancialStyles.inputLabel}>Description</Text>
                             <TextInput
-                                style={styles.textInput}
+                                style={FinancialStyles.textInput}
                                 value={newExpense.description}
                                 onChangeText={(text) => setNewExpense({ ...newExpense, description: text })}
                                 placeholder="Enter expense description"
                             />
                         </View>
 
-                        <View style={CommonStyles.inputGroup}>
-                            <Text style={CommonStyles.inputLabel}>Amount</Text>
+                        <View style={FinancialStyles.inputGroup}>
+                            <Text style={FinancialStyles.inputLabel}>Amount</Text>
                             <TextInput
-                                style={CommonStyles.textInput}
+                                style={FinancialStyles.textInput}
                                 value={newExpense.amount}
                                 onChangeText={(text) => setNewExpense({ ...newExpense, amount: text })}
                                 placeholder="0.00"
@@ -378,14 +368,14 @@ const FinancialScreen: React.FC = () => {
                             />
                         </View>
 
-                        <View style={CommonStyles.inputGroup}>
-                            <Text style={CommonStyles.inputLabel}>Tax Category</Text>
+                        <View style={FinancialStyles.inputGroup}>
+                            <Text style={FinancialStyles.inputLabel}>Tax Category</Text>
                             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                                 {taxCategories.slice(1).map((category) => (
                                     <TouchableOpacity
                                         key={category.id}
                                         style={[
-                                            CommonStyles.categoryButton,
+                                            FinancialStyles.categoryButton,
                                             {
                                                 backgroundColor: newExpense.taxCategory === category.id
                                                     ? category.color
@@ -395,7 +385,7 @@ const FinancialScreen: React.FC = () => {
                                         onPress={() => setNewExpense({ ...newExpense, taxCategory: category.id as any })}
                                     >
                                         <Text style={[
-                                            styles.categoryButtonText,
+                                            FinancialStyles.categoryButtonText,
                                             { color: category.color }
                                         ]}>
                                             {category.label}
@@ -414,14 +404,14 @@ const FinancialScreen: React.FC = () => {
                 animationType="slide"
                 presentationStyle="pageSheet"
             >
-                <SafeAreaView style={CommonStyles.modalContainer}>
-                    <View style={CommonStyles.modalHeader}>
+                <SafeAreaView style={FinancialStyles.modalContainer}>
+                    <View style={FinancialStyles.modalHeader}>
                         <TouchableOpacity onPress={() => setShowCalendar(false)}>
                             <Ionicons name="close" size={24} color="#666" />
                         </TouchableOpacity>
-                        <Text style={CommonStyles.modalTitle}>Select Date Range</Text>
+                        <Text style={FinancialStyles.modalTitle}>Select Date Range</Text>
                         <TouchableOpacity onPress={() => setShowCalendar(false)}>
-                            <Text style={CommonStyles.saveButton}>Done</Text>
+                            <Text style={FinancialStyles.saveButton}>Done</Text>
                         </TouchableOpacity>
                     </View>
 

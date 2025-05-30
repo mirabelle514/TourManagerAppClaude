@@ -11,6 +11,14 @@ import TourSetupWizard from './src/screens/setup/TourSetupWizard';
 import MainAppScreen from './src/screens/MainAppScreen';
 import LoadingScreen from './src/components/common/LoadingScreen';
 
+// Main App Screens
+import DaySheetScreen from './src/screens/main/DaySheetScreen';
+import FinancialScreen from './src/screens/main/FinancialScreen';
+import MerchandiseScreen from './src/screens/main/MerchandiseScreen';
+import TeamScreen from './src/screens/main/TeamScreen';
+import ScheduleScreen from './src/screens/main/ScheduleScreen';
+import SettingsScreen from './src/screens/main/SettingsScreen';
+
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -87,6 +95,38 @@ export default function App() {
         <Stack.Screen
           name="MainApp"
           component={MainAppScreen}
+          options={{ gestureEnabled: true }}
+        />
+
+        {/* Feature Screens */}
+        <Stack.Screen
+          name="DaySheet"
+          component={DaySheetScreen}
+          options={{ gestureEnabled: true }}
+        />
+        <Stack.Screen
+          name="Financial"
+          component={FinancialScreen}
+          options={{ gestureEnabled: true }}
+        />
+        <Stack.Screen
+          name="Merchandise"
+          component={MerchandiseScreen}
+          options={{ gestureEnabled: true }}
+        />
+        <Stack.Screen
+          name="Team"
+          component={TeamScreen}
+          options={{ gestureEnabled: true }}
+        />
+        <Stack.Screen
+          name="Schedule"
+          component={ScheduleScreen}
+          options={{ gestureEnabled: true }}
+        />
+        <Stack.Screen
+          name="Settings"
+          component={SettingsScreen}
           options={{ gestureEnabled: true }}
         />
       </Stack.Navigator>

@@ -12,6 +12,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons, MaterialIcons, FontAwesome5 } from '@expo/vector-icons';
 import { CommonStyles, FormStyles } from '../../styles';
 import { Colors } from '../../styles/theme/color';
+import { DaySheetStyles } from '../../styles/DaySheetStyles';
 
 import { VenueCard } from '../../components/daysheet/VenueCard';
 import { WeatherWidget } from '../../components/daysheet/WeatherWidget';
@@ -19,6 +20,7 @@ import { CountdownTimer } from '../../components/daysheet/CountdownTimer';
 import { QuickActions } from '../../components/daysheet/QuickActions';
 import { TourManagerNotes } from '../../components/daysheet/TourManagerNotes';
 import { EmergencyContacts } from '../../components/daysheet/EmergencyContacts';
+import { Header } from '../../components/common/Header';
 
 // Types
 interface Venue {
@@ -164,35 +166,23 @@ const DaySheetScreen: React.FC = () => {
 
     if (!dayData) {
         return (
-            <SafeAreaView style={CommonStyles.container}>
-                <View style={CommonStyles.loadingContainer}>
-                    <Text style={CommonStyles.loadingText}>Loading Day Sheet...</Text>
+            <SafeAreaView style={DaySheetStyles.container}>
+                <View style={DaySheetStyles.loadingContainer}>
+                    <Text style={DaySheetStyles.loadingText}>Loading Day Sheet...</Text>
                 </View>
             </SafeAreaView>
         );
     }
 
     return (
-        <SafeAreaView style={CommonStyles.container}>
+        <SafeAreaView style={DaySheetStyles.container}>
+            <Header title="Day Sheet" />
             <ScrollView
-                style={CommonStyles.scrollView}
+                style={DaySheetStyles.scrollView}
                 refreshControl={
                     <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
                 }
             >
-                {/* Header */}
-                <View style={CommonStyles.header}>
-                    <Text style={CommonStyles.headerTitle}>Day Sheet</Text>
-                    <Text style={CommonStyles.headerDate}>
-                        {new Date(dayData.date).toLocaleDateString('en-US', {
-                            weekday: 'long',
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric'
-                        })}
-                    </Text>
-                </View>
-
                 {/* Weather Widget */}
                 <WeatherWidget weather={dayData.weather} />
 
@@ -220,28 +210,28 @@ const DaySheetScreen: React.FC = () => {
                 {/* Schedule Overview */}
                 <View style={CommonStyles.card}>
                     <Text style={CommonStyles.cardTitle}>Today's Schedule</Text>
-                    <View style={CommonStyles.scheduleItem}>
+                    <View style={DaySheetStyles.scheduleItem}>
                         <Ionicons name="time-outline" size={20} color={Colors.text.secondary} />
-                        <Text style={CommonStyles.scheduleText}>
+                        <Text style={DaySheetStyles.scheduleText}>
                             Load-in: {dayData.venue.loadInTime}
                         </Text>
                     </View>
-                    <View style={CommonStyles.scheduleItem}>
+                    <View style={DaySheetStyles.scheduleItem}>
                         <MaterialIcons name="music-note" size={20} color={Colors.text.secondary} />
-                        <Text style={CommonStyles.scheduleText}>
+                        <Text style={DaySheetStyles.scheduleText}>
                             Soundcheck: {dayData.venue.soundcheckTime}
                         </Text>
                     </View>
-                    <View style={CommonStyles.scheduleItem}>
+                    <View style={DaySheetStyles.scheduleItem}>
                         <Ionicons name="people-outline" size={20} color={Colors.text.secondary} />
-                        <Text style={CommonStyles.scheduleText}>
+                        <Text style={DaySheetStyles.scheduleText}>
                             Doors: {dayData.venue.doorsTime}
                         </Text>
                     </View>
                     {dayData.venue.setTimes.map((set, index) => (
-                        <View key={index} style={CommonStyles.scheduleItem}>
+                        <View key={index} style={DaySheetStyles.scheduleItem}>
                             <FontAwesome5 name="guitar" size={16} color={Colors.text.secondary} />
-                            <Text style={CommonStyles.scheduleText}>
+                            <Text style={DaySheetStyles.scheduleText}>
                                 {set.band}: {set.time}
                             </Text>
                         </View>
@@ -254,42 +244,42 @@ const DaySheetScreen: React.FC = () => {
                 {/* Technical Details */}
                 <View style={CommonStyles.card}>
                     <Text style={CommonStyles.cardTitle}>Technical Details</Text>
-                    <View style={CommonStyles.techDetail}>
-                        <Text style={CommonStyles.techLabel}>Backline:</Text>
-                        <Text style={CommonStyles.techValue}>
+                    <View style={DaySheetStyles.techDetail}>
+                        <Text style={DaySheetStyles.techLabel}>Backline:</Text>
+                        <Text style={DaySheetStyles.techValue}>
                             {dayData.venue.backline.join(', ')}
                         </Text>
                     </View>
-                    <View style={CommonStyles.techDetail}>
-                        <Text style={CommonStyles.techLabel}>WiFi:</Text>
-                        <Text style={CommonStyles.techValue}>
+                    <View style={DaySheetStyles.techDetail}>
+                        <Text style={DaySheetStyles.techLabel}>WiFi:</Text>
+                        <Text style={DaySheetStyles.techValue}>
                             {dayData.venue.wifi.network} / {dayData.venue.wifi.password}
                         </Text>
                     </View>
-                    <View style={CommonStyles.techDetail}>
-                        <Text style={CommonStyles.techLabel}>Green Room:</Text>
-                        <Text style={CommonStyles.techValue}>{dayData.venue.greenRoom}</Text>
+                    <View style={DaySheetStyles.techDetail}>
+                        <Text style={DaySheetStyles.techLabel}>Green Room:</Text>
+                        <Text style={DaySheetStyles.techValue}>{dayData.venue.greenRoom}</Text>
                     </View>
                 </View>
 
                 {/* Settlement Info */}
                 <View style={CommonStyles.card}>
                     <Text style={CommonStyles.cardTitle}>Settlement</Text>
-                    <View style={CommonStyles.settlementInfo}>
-                        <Text style={CommonStyles.settlementLabel}>Handler:</Text>
-                        <Text style={CommonStyles.settlementValue}>
+                    <View style={DaySheetStyles.settlementInfo}>
+                        <Text style={DaySheetStyles.settlementLabel}>Handler:</Text>
+                        <Text style={DaySheetStyles.settlementValue}>
                             {dayData.venue.settlement.handler}
                         </Text>
                     </View>
-                    <View style={CommonStyles.settlementInfo}>
-                        <Text style={CommonStyles.settlementLabel}>Contact:</Text>
-                        <Text style={CommonStyles.settlementValue}>
+                    <View style={DaySheetStyles.settlementInfo}>
+                        <Text style={DaySheetStyles.settlementLabel}>Contact:</Text>
+                        <Text style={DaySheetStyles.settlementValue}>
                             {dayData.venue.settlement.contact}
                         </Text>
                     </View>
-                    <View style={CommonStyles.settlementInfo}>
-                        <Text style={CommonStyles.settlementLabel}>Expected Time:</Text>
-                        <Text style={CommonStyles.settlementValue}>
+                    <View style={DaySheetStyles.settlementInfo}>
+                        <Text style={DaySheetStyles.settlementLabel}>Expected Time:</Text>
+                        <Text style={DaySheetStyles.settlementValue}>
                             {dayData.venue.settlement.expectedTime}
                         </Text>
                     </View>
@@ -298,21 +288,21 @@ const DaySheetScreen: React.FC = () => {
                 {/* Next Venue Info */}
                 <View style={CommonStyles.card}>
                     <Text style={CommonStyles.cardTitle}>Tomorrow's Travel</Text>
-                    <View style={CommonStyles.travelInfo}>
-                        <Text style={CommonStyles.travelLabel}>Distance:</Text>
-                        <Text style={CommonStyles.travelValue}>
+                    <View style={DaySheetStyles.travelInfo}>
+                        <Text style={DaySheetStyles.travelLabel}>Distance:</Text>
+                        <Text style={DaySheetStyles.travelValue}>
                             {dayData.venue.nextVenue.distance}
                         </Text>
                     </View>
-                    <View style={CommonStyles.travelInfo}>
-                        <Text style={CommonStyles.travelLabel}>Drive Time:</Text>
-                        <Text style={CommonStyles.travelValue}>
+                    <View style={DaySheetStyles.travelInfo}>
+                        <Text style={DaySheetStyles.travelLabel}>Drive Time:</Text>
+                        <Text style={DaySheetStyles.travelValue}>
                             {dayData.venue.nextVenue.driveTime}
                         </Text>
                     </View>
-                    <View style={CommonStyles.travelInfo}>
-                        <Text style={CommonStyles.travelLabel}>Departure:</Text>
-                        <Text style={CommonStyles.travelValue}>
+                    <View style={DaySheetStyles.travelInfo}>
+                        <Text style={DaySheetStyles.travelLabel}>Departure:</Text>
+                        <Text style={DaySheetStyles.travelValue}>
                             {dayData.venue.nextVenue.loadInTime}
                         </Text>
                     </View>
@@ -320,11 +310,11 @@ const DaySheetScreen: React.FC = () => {
 
                 {/* Emergency Contacts Button */}
                 <TouchableOpacity
-                    style={CommonStyles.emergencyButton}
+                    style={DaySheetStyles.emergencyButton}
                     onPress={() => setShowEmergencyContacts(true)}
                 >
                     <Ionicons name="warning-outline" size={24} color={Colors.text.primary} />
-                    <Text style={CommonStyles.emergencyButtonText}>Emergency Contacts</Text>
+                    <Text style={DaySheetStyles.emergencyButtonText}>Emergency Contacts</Text>
                 </TouchableOpacity>
 
                 {/* Emergency Contacts Modal would go here */}

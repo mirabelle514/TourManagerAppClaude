@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import {
     View,
     Text,
-    StyleSheet,
     SafeAreaView,
     TouchableOpacity,
     Alert,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
+import { CommonStyles } from '../../styles/CommonStyles';
+import { Colors } from '../../styles/theme';
 
 // Setup Step Components (we'll create these next)
 import Step1AdminUser from './steps/Step1AdminUser';
@@ -65,7 +66,7 @@ export default function TourSetupWizard({ navigation }: TourSetupWizardProps) {
             await AsyncStorage.setItem('tourSetupComplete', 'true');
 
             Alert.alert(
-                '🎉 Tour Setup Complete!',
+                'Tour Setup Complete!',
                 'Your tour management app is ready to use. Welcome to Tour Manager!',
                 [
                     {
@@ -126,67 +127,67 @@ export default function TourSetupWizard({ navigation }: TourSetupWizardProps) {
     };
 
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={CommonStyles.container}>
             {/* Header with Progress */}
-            <View style={styles.header}>
-                <View style={styles.headerTop}>
+            <View style={CommonStyles.header}>
+                <View style={CommonStyles.header}>
                     {currentStep > 1 && (
-                        <TouchableOpacity style={styles.backButton} onPress={prevStep}>
-                            <Ionicons name="chevron-back" size={24} color="#ffffff" />
+                        <TouchableOpacity style={CommonStyles.backButton} onPress={prevStep}>
+                            <Ionicons name="chevron-back" size={24} color={Colors.text.inverse} />
                         </TouchableOpacity>
                     )}
-                    <View style={styles.headerCenter}>
-                        <Text style={styles.stepCounter}>
+                    <View style={CommonStyles.headerCenter}>
+                        <Text style={CommonStyles.stepCounter}>
                             Step {currentStep} of {totalSteps}
                         </Text>
-                        <Text style={styles.stepTitle}>{getStepTitle()}</Text>
+                        <Text style={CommonStyles.stepTitle}>{getStepTitle()}</Text>
                     </View>
-                    <View style={styles.headerRight} />
+                    <View style={CommonStyles.headerRight} />
                 </View>
 
                 {/* Progress Bar */}
-                <View style={styles.progressContainer}>
-                    <View style={styles.progressTrack}>
+                <View style={CommonStyles.progressContainer}>
+                    <View style={CommonStyles.progressTrack}>
                         <View
                             style={[
-                                styles.progressFill,
+                                CommonStyles.progressFill,
                                 { width: `${(currentStep / totalSteps) * 100}%` }
                             ]}
                         />
                     </View>
-                    <Text style={styles.progressText}>
+                    <Text style={CommonStyles.progressText}>
                         {Math.round((currentStep / totalSteps) * 100)}% Complete
                     </Text>
                 </View>
             </View>
 
             {/* Current Step Content */}
-            <View style={styles.content}>
+            <View style={CommonStyles.content}>
                 {renderCurrentStep()}
             </View>
 
             {/* Navigation Footer */}
-            <View style={styles.footer}>
-                <View style={styles.navigationButtons}>
+            <View style={CommonStyles.footer}>
+                <View style={CommonStyles.navigationButtons}>
                     <TouchableOpacity
-                        style={[styles.navButton, styles.secondaryButton]}
+                        style={[CommonStyles.navButton, CommonStyles.secondaryButton]}
                         onPress={prevStep}
                         disabled={currentStep === 1}
                     >
                         <Text style={[
-                            styles.navButtonText,
-                            styles.secondaryButtonText,
-                            currentStep === 1 && styles.disabledButtonText
+                            CommonStyles.navButtonText,
+                            CommonStyles.secondaryButtonText,
+                            currentStep === 1 && CommonStyles.disabledButtonText
                         ]}>
                             Previous
                         </Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                        style={[styles.navButton, styles.primaryButton]}
+                        style={[CommonStyles.navButton, CommonStyles.primaryButton]}
                         onPress={nextStep}
                     >
-                        <Text style={[styles.navButtonText, styles.primaryButtonText]}>
+                        <Text style={[CommonStyles.navButtonText, CommonStyles.primaryButtonText]}>
                             {currentStep === totalSteps ? 'Complete Setup' : 'Next'}
                         </Text>
                     </TouchableOpacity>
@@ -195,105 +196,3 @@ export default function TourSetupWizard({ navigation }: TourSetupWizardProps) {
         </SafeAreaView>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#0a0a0a',
-    },
-    header: {
-        backgroundColor: '#1a1a2e',
-        paddingTop: 20,
-        paddingBottom: 20,
-        paddingHorizontal: 20,
-    },
-    headerTop: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: 16,
-    },
-    backButton: {
-        width: 40,
-        height: 40,
-        borderRadius: 20,
-        backgroundColor: 'rgba(255,255,255,0.1)',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    headerCenter: {
-        flex: 1,
-        alignItems: 'center',
-    },
-    headerRight: {
-        width: 40,
-    },
-    stepCounter: {
-        fontSize: 14,
-        color: '#4CAF50',
-        fontWeight: '600',
-    },
-    stepTitle: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: '#ffffff',
-        marginTop: 4,
-    },
-    progressContainer: {
-        alignItems: 'center',
-    },
-    progressTrack: {
-        width: '100%',
-        height: 4,
-        backgroundColor: 'rgba(255,255,255,0.2)',
-        borderRadius: 2,
-        marginBottom: 8,
-    },
-    progressFill: {
-        height: '100%',
-        backgroundColor: '#4CAF50',
-        borderRadius: 2,
-    },
-    progressText: {
-        fontSize: 12,
-        color: '#b0b0b0',
-    },
-    content: {
-        flex: 1,
-    },
-    footer: {
-        backgroundColor: '#151515',
-        padding: 20,
-    },
-    navigationButtons: {
-        flexDirection: 'row',
-        gap: 16,
-    },
-    navButton: {
-        flex: 1,
-        paddingVertical: 16,
-        paddingHorizontal: 24,
-        borderRadius: 12,
-        alignItems: 'center',
-    },
-    primaryButton: {
-        backgroundColor: '#4CAF50',
-    },
-    secondaryButton: {
-        backgroundColor: 'transparent',
-        borderWidth: 1,
-        borderColor: '#333',
-    },
-    navButtonText: {
-        fontSize: 16,
-        fontWeight: '600',
-    },
-    primaryButtonText: {
-        color: '#ffffff',
-    },
-    secondaryButtonText: {
-        color: '#ffffff',
-    },
-    disabledButtonText: {
-        color: '#666',
-    },
-});
