@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { Colors } from '../../styles/theme';
+import { Colors, Typography, Spacing } from '../../styles/theme/index';
+import { FinancialStyles } from '../../styles/FinancialStyles';
 
 export type PaymentStatusType = 'pending' | 'received' | 'partial' | 'overdue';
 

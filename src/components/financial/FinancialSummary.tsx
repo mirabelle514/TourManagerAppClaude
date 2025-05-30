@@ -2,7 +2,8 @@ import React from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 import { CommonStyles } from '../../styles/CommonStyles';
-import { Colors } from '../../styles/theme';
+import { Colors, Typography, Spacing } from '../../styles/theme/index';
+import { FinancialStyles } from '../../styles/FinancialStyles';
 
 interface FinancialData {
     date: string;

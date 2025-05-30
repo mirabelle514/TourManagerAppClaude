@@ -1,6 +1,7 @@
 // src/styles/components/common.ts
 import { StyleSheet, Dimensions, ViewStyle, TextStyle } from 'react-native';
-import { Colors, Typography, Spacing } from './theme';
+import { Theme } from './theme/ThemeProvider';
+import { Colors } from './theme/color';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -8,68 +9,68 @@ export const CommonStyles = StyleSheet.create({
     // Containers
     container: {
         flex: 1,
-        backgroundColor: Colors.background.primary,
+        backgroundColor: Theme.colors.background.primary,
     },
     content: {
         flex: 1,
-        padding: Spacing.xl,
+        padding: Theme.spacing.xl,
     },
     safeArea: {
         flex: 1,
-        backgroundColor: Colors.background.primary,
+        backgroundColor: Theme.colors.background.primary,
     },
 
     // Headers
     header: {
         alignItems: 'center',
-        marginBottom: Spacing['4xl'],
+        marginBottom: Theme.spacing['4xl'],
         paddingHorizontal: 20,
         paddingTop: 20,
         paddingBottom: 16,
-        backgroundColor: Colors.background.primary,
+        backgroundColor: Theme.colors.background.primary,
         borderBottomWidth: 1,
-        borderBottomColor: Colors.border.light,
+        borderBottomColor: Theme.colors.border.light,
     },
     headerWithBackground: {
-        backgroundColor: Colors.background.primary,
-        paddingHorizontal: Spacing.xl,
-        paddingVertical: Spacing['2xl'],
+        backgroundColor: Theme.colors.background.primary,
+        paddingHorizontal: Theme.spacing.xl,
+        paddingVertical: Theme.spacing['2xl'],
         alignItems: 'center',
     },
 
     // Text Styles
     title: {
-        fontSize: Typography.sizes['3xl'],
-        fontWeight: Typography.weights.bold,
-        color: Colors.text.primary,
-        marginTop: Spacing.lg,
+        fontSize: Theme.typography.sizes['3xl'],
+        fontWeight: Theme.typography.weights.bold,
+        color: Theme.colors.text.primary,
+        marginTop: Theme.spacing.lg,
         textAlign: 'center',
     },
     subtitle: {
-        fontSize: Typography.sizes.base,
-        color: Colors.text.secondary,
+        fontSize: Theme.typography.sizes.base,
+        color: Theme.colors.text.secondary,
         textAlign: 'center',
-        marginTop: Spacing.sm,
-        lineHeight: Typography.lineHeights.normal,
+        marginTop: Theme.spacing.sm,
+        lineHeight: Theme.typography.lineHeights.normal,
     },
     sectionTitle: {
-        fontSize: Typography.sizes.xl,
-        fontWeight: Typography.weights.semibold,
-        color: Colors.text.primary,
-        marginBottom: Spacing.lg,
+        fontSize: Theme.typography.sizes.xl,
+        fontWeight: Theme.typography.weights.semibold,
+        color: Theme.colors.text.primary,
+        marginBottom: Theme.spacing.lg,
     },
     bodyText: {
-        fontSize: Typography.sizes.base,
-        color: Colors.text.primary,
+        fontSize: Theme.typography.sizes.base,
+        color: Theme.colors.text.primary,
     },
     captionText: {
-        fontSize: Typography.sizes.sm,
-        color: Colors.text.secondary,
+        fontSize: Theme.typography.sizes.sm,
+        color: Theme.colors.text.secondary,
     },
 
     // Cards & Containers
     card: {
-        backgroundColor: Colors.background.secondary,
+        backgroundColor: Theme.colors.background.secondary,
         borderRadius: 12,
         padding: 16,
         marginBottom: 16,
@@ -88,17 +89,17 @@ export const CommonStyles = StyleSheet.create({
     cardTitle: {
         fontSize: 18,
         fontWeight: '600',
-        color: Colors.text.primary,
+        color: Theme.colors.text.primary,
         marginBottom: 12,
     },
     welcomeCard: {
-        backgroundColor: Colors.background.secondary,
-        padding: Spacing['2xl'],
-        borderRadius: Spacing.lg,
+        backgroundColor: Theme.colors.background.secondary,
+        padding: Theme.spacing['2xl'],
+        borderRadius: Theme.spacing.lg,
         alignItems: 'center',
-        marginBottom: Spacing['3xl'],
+        marginBottom: Theme.spacing['3xl'],
         borderWidth: 1,
-        borderColor: Colors.border.light,
+        borderColor: Theme.colors.border.light,
     },
 
     // Buttons
@@ -106,44 +107,44 @@ export const CommonStyles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: Colors.accent.primary,
-        paddingVertical: Spacing.lg,
-        paddingHorizontal: Spacing['2xl'],
-        borderRadius: Spacing.md,
-        marginTop: Spacing.xl,
+        backgroundColor: Theme.colors.accent.primary.main,
+        paddingVertical: Theme.spacing.lg,
+        paddingHorizontal: Theme.spacing['2xl'],
+        borderRadius: Theme.spacing.md,
+        marginTop: Theme.spacing.xl,
     },
     primaryButtonText: {
-        fontSize: Typography.sizes.lg,
-        fontWeight: Typography.weights.semibold,
-        color: Colors.text.primary,
-        marginRight: Spacing.sm,
+        fontSize: Theme.typography.sizes.lg,
+        fontWeight: Theme.typography.weights.semibold,
+        color: Theme.colors.text.primary,
+        marginRight: Theme.spacing.sm,
     },
 
     // Disabled Button States
     disabledButton: {
-        backgroundColor: Colors.text.muted,
+        backgroundColor: Theme.colors.text.muted,
         opacity: 0.6,
     },
     disabledButtonText: {
-        color: Colors.text.secondary,
+        color: Theme.colors.text.secondary,
     },
 
     secondaryButton: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: Colors.transparent,
-        paddingVertical: Spacing.lg,
-        paddingHorizontal: Spacing['2xl'],
-        borderRadius: Spacing.md,
+        backgroundColor: Theme.colors.transparent,
+        paddingVertical: Theme.spacing.lg,
+        paddingHorizontal: Theme.spacing['2xl'],
+        borderRadius: Theme.spacing.md,
         borderWidth: 1,
-        borderColor: Colors.border.light,
-        marginTop: Spacing['3xl'],
+        borderColor: Theme.colors.border.light,
+        marginTop: Theme.spacing['3xl'],
     },
     secondaryButtonText: {
-        fontSize: Typography.sizes.base,
-        fontWeight: Typography.weights.medium,
-        color: Colors.text.secondary,
+        fontSize: Theme.typography.sizes.base,
+        fontWeight: Theme.typography.weights.medium,
+        color: Theme.colors.text.secondary,
     },
 
     // Layout Helpers
@@ -167,12 +168,12 @@ export const CommonStyles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        backgroundColor: Colors.background.secondary,
-        padding: Spacing.lg,
-        borderRadius: Spacing.md,
-        marginBottom: Spacing.md,
+        backgroundColor: Theme.colors.background.secondary,
+        padding: Theme.spacing.lg,
+        borderRadius: Theme.spacing.md,
+        marginBottom: Theme.spacing.md,
         borderWidth: 1,
-        borderColor: Colors.border.light,
+        borderColor: Theme.colors.border.light,
     },
     settingLeft: {
         flexDirection: 'row',
@@ -180,9 +181,9 @@ export const CommonStyles = StyleSheet.create({
         flex: 1,
     },
     settingText: {
-        fontSize: Typography.sizes.base,
-        color: Colors.text.primary,
-        marginLeft: Spacing.md,
+        fontSize: Theme.typography.sizes.base,
+        color: Theme.colors.text.primary,
+        marginLeft: Theme.spacing.md,
         flex: 1,
     },
 
@@ -191,60 +192,60 @@ export const CommonStyles = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
         justifyContent: 'space-between',
-        marginBottom: Spacing['3xl'],
+        marginBottom: Theme.spacing['3xl'],
     },
     themeOption: {
         width: '48%',
         aspectRatio: 1,
-        borderRadius: Spacing.md,
+        borderRadius: Theme.spacing.md,
         alignItems: 'center',
         justifyContent: 'center',
-        marginBottom: Spacing.lg,
+        marginBottom: Theme.spacing.lg,
         position: 'relative',
     },
     selectedTheme: {
         borderWidth: 3,
-        borderColor: Colors.accent.primary,
+        borderColor: Theme.colors.accent.primary.main,
     },
     themeName: {
-        fontSize: Typography.sizes.sm,
-        fontWeight: Typography.weights.semibold,
-        color: Colors.text.primary,
-        marginTop: Spacing.sm,
+        fontSize: Theme.typography.sizes.sm,
+        fontWeight: Theme.typography.weights.semibold,
+        color: Theme.colors.text.primary,
+        marginTop: Theme.spacing.sm,
         textAlign: 'center',
     },
     checkmark: {
         position: 'absolute',
-        top: Spacing.sm,
-        right: Spacing.sm,
+        top: Theme.spacing.sm,
+        right: Theme.spacing.sm,
     },
 
     featuresGrid: {
         flexDirection: 'row',
         flexWrap: 'wrap',
         justifyContent: 'space-between',
-        marginBottom: Spacing['3xl'],
+        marginBottom: Theme.spacing['3xl'],
     },
     featureCard: {
         width: '48%',
-        backgroundColor: Colors.background.secondary,
-        padding: Spacing.xl,
-        borderRadius: Spacing.md,
+        backgroundColor: Theme.colors.background.secondary,
+        padding: Theme.spacing.xl,
+        borderRadius: Theme.spacing.md,
         alignItems: 'center',
-        marginBottom: Spacing.lg,
+        marginBottom: Theme.spacing.lg,
         borderWidth: 1,
-        borderColor: Colors.border.light,
+        borderColor: Theme.colors.border.light,
     },
     featureTitle: {
-        fontSize: Typography.sizes.base,
-        fontWeight: Typography.weights.semibold,
-        color: Colors.text.primary,
-        marginTop: Spacing.md,
-        marginBottom: Spacing.xs,
+        fontSize: Theme.typography.sizes.base,
+        fontWeight: Theme.typography.weights.semibold,
+        color: Theme.colors.text.primary,
+        marginTop: Theme.spacing.md,
+        marginBottom: Theme.spacing.xs,
     },
     featureDesc: {
-        fontSize: Typography.sizes.xs,
-        color: Colors.text.secondary,
+        fontSize: Theme.typography.sizes.xs,
+        color: Theme.colors.text.secondary,
         textAlign: 'center',
     },
 
@@ -252,161 +253,161 @@ export const CommonStyles = StyleSheet.create({
     importOption: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: Colors.background.secondary,
-        padding: Spacing.xl,
-        borderRadius: Spacing.md,
-        marginBottom: Spacing.lg,
+        backgroundColor: Theme.colors.background.secondary,
+        padding: Theme.spacing.xl,
+        borderRadius: Theme.spacing.md,
+        marginBottom: Theme.spacing.lg,
         borderWidth: 1,
-        borderColor: Colors.border.light,
+        borderColor: Theme.colors.border.light,
     },
     optionContent: {
         flex: 1,
-        marginLeft: Spacing.lg,
-        marginRight: Spacing.lg,
+        marginLeft: Theme.spacing.lg,
+        marginRight: Theme.spacing.lg,
     },
     optionTitle: {
-        fontSize: Typography.sizes.lg,
-        fontWeight: Typography.weights.semibold,
-        color: Colors.text.primary,
-        marginBottom: Spacing.xs,
+        fontSize: Theme.typography.sizes.lg,
+        fontWeight: Theme.typography.weights.semibold,
+        color: Theme.colors.text.primary,
+        marginBottom: Theme.spacing.xs,
     },
     optionDesc: {
-        fontSize: Typography.sizes.sm,
-        color: Colors.text.secondary,
-        lineHeight: Typography.lineHeights.tight,
+        fontSize: Theme.typography.sizes.sm,
+        color: Theme.colors.text.secondary,
+        lineHeight: Theme.typography.lineHeights.tight,
     },
 
     // Role/Team Styles
     roleCard: {
         flexDirection: 'row',
         alignItems: 'flex-start',
-        backgroundColor: Colors.background.secondary,
-        padding: Spacing.lg,
-        borderRadius: Spacing.md,
-        marginBottom: Spacing.md,
+        backgroundColor: Theme.colors.background.secondary,
+        padding: Theme.spacing.lg,
+        borderRadius: Theme.spacing.md,
+        marginBottom: Theme.spacing.md,
         borderWidth: 1,
-        borderColor: Colors.border.light,
+        borderColor: Theme.colors.border.light,
     },
     roleContent: {
         flex: 1,
-        marginLeft: Spacing.md,
+        marginLeft: Theme.spacing.md,
     },
     roleName: {
-        fontSize: Typography.sizes.base,
-        fontWeight: Typography.weights.semibold,
-        color: Colors.text.primary,
-        marginBottom: Spacing.xs,
+        fontSize: Theme.typography.sizes.base,
+        fontWeight: Theme.typography.weights.semibold,
+        color: Theme.colors.text.primary,
+        marginBottom: Theme.spacing.xs,
     },
     roleDesc: {
-        fontSize: Typography.sizes.sm,
-        color: Colors.text.secondary,
-        lineHeight: Typography.lineHeights.tight,
+        fontSize: Theme.typography.sizes.sm,
+        color: Theme.colors.text.secondary,
+        lineHeight: Theme.typography.lineHeights.tight,
     },
 
     // Action Buttons (for MainAppScreen)
     quickActions: {
-        marginBottom: Spacing.xl,
+        marginBottom: Theme.spacing.xl,
     },
     actionButton: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: Colors.background.secondary,
-        padding: Spacing.lg,
-        borderRadius: Spacing.md,
-        marginBottom: Spacing.md,
+        backgroundColor: Theme.colors.background.secondary,
+        padding: Theme.spacing.lg,
+        borderRadius: Theme.spacing.md,
+        marginBottom: Theme.spacing.md,
         borderWidth: 1,
-        borderColor: Colors.border.light,
+        borderColor: Theme.colors.border.light,
     },
     actionText: {
-        fontSize: Typography.sizes.base,
-        color: Colors.text.primary,
+        fontSize: Theme.typography.sizes.base,
+        color: Theme.colors.text.primary,
         flex: 1,
-        marginLeft: Spacing.md,
+        marginLeft: Theme.spacing.md,
     },
 
     // Welcome/Complete Styles
     welcomeTitle: {
-        fontSize: Typography.sizes['2xl'],
-        fontWeight: Typography.weights.bold,
-        color: Colors.text.primary,
-        marginTop: Spacing.lg,
-        marginBottom: Spacing.md,
+        fontSize: Theme.typography.sizes['2xl'],
+        fontWeight: Theme.typography.weights.bold,
+        color: Theme.colors.text.primary,
+        marginTop: Theme.spacing.lg,
+        marginBottom: Theme.spacing.md,
     },
     welcomeText: {
-        fontSize: Typography.sizes.base,
-        color: Colors.text.secondary,
+        fontSize: Theme.typography.sizes.base,
+        color: Theme.colors.text.secondary,
         textAlign: 'center',
-        lineHeight: Typography.lineHeights.relaxed,
+        lineHeight: Theme.typography.lineHeights.relaxed,
     },
 
     // Skip/Invite Button Styles
     skipButton: {
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: Colors.background.secondary,
-        paddingVertical: Spacing.lg,
-        paddingHorizontal: Spacing['2xl'],
-        borderRadius: Spacing.md,
-        marginTop: Spacing['3xl'],
+        backgroundColor: Theme.colors.background.secondary,
+        paddingVertical: Theme.spacing.lg,
+        paddingHorizontal: Theme.spacing['2xl'],
+        borderRadius: Theme.spacing.md,
+        marginTop: Theme.spacing['3xl'],
         borderWidth: 1,
-        borderColor: Colors.border.light,
+        borderColor: Theme.colors.border.light,
     },
     skipButtonText: {
-        fontSize: Typography.sizes.base,
-        fontWeight: Typography.weights.medium,
-        color: Colors.text.secondary,
+        fontSize: Theme.typography.sizes.base,
+        fontWeight: Theme.typography.weights.medium,
+        color: Theme.colors.text.secondary,
     },
 
     inviteButton: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: Colors.background.secondary,
-        paddingVertical: Spacing.lg,
-        paddingHorizontal: Spacing['2xl'],
-        borderRadius: Spacing.md,
-        marginTop: Spacing['3xl'],
-        marginBottom: Spacing.lg,
+        backgroundColor: Theme.colors.background.secondary,
+        paddingVertical: Theme.spacing.lg,
+        paddingHorizontal: Theme.spacing['2xl'],
+        borderRadius: Theme.spacing.md,
+        marginTop: Theme.spacing['3xl'],
+        marginBottom: Theme.spacing.lg,
         borderWidth: 1,
-        borderColor: Colors.border.light,
+        borderColor: Theme.colors.border.light,
     },
     inviteButtonText: {
-        fontSize: Typography.sizes.base,
-        fontWeight: Typography.weights.medium,
-        color: Colors.text.primary,
-        marginLeft: Spacing.sm,
+        fontSize: Theme.typography.sizes.base,
+        fontWeight: Theme.typography.weights.medium,
+        color: Theme.colors.text.primary,
+        marginLeft: Theme.spacing.sm,
     },
 
     completeButton: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: Colors.accent.primary,
-        paddingVertical: Spacing.lg,
-        paddingHorizontal: Spacing['2xl'],
-        borderRadius: Spacing.md,
+        backgroundColor: Theme.colors.accent.primary.main,
+        paddingVertical: Theme.spacing.lg,
+        paddingHorizontal: Theme.spacing['2xl'],
+        borderRadius: Theme.spacing.md,
     },
     completeButtonText: {
-        fontSize: Typography.sizes.lg,
-        fontWeight: Typography.weights.semibold,
-        color: Colors.text.primary,
-        marginRight: Spacing.sm,
+        fontSize: Theme.typography.sizes.lg,
+        fontWeight: Theme.typography.weights.semibold,
+        color: Theme.colors.text.primary,
+        marginRight: Theme.spacing.sm,
     },
 
     // Permissions Card Styles
     permissionsCard: {
-        backgroundColor: Colors.background.secondary,
-        borderRadius: Spacing.md,
-        padding: Spacing.xl,
-        marginBottom: Spacing['2xl'],
+        backgroundColor: Theme.colors.background.secondary,
+        borderRadius: Theme.spacing.md,
+        padding: Theme.spacing.xl,
+        marginBottom: Theme.spacing['2xl'],
         borderWidth: 1,
-        borderColor: Colors.border.light,
+        borderColor: Theme.colors.border.light,
     },
     permissionsTitle: {
-        fontSize: Typography.sizes.lg,
-        fontWeight: Typography.weights.semibold,
-        color: Colors.text.primary,
-        marginBottom: Spacing.lg,
+        fontSize: Theme.typography.sizes.lg,
+        fontWeight: Theme.typography.weights.semibold,
+        color: Theme.colors.text.primary,
+        marginBottom: Theme.spacing.lg,
     },
     permissionsList: {
         // Container for permission items
@@ -414,12 +415,12 @@ export const CommonStyles = StyleSheet.create({
     permissionItem: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: Spacing.md,
+        marginBottom: Theme.spacing.md,
     },
     permissionText: {
-        fontSize: Typography.sizes.base,
-        color: Colors.text.primary,
-        marginLeft: Spacing.md,
+        fontSize: Theme.typography.sizes.base,
+        color: Theme.colors.text.primary,
+        marginLeft: Theme.spacing.md,
         flex: 1,
     },
 
@@ -428,48 +429,48 @@ export const CommonStyles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: Colors.accent.primary,
-        paddingVertical: Spacing.lg,
-        paddingHorizontal: Spacing['2xl'],
-        borderRadius: Spacing.md,
-        marginTop: Spacing.xl,
+        backgroundColor: Theme.colors.accent.primary.main,
+        paddingVertical: Theme.spacing.lg,
+        paddingHorizontal: Theme.spacing['2xl'],
+        borderRadius: Theme.spacing.md,
+        marginTop: Theme.spacing.xl,
     },
     continueButtonText: {
-        fontSize: Typography.sizes.lg,
-        fontWeight: Typography.weights.semibold,
-        color: Colors.text.primary,
-        marginRight: Spacing.sm,
+        fontSize: Theme.typography.sizes.lg,
+        fontWeight: Theme.typography.weights.semibold,
+        color: Theme.colors.text.primary,
+        marginRight: Theme.spacing.sm,
     },
     continueButtonDisabled: {
-        backgroundColor: Colors.text.muted,
+        backgroundColor: Theme.colors.text.muted,
         opacity: 0.6,
     },
 
     // Info Card Styles
     infoCard: {
-        backgroundColor: Colors.background.secondary,
-        borderRadius: Spacing.md,
-        padding: Spacing.lg,
-        marginBottom: Spacing.lg,
+        backgroundColor: Theme.colors.background.secondary,
+        borderRadius: Theme.spacing.md,
+        padding: Theme.spacing.lg,
+        marginBottom: Theme.spacing.lg,
         borderWidth: 1,
-        borderColor: Colors.border.light,
+        borderColor: Theme.colors.border.light,
         borderLeftWidth: 4,
-        borderLeftColor: Colors.accent.primary,
+        borderLeftColor: Theme.colors.accent.primary.main,
     },
     infoCardIcon: {
         alignSelf: 'flex-start',
-        marginBottom: Spacing.sm,
+        marginBottom: Theme.spacing.sm,
     },
     infoCardTitle: {
-        fontSize: Typography.sizes.base,
-        fontWeight: Typography.weights.semibold,
-        color: Colors.text.primary,
-        marginBottom: Spacing.xs,
+        fontSize: Theme.typography.sizes.base,
+        fontWeight: Theme.typography.weights.semibold,
+        color: Theme.colors.text.primary,
+        marginBottom: Theme.spacing.xs,
     },
     infoCardText: {
-        fontSize: Typography.sizes.sm,
-        color: Colors.text.secondary,
-        lineHeight: Typography.lineHeights.tight,
+        fontSize: Theme.typography.sizes.sm,
+        color: Theme.colors.text.secondary,
+        lineHeight: Theme.typography.lineHeights.tight,
     },
     infoCardContent: {
         flex: 1,
@@ -478,114 +479,114 @@ export const CommonStyles = StyleSheet.create({
     // Login Screen Styles
     loginContainer: {
         flex: 1,
-        backgroundColor: Colors.background.primary, // #1a1a2e
+        backgroundColor: Theme.colors.background.primary, // #1a1a2e
     },
     loginContent: {
         flex: 1,
         justifyContent: 'center',
-        paddingHorizontal: Spacing['2xl'],
+        paddingHorizontal: Theme.spacing['2xl'],
     },
     loginTitle: {
-        fontSize: Typography.sizes['4xl'], // 32
-        fontWeight: Typography.weights.bold,
-        color: Colors.text.primary,
+        fontSize: Theme.typography.sizes['4xl'], // 32
+        fontWeight: Theme.typography.weights.bold,
+        color: Theme.colors.text.primary,
         textAlign: 'center',
-        marginBottom: Spacing.sm,
+        marginBottom: Theme.spacing.sm,
     },
     loginSubtitle: {
-        fontSize: Typography.sizes.base,
-        color: Colors.text.secondary,
+        fontSize: Theme.typography.sizes.base,
+        color: Theme.colors.text.secondary,
         textAlign: 'center',
-        marginBottom: Spacing['4xl'], // 32
+        marginBottom: Theme.spacing['4xl'], // 32
     },
     loginInputContainer: {
-        marginBottom: Spacing['2xl'],
+        marginBottom: Theme.spacing['2xl'],
     },
     loginInput: {
         backgroundColor: '#16213e', // Keeping original dark blue
-        borderRadius: Spacing.sm,
-        padding: Spacing.lg,
-        fontSize: Typography.sizes.base,
-        color: Colors.text.primary,
-        marginBottom: Spacing.lg,
+        borderRadius: Theme.spacing.sm,
+        padding: Theme.spacing.lg,
+        fontSize: Theme.typography.sizes.base,
+        color: Theme.colors.text.primary,
+        marginBottom: Theme.spacing.lg,
         borderWidth: 1,
         borderColor: '#0f3460', // Keeping original border color
     },
     loginButton: {
         backgroundColor: '#007AFF', // iOS blue - keeping original
-        borderRadius: Spacing.sm,
-        padding: Spacing.lg,
+        borderRadius: Theme.spacing.sm,
+        padding: Theme.spacing.lg,
         alignItems: 'center',
-        marginBottom: Spacing.lg,
+        marginBottom: Theme.spacing.lg,
     },
     loginButtonDisabled: {
         backgroundColor: '#555555',
     },
     loginButtonText: {
-        color: Colors.text.primary,
-        fontSize: Typography.sizes.base,
-        fontWeight: Typography.weights.semibold,
+        color: Theme.colors.text.primary,
+        fontSize: Theme.typography.sizes.base,
+        fontWeight: Theme.typography.weights.semibold,
     },
     forgotPasswordButton: {
         alignItems: 'center',
     },
     forgotPasswordText: {
         color: '#007AFF', // Matching login button color
-        fontSize: Typography.sizes.sm,
+        fontSize: Theme.typography.sizes.sm,
     },
     devHelper: {
-        marginTop: Spacing['4xl'],
-        padding: Spacing.md,
-        backgroundColor: Colors.background.secondary,
-        borderRadius: Spacing.sm,
+        marginTop: Theme.spacing['4xl'],
+        padding: Theme.spacing.md,
+        backgroundColor: Theme.colors.background.secondary,
+        borderRadius: Theme.spacing.sm,
     },
     devHelperText: {
-        color: Colors.text.secondary,
-        fontSize: Typography.sizes.xs,
+        color: Theme.colors.text.secondary,
+        fontSize: Theme.typography.sizes.xs,
         textAlign: 'center',
     },
 
     // Biometric Setup Screen Styles
     biometricContainer: {
         flex: 1,
-        backgroundColor: Colors.background.primary, // #1a1a2e
+        backgroundColor: Theme.colors.background.primary, // #1a1a2e
     },
     biometricContent: {
         flex: 1,
         justifyContent: 'center',
-        paddingHorizontal: Spacing['2xl'],
+        paddingHorizontal: Theme.spacing['2xl'],
     },
     biometricTitle: {
-        fontSize: Typography.sizes['3xl'], // 28
-        fontWeight: Typography.weights.bold,
-        color: Colors.text.primary,
+        fontSize: Theme.typography.sizes['3xl'], // 28
+        fontWeight: Theme.typography.weights.bold,
+        color: Theme.colors.text.primary,
         textAlign: 'center',
-        marginBottom: Spacing.sm,
+        marginBottom: Theme.spacing.sm,
     },
     biometricSubtitle: {
-        fontSize: Typography.sizes.base,
-        color: Colors.text.secondary,
+        fontSize: Theme.typography.sizes.base,
+        color: Theme.colors.text.secondary,
         textAlign: 'center',
-        marginBottom: Spacing['5xl'], // 48
-        lineHeight: Typography.lineHeights.normal,
+        marginBottom: Theme.spacing['5xl'], // 48
+        lineHeight: Theme.typography.lineHeights.normal,
     },
     enableButton: {
         backgroundColor: '#007AFF', // iOS blue - keeping original
-        borderRadius: Spacing.sm,
-        padding: Spacing.lg,
+        borderRadius: Theme.spacing.sm,
+        padding: Theme.spacing.lg,
         alignItems: 'center',
-        marginBottom: Spacing.lg,
+        marginBottom: Theme.spacing.lg,
     },
     enableButtonText: {
-        color: Colors.text.primary,
-        fontSize: Typography.sizes.base,
-        fontWeight: Typography.weights.semibold,
+        color: Theme.colors.text.primary,
+        fontSize: Theme.typography.sizes.base,
+        fontWeight: Theme.typography.weights.semibold,
     },
 
     // Container Styles
     scrollView: {
         flex: 1,
-        backgroundColor: Colors.background.primary,
+        backgroundColor: Theme.colors.background.primary,
     },
 
     // Loading Styles
@@ -593,12 +594,12 @@ export const CommonStyles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: Colors.background.primary,
+        backgroundColor: Theme.colors.background.primary,
     },
 
     loadingText: {
         fontSize: 16,
-        color: Colors.text.secondary,
+        color: Theme.colors.text.secondary,
         marginTop: 12,
     },
 
@@ -606,25 +607,25 @@ export const CommonStyles = StyleSheet.create({
     headerTitle: {
         fontSize: 28,
         fontWeight: 'bold',
-        color: Colors.text.primary,
+        color: Theme.colors.text.primary,
         marginBottom: 4,
     },
 
     headerDate: {
         fontSize: 16,
-        color: Colors.text.secondary,
+        color: Theme.colors.text.secondary,
     },
 
     headerSubtitle: {
         fontSize: 14,
-        color: Colors.text.secondary,
+        color: Theme.colors.text.secondary,
         marginTop: 2,
     },
 
     // Card Styles
     cardSubtitle: {
         fontSize: 14,
-        color: Colors.text.secondary,
+        color: Theme.colors.text.secondary,
         marginBottom: 8,
     },
 
@@ -638,7 +639,7 @@ export const CommonStyles = StyleSheet.create({
 
     scheduleText: {
         fontSize: 16,
-        color: Colors.text.primary,
+        color: Theme.colors.text.primary,
         marginLeft: 12,
         fontWeight: '500',
     },
@@ -651,13 +652,13 @@ export const CommonStyles = StyleSheet.create({
     techLabel: {
         fontSize: 14,
         fontWeight: '600',
-        color: Colors.text.secondary,
+        color: Theme.colors.text.secondary,
         marginBottom: 4,
     },
 
     techValue: {
         fontSize: 16,
-        color: Colors.text.primary,
+        color: Theme.colors.text.primary,
     },
 
     // Settlement Styles
@@ -671,12 +672,12 @@ export const CommonStyles = StyleSheet.create({
     settlementLabel: {
         fontSize: 14,
         fontWeight: '600',
-        color: Colors.text.secondary,
+        color: Theme.colors.text.secondary,
     },
 
     settlementValue: {
         fontSize: 16,
-        color: Colors.text.primary,
+        color: Theme.colors.text.primary,
         fontWeight: '500',
     },
 
@@ -691,12 +692,12 @@ export const CommonStyles = StyleSheet.create({
     travelLabel: {
         fontSize: 14,
         fontWeight: '600',
-        color: Colors.text.secondary,
+        color: Theme.colors.text.secondary,
     },
 
     travelValue: {
         fontSize: 16,
-        color: Colors.text.primary,
+        color: Theme.colors.text.primary,
         fontWeight: '500',
     },
 
@@ -705,7 +706,7 @@ export const CommonStyles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: Colors.status.error,
+        backgroundColor: Theme.colors.status.error,
         paddingVertical: 16,
         paddingHorizontal: 24,
         borderRadius: 12,
@@ -716,13 +717,13 @@ export const CommonStyles = StyleSheet.create({
     emergencyButtonText: {
         fontSize: 18,
         fontWeight: '600',
-        color: Colors.text.inverse,
+        color: Theme.colors.text.inverse,
         marginLeft: 8,
     },
 
     // Inventory Card Styles
     inventoryCard: {
-        backgroundColor: Colors.background.primary,
+        backgroundColor: Theme.colors.background.primary,
         borderRadius: 12,
         padding: 16,
         marginHorizontal: 16,
@@ -763,20 +764,20 @@ export const CommonStyles = StyleSheet.create({
     inventoryName: {
         fontSize: 16,
         fontWeight: '600',
-        color: Colors.text.primary,
+        color: Theme.colors.text.primary,
         marginBottom: 2,
     },
 
     inventoryCategory: {
         fontSize: 12,
-        color: Colors.text.secondary,
+        color: Theme.colors.text.secondary,
         textTransform: 'uppercase',
         letterSpacing: 0.5,
     },
 
     inventorySizes: {
         fontSize: 12,
-        color: Colors.text.tertiary,
+        color: Theme.colors.text.tertiary,
         marginTop: 2,
     },
 
@@ -787,7 +788,7 @@ export const CommonStyles = StyleSheet.create({
     inventoryPrice: {
         fontSize: 18,
         fontWeight: 'bold',
-        color: Colors.primary,
+        color: Theme.colors.primary,
         marginBottom: 4,
     },
 
@@ -799,7 +800,7 @@ export const CommonStyles = StyleSheet.create({
     lowStockBanner: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: Colors.status.error + '15',
+        backgroundColor: Theme.colors.status.error + '15',
         paddingHorizontal: 12,
         paddingVertical: 8,
         borderRadius: 8,
@@ -808,7 +809,7 @@ export const CommonStyles = StyleSheet.create({
 
     lowStockText: {
         fontSize: 12,
-        color: Colors.status.error,
+        color: Theme.colors.status.error,
         marginLeft: 6,
         fontWeight: '500',
     },
@@ -818,7 +819,7 @@ export const CommonStyles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingTop: 12,
         borderTopWidth: 1,
-        borderTopColor: Colors.border.light,
+        borderTopColor: Theme.colors.border.light,
     },
 
     metric: {
@@ -828,19 +829,19 @@ export const CommonStyles = StyleSheet.create({
 
     metricLabel: {
         fontSize: 12,
-        color: Colors.text.secondary,
+        color: Theme.colors.text.secondary,
         marginBottom: 4,
     },
 
     metricValue: {
         fontSize: 14,
         fontWeight: '600',
-        color: Colors.text.primary,
+        color: Theme.colors.text.primary,
     },
 
     // Sales Tracker
     salesTrackerCard: {
-        backgroundColor: Colors.background.primary,
+        backgroundColor: Theme.colors.background.primary,
         borderRadius: 12,
         padding: 20,
         marginHorizontal: 16,
@@ -855,7 +856,7 @@ export const CommonStyles = StyleSheet.create({
     salesTrackerTitle: {
         fontSize: 18,
         fontWeight: '600',
-        color: Colors.text.primary,
+        color: Theme.colors.text.primary,
         marginBottom: 16,
         textAlign: 'center',
     },
@@ -867,13 +868,13 @@ export const CommonStyles = StyleSheet.create({
 
     // Reorder Alert
     reorderAlertCard: {
-        backgroundColor: Colors.status.error + '10',
+        backgroundColor: Theme.colors.status.error + '10',
         borderRadius: 12,
         padding: 16,
         marginHorizontal: 16,
         marginVertical: 8,
         borderLeftWidth: 4,
-        borderLeftColor: Colors.status.error,
+        borderLeftColor: Theme.colors.status.error,
     },
 
     reorderHeader: {
@@ -885,13 +886,13 @@ export const CommonStyles = StyleSheet.create({
     reorderTitle: {
         fontSize: 16,
         fontWeight: '600',
-        color: Colors.status.error,
+        color: Theme.colors.status.error,
         marginLeft: 8,
     },
 
     reorderDescription: {
         fontSize: 14,
-        color: Colors.text.secondary,
+        color: Theme.colors.text.secondary,
         marginBottom: 12,
     },
 
@@ -900,7 +901,7 @@ export const CommonStyles = StyleSheet.create({
     },
 
     reorderItem: {
-        backgroundColor: Colors.background.primary,
+        backgroundColor: Theme.colors.background.primary,
         borderRadius: 8,
         padding: 12,
         marginHorizontal: 8,
@@ -911,27 +912,27 @@ export const CommonStyles = StyleSheet.create({
     reorderItemName: {
         fontSize: 12,
         fontWeight: '600',
-        color: Colors.text.primary,
+        color: Theme.colors.text.primary,
         textAlign: 'center',
         marginBottom: 4,
     },
 
     reorderItemStock: {
         fontSize: 14,
-        color: Colors.status.error,
+        color: Theme.colors.status.error,
         fontWeight: 'bold',
         marginBottom: 2,
     },
 
     reorderSuggestion: {
         fontSize: 10,
-        color: Colors.text.secondary,
+        color: Theme.colors.text.secondary,
         textAlign: 'center',
     },
 
     // Venue Performance
     venuePerformanceCard: {
-        backgroundColor: Colors.background.primary,
+        backgroundColor: Theme.colors.background.primary,
         borderRadius: 12,
         padding: 16,
         marginHorizontal: 16,
@@ -953,12 +954,12 @@ export const CommonStyles = StyleSheet.create({
     venueName: {
         fontSize: 16,
         fontWeight: '600',
-        color: Colors.text.primary,
+        color: Theme.colors.text.primary,
     },
 
     venueDate: {
         fontSize: 12,
-        color: Colors.text.secondary,
+        color: Theme.colors.text.secondary,
     },
 
     venueStats: {
@@ -975,20 +976,20 @@ export const CommonStyles = StyleSheet.create({
     venueStatValue: {
         fontSize: 16,
         fontWeight: 'bold',
-        color: Colors.text.primary,
+        color: Theme.colors.text.primary,
         marginBottom: 4,
     },
 
     venueStatLabel: {
         fontSize: 10,
-        color: Colors.text.secondary,
+        color: Theme.colors.text.secondary,
         textAlign: 'center',
     },
 
     topItemsTitle: {
         fontSize: 14,
         fontWeight: '600',
-        color: Colors.text.primary,
+        color: Theme.colors.text.primary,
         marginBottom: 8,
     },
 
@@ -998,12 +999,12 @@ export const CommonStyles = StyleSheet.create({
         alignItems: 'center',
         paddingVertical: 6,
         borderBottomWidth: 1,
-        borderBottomColor: Colors.border.light,
+        borderBottomColor: Theme.colors.border.light,
     },
 
     topItemName: {
         fontSize: 14,
-        color: Colors.text.primary,
+        color: Theme.colors.text.primary,
         flex: 1,
     },
 
@@ -1013,13 +1014,13 @@ export const CommonStyles = StyleSheet.create({
 
     topItemQuantity: {
         fontSize: 12,
-        color: Colors.text.secondary,
+        color: Theme.colors.text.secondary,
     },
 
     topItemRevenue: {
         fontSize: 14,
         fontWeight: '600',
-        color: Colors.primary,
+        color: Theme.colors.primary,
     },
 
     // Venue Card Specific Styles
@@ -1030,129 +1031,129 @@ export const CommonStyles = StyleSheet.create({
     addressContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: Spacing.xs,
+        marginTop: Theme.spacing.xs,
     },
     address: {
-        fontSize: Typography.sizes.sm,
-        marginLeft: Spacing.xs,
+        fontSize: Theme.typography.sizes.sm,
+        marginLeft: Theme.spacing.xs,
     },
     distance: {
-        fontSize: Typography.sizes.sm,
-        marginTop: Spacing.xs,
+        fontSize: Theme.typography.sizes.sm,
+        marginTop: Theme.spacing.xs,
     },
     section: {
-        padding: Spacing.lg,
-        marginBottom: Spacing.md,
+        padding: Theme.spacing.lg,
+        marginBottom: Theme.spacing.md,
     },
     capacityRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: Spacing.sm,
+        marginBottom: Theme.spacing.sm,
     },
     capacityStats: {
         alignItems: 'flex-end',
     },
     capacityText: {
-        fontSize: Typography.sizes.base,
-        fontWeight: Typography.weights.semibold,
+        fontSize: Theme.typography.sizes.base,
+        fontWeight: Theme.typography.weights.semibold,
     },
     percentageText: {
-        fontSize: Typography.sizes.sm,
-        fontWeight: Typography.weights.semibold,
+        fontSize: Theme.typography.sizes.sm,
+        fontWeight: Theme.typography.weights.semibold,
     },
     venuePercentage: {
-        fontSize: Typography.sizes.sm,
+        fontSize: Theme.typography.sizes.sm,
     },
     scheduleTime: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginRight: Spacing.md,
+        marginRight: Theme.spacing.md,
     },
     timeText: {
-        fontSize: Typography.sizes.base,
-        fontWeight: Typography.weights.medium,
+        fontSize: Theme.typography.sizes.base,
+        fontWeight: Theme.typography.weights.medium,
     },
     countdown: {
-        fontSize: Typography.sizes.sm,
-        marginLeft: Spacing.sm,
+        fontSize: Theme.typography.sizes.sm,
+        marginLeft: Theme.spacing.sm,
     },
     scheduleLabel: {
-        fontSize: Typography.sizes.base,
+        fontSize: Theme.typography.sizes.base,
     },
     contactRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: Spacing.sm,
+        marginBottom: Theme.spacing.sm,
     },
     contactName: {
-        fontSize: Typography.sizes.base,
-        fontWeight: Typography.weights.medium,
+        fontSize: Theme.typography.sizes.base,
+        fontWeight: Theme.typography.weights.medium,
     },
     phoneButton: {
-        padding: Spacing.xs,
+        padding: Theme.spacing.xs,
     },
     phoneText: {
-        fontSize: Typography.sizes.base,
+        fontSize: Theme.typography.sizes.base,
     },
     emailText: {
-        fontSize: Typography.sizes.sm,
+        fontSize: Theme.typography.sizes.sm,
     },
     techItem: {
-        fontSize: Typography.sizes.base,
-        marginBottom: Spacing.sm,
+        fontSize: Theme.typography.sizes.base,
+        marginBottom: Theme.spacing.sm,
     },
     wifiInfo: {
-        marginBottom: Spacing.sm,
+        marginBottom: Theme.spacing.sm,
     },
     wifiPassword: {
-        fontSize: Typography.sizes.sm,
-        marginLeft: Spacing.md,
+        fontSize: Theme.typography.sizes.sm,
+        marginLeft: Theme.spacing.md,
     },
     settlementRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: Spacing.sm,
+        marginBottom: Theme.spacing.sm,
     },
     settlementButton: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: Spacing.md,
-        borderRadius: Spacing.sm,
-        marginTop: Spacing.md,
+        padding: Theme.spacing.md,
+        borderRadius: Theme.spacing.sm,
+        marginTop: Theme.spacing.md,
     },
     settlementButtonText: {
-        fontSize: Typography.sizes.base,
-        fontWeight: Typography.weights.medium,
+        fontSize: Theme.typography.sizes.base,
+        fontWeight: Theme.typography.weights.medium,
     },
     logisticsItem: {
-        fontSize: Typography.sizes.base,
-        marginBottom: Spacing.sm,
+        fontSize: Theme.typography.sizes.base,
+        marginBottom: Theme.spacing.sm,
     },
     hospitalityItem: {
-        fontSize: Typography.sizes.base,
-        marginBottom: Spacing.sm,
+        fontSize: Theme.typography.sizes.base,
+        marginBottom: Theme.spacing.sm,
     },
     travelItem: {
-        fontSize: Typography.sizes.base,
-        marginBottom: Spacing.xs,
+        fontSize: Theme.typography.sizes.base,
+        marginBottom: Theme.spacing.xs,
     },
     notesButton: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: Spacing.md,
-        borderRadius: Spacing.sm,
-        marginTop: Spacing.md,
+        padding: Theme.spacing.md,
+        borderRadius: Theme.spacing.sm,
+        marginTop: Theme.spacing.md,
         borderWidth: 1,
     },
     notesButtonText: {
-        fontSize: Typography.sizes.base,
-        fontWeight: Typography.weights.medium,
-        marginLeft: Spacing.sm,
+        fontSize: Theme.typography.sizes.base,
+        fontWeight: Theme.typography.weights.medium,
+        marginLeft: Theme.spacing.sm,
     },
 
     // Header styles
@@ -1180,14 +1181,14 @@ export const CommonStyles = StyleSheet.create({
     stepCounter: {
         fontSize: 14,
         fontWeight: '500',
-        color: Colors.text.secondary,
+        color: Theme.colors.text.secondary,
         marginBottom: 4,
     } as TextStyle,
 
     stepTitle: {
         fontSize: 16,
         fontWeight: '600',
-        color: Colors.text.primary,
+        color: Theme.colors.text.primary,
         textAlign: 'center',
     } as TextStyle,
 
@@ -1198,20 +1199,20 @@ export const CommonStyles = StyleSheet.create({
 
     progressTrack: {
         height: 4,
-        backgroundColor: Colors.background.tertiary,
+        backgroundColor: Theme.colors.background.tertiary,
         borderRadius: 2,
         overflow: 'hidden',
     } as ViewStyle,
 
     progressFill: {
         height: '100%',
-        backgroundColor: Colors.primary,
+        backgroundColor: Theme.colors.primary,
         borderRadius: 2,
     } as ViewStyle,
 
     progressText: {
         fontSize: 12,
-        color: Colors.text.secondary,
+        color: Theme.colors.text.secondary,
         marginTop: 4,
         textAlign: 'right',
     } as TextStyle,
@@ -1220,8 +1221,8 @@ export const CommonStyles = StyleSheet.create({
     footer: {
         padding: 16,
         borderTopWidth: 1,
-        borderTopColor: Colors.border.light,
-        backgroundColor: Colors.background.primary,
+        borderTopColor: Theme.colors.border.light,
+        backgroundColor: Theme.colors.background.primary,
     } as ViewStyle,
 
     navigationButtons: {
@@ -1286,13 +1287,13 @@ export const CommonStyles = StyleSheet.create({
     } as TextStyle,
 
     disabled: {
-        backgroundColor: Colors.background.tertiary,
-        borderColor: Colors.border.light,
+        backgroundColor: Theme.colors.background.tertiary,
+        borderColor: Theme.colors.border.light,
     } as ViewStyle,
 
     // Card variant styles
     elevated: {
-        shadowColor: Colors.text.primary,
+        shadowColor: Theme.colors.text.primary,
         shadowOffset: {
             width: 0,
             height: 2,
@@ -1304,11 +1305,11 @@ export const CommonStyles = StyleSheet.create({
 
     outlined: {
         borderWidth: 1,
-        borderColor: Colors.border.light,
+        borderColor: Theme.colors.border.light,
     } as ViewStyle,
 
     flat: {
-        backgroundColor: Colors.background.secondary,
+        backgroundColor: Theme.colors.background.secondary,
     } as ViewStyle,
 
     // Empty state styles
@@ -1324,7 +1325,7 @@ export const CommonStyles = StyleSheet.create({
 
     message: {
         fontSize: 14,
-        color: Colors.text.secondary,
+        color: Theme.colors.text.secondary,
         textAlign: 'center',
         lineHeight: 20,
     } as TextStyle,
@@ -1335,7 +1336,7 @@ export const CommonStyles = StyleSheet.create({
     } as ViewStyle,
 
     buttonText: {
-        color: Colors.text.inverse,
+        color: Theme.colors.text.inverse,
         fontSize: 16,
         fontWeight: '500',
     } as TextStyle,
@@ -1367,23 +1368,23 @@ export const CommonStyles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         borderWidth: 1,
-        borderColor: Colors.border.light,
+        borderColor: Theme.colors.border.light,
         borderRadius: 8,
-        backgroundColor: Colors.background.primary,
+        backgroundColor: Theme.colors.background.primary,
     } as ViewStyle,
 
     errorContainer: {
-        borderColor: Colors.border.error,
+        borderColor: Theme.colors.border.error,
     } as ViewStyle,
 
     focusedContainer: {
-        borderColor: Colors.border.focus,
+        borderColor: Theme.colors.border.focus,
     } as ViewStyle,
 
     label: {
         fontSize: 14,
         fontWeight: '500',
-        color: Colors.text.primary,
+        color: Theme.colors.text.primary,
         marginBottom: 8,
     } as TextStyle,
 
@@ -1392,9 +1393,9 @@ export const CommonStyles = StyleSheet.create({
         height: 40,
         paddingHorizontal: 12,
         fontSize: 14,
-        color: Colors.text.primary,
+        color: Theme.colors.text.primary,
         borderWidth: 1,
-        borderColor: Colors.border.light,
+        borderColor: Theme.colors.border.light,
     } as TextStyle,
 
     inputWithLeftIcon: {
@@ -1407,13 +1408,13 @@ export const CommonStyles = StyleSheet.create({
 
     error: {
         fontSize: 12,
-        color: Colors.text.error,
+        color: Theme.colors.text.error,
         marginTop: 4,
     } as TextStyle,
 
     // Modal styles
     modal: {
-        backgroundColor: Colors.background.primary,
+        backgroundColor: Theme.colors.background.primary,
         borderRadius: 12,
     } as ViewStyle,
 
@@ -1439,7 +1440,7 @@ export const CommonStyles = StyleSheet.create({
 
     overlay: {
         flex: 1,
-        backgroundColor: Colors.background.overlay,
+        backgroundColor: Theme.colors.background.overlay,
         justifyContent: 'center',
         alignItems: 'center',
     } as ViewStyle,
@@ -1478,206 +1479,20 @@ export const CommonStyles = StyleSheet.create({
         marginTop: 16,
     },
     saveButton: {
-        backgroundColor: Colors.status.success,
+        backgroundColor: Theme.colors.status.success,
     },
     cancelButton: {
-        backgroundColor: Colors.status.error,
+        backgroundColor: Theme.colors.status.error,
     },
     addButton: {
         padding: 8,
         borderRadius: 8,
-        backgroundColor: Colors.background.primary,
+        backgroundColor: Theme.colors.background.primary,
     },
     exportButton: {
         padding: 8,
         borderRadius: 8,
-        backgroundColor: Colors.background.primary,
-    },
-
-    // Income/Expense styles
-    incomeItem: {
-        backgroundColor: Colors.background.primary,
-        borderRadius: 8,
-        padding: 12,
-        marginBottom: 8,
-    },
-    expenseItem: {
-        backgroundColor: Colors.background.primary,
-        borderRadius: 8,
-        padding: 12,
-        marginBottom: 8,
-    },
-    incomeHeader: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: 8,
-    },
-    expenseHeader: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: 8,
-    },
-    incomeDescription: {
-        fontSize: 16,
-        fontWeight: '500',
-        color: Colors.text.primary,
-    },
-    expenseDescription: {
-        fontSize: 16,
-        fontWeight: '500',
-        color: Colors.text.primary,
-    },
-    incomeAmount: {
-        fontSize: 16,
-        fontWeight: '600',
-    },
-    expenseAmount: {
-        fontSize: 16,
-        fontWeight: '600',
-    },
-    incomeDetails: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-    },
-    expenseDetails: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-    },
-    incomeDate: {
-        fontSize: 14,
-        color: Colors.text.secondary,
-    },
-    expenseDate: {
-        fontSize: 14,
-        color: Colors.text.secondary,
-    },
-    deleteButton: {
-        position: 'absolute',
-        right: 12,
-        top: 12,
-        padding: 4,
-    },
-
-    // Financial Summary styles
-    periodSelector: {
-        flexDirection: 'row',
-        gap: 8,
-    },
-    periodButton: {
-        paddingVertical: 4,
-        paddingHorizontal: 12,
-        borderRadius: 16,
-        backgroundColor: Colors.background.primary,
-    },
-    activePeriod: {
-        backgroundColor: Colors.status.info,
-    },
-    periodText: {
-        fontSize: 14,
-        color: Colors.text.primary,
-    },
-    statsContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginTop: 16,
-    },
-    statCard: {
-        flex: 1,
-        backgroundColor: Colors.background.primary,
-        borderRadius: 8,
-        padding: 12,
-        marginHorizontal: 4,
-    },
-    statLabel: {
-        fontSize: 14,
-        color: Colors.text.secondary,
-        marginBottom: 4,
-    },
-    statValue: {
-        fontSize: 18,
-        fontWeight: '600',
-    },
-
-    // Tax Report styles
-    taxSummary: {
-        backgroundColor: Colors.background.primary,
-        borderRadius: 8,
-        padding: 16,
-        marginBottom: 16,
-    },
-    taxTotalLabel: {
-        fontSize: 14,
-        color: Colors.text.secondary,
-        marginBottom: 4,
-    },
-    taxTotalValue: {
-        fontSize: 24,
-        fontWeight: '600',
-        color: Colors.text.primary,
-    },
-    taxCategories: {
-        maxHeight: 300,
-    },
-    taxCategory: {
-        backgroundColor: Colors.background.primary,
-        borderRadius: 8,
-        padding: 12,
-        marginBottom: 8,
-    },
-    taxCategoryInfo: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: 8,
-    },
-    taxCategoryName: {
-        fontSize: 16,
-        fontWeight: '500',
-        color: Colors.text.primary,
-    },
-    taxCategoryAmount: {
-        fontSize: 16,
-        fontWeight: '600',
-        color: Colors.text.primary,
-    },
-    taxCategoryProgress: {
-        height: 4,
-        backgroundColor: Colors.background.secondary,
-        borderRadius: 2,
-        position: 'relative',
-    },
-    taxCategoryProgressBar: {
-        height: '100%',
-        backgroundColor: Colors.status.info,
-        borderRadius: 2,
-    },
-    taxCategoryPercentage: {
-        position: 'absolute',
-        right: 0,
-        top: -20,
-        fontSize: 12,
-        color: Colors.text.secondary,
-    },
-    taxNotes: {
-        marginTop: 16,
-        padding: 12,
-        backgroundColor: Colors.background.primary,
-        borderRadius: 8,
-    },
-    taxNoteTitle: {
-        fontSize: 16,
-        fontWeight: '600',
-        color: Colors.text.primary,
-        marginBottom: 8,
-    },
-    taxNoteText: {
-        fontSize: 14,
-        color: Colors.text.secondary,
-        marginBottom: 4,
+        backgroundColor: Theme.colors.background.primary,
     },
 
     // Category badge styles
@@ -1689,5 +1504,134 @@ export const CommonStyles = StyleSheet.create({
     categoryText: {
         fontSize: 12,
         fontWeight: '500',
+    },
+
+    // Search and Filter Styles
+    searchContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 16,
+        gap: 8,
+    },
+    searchInput: {
+        flex: 1,
+        backgroundColor: Colors.background.secondary,
+        borderRadius: 8,
+        padding: 12,
+        color: Colors.text.primary,
+    },
+    filterButton: {
+        padding: 12,
+        backgroundColor: Colors.background.secondary,
+        borderRadius: 8,
+    },
+    categoryFilter: {
+        paddingHorizontal: 16,
+        marginBottom: 16,
+    },
+    categoryButton: {
+        paddingHorizontal: 16,
+        paddingVertical: 8,
+        backgroundColor: Colors.background.secondary,
+        borderRadius: 20,
+        marginRight: 8,
+    },
+    selectedCategoryButton: {
+        backgroundColor: Colors.accent.primary.main,
+    },
+    categoryButtonText: {
+        color: Colors.text.primary,
+        fontSize: 14,
+        fontWeight: '500',
+    },
+    selectedCategoryButtonText: {
+        color: Colors.text.inverse,
+    },
+
+    // Contact Card Styles
+    contactCard: {
+        backgroundColor: Colors.background.secondary,
+        borderRadius: 12,
+        padding: 16,
+        marginHorizontal: 16,
+        marginBottom: 12,
+    },
+    contactHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 8,
+    },
+    contactName: {
+        fontSize: 18,
+        fontWeight: '600',
+        color: Colors.text.primary,
+    },
+    contactRole: {
+        fontSize: 14,
+        color: Colors.text.secondary,
+        marginBottom: 8,
+    },
+    contactDetail: {
+        fontSize: 14,
+        color: Colors.text.secondary,
+        marginBottom: 4,
+    },
+    emergencyBadge: {
+        backgroundColor: Colors.error.main,
+        paddingHorizontal: 8,
+        paddingVertical: 4,
+        borderRadius: 4,
+        alignSelf: 'flex-start',
+        marginTop: 8,
+    },
+    emergencyBadgeText: {
+        color: Colors.text.inverse,
+        fontSize: 12,
+        fontWeight: '500',
+    },
+
+    // Modal Styles
+    modalOverlay: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: Colors.background.overlay,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    modalContent: {
+        backgroundColor: Colors.background.primary,
+        borderRadius: 12,
+        padding: 24,
+        width: '90%',
+        maxWidth: 400,
+    },
+    modalTitle: {
+        fontSize: 20,
+        fontWeight: '600',
+        color: Colors.text.primary,
+        marginBottom: 16,
+    },
+    modalButtons: {
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        gap: 12,
+        marginTop: 16,
+    },
+    input: {
+        backgroundColor: Colors.background.secondary,
+        borderRadius: 8,
+        padding: 12,
+        marginBottom: 12,
+        color: Colors.text.primary,
+    },
+
+    // Button Container
+    buttonContainer: {
+        padding: 16,
+        gap: 12,
     },
 });

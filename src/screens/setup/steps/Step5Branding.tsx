@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { CommonStyles } from '../../../styles';
+import { Colors } from '../../../styles/theme/color';
+import { CommonStyles } from '../../../styles/CommonStyles';
 
 export default function Step5Branding({ data, onUpdate, onNext, onPrev }: any) {
     const [selectedTheme, setSelectedTheme] = useState('dark');
@@ -17,7 +18,7 @@ export default function Step5Branding({ data, onUpdate, onNext, onPrev }: any) {
         <ScrollView style={CommonStyles.container}>
             <View style={CommonStyles.content}>
                 <View style={CommonStyles.header}>
-                    <Ionicons name="color-palette" size={64} color="#4CAF50" />
+                    <Ionicons name="color-palette" size={64} color={Colors.accent.primary.main} />
                     <Text style={CommonStyles.title}>App Branding</Text>
                     <Text style={CommonStyles.subtitle}>Customize the look and feel of your Tour Manager app</Text>
                 </View>
@@ -37,10 +38,10 @@ export default function Step5Branding({ data, onUpdate, onNext, onPrev }: any) {
                                 onUpdate('branding', { theme: theme.id, primary: theme.primary });
                             }}
                         >
-                            <Ionicons name={theme.icon as any} size={32} color="#ffffff" />
+                            <Ionicons name={theme.icon as any} size={32} color={Colors.text.primary} />
                             <Text style={CommonStyles.themeName}>{theme.name}</Text>
                             {selectedTheme === theme.id && (
-                                <Ionicons name="checkmark-circle" size={24} color="#ffffff" style={CommonStyles.checkmark} />
+                                <Ionicons name="checkmark-circle" size={24} color={Colors.text.primary} style={CommonStyles.checkmark} />
                             )}
                         </TouchableOpacity>
                     ))}
@@ -48,7 +49,7 @@ export default function Step5Branding({ data, onUpdate, onNext, onPrev }: any) {
 
                 <TouchableOpacity style={CommonStyles.continueButton} onPress={onNext}>
                     <Text style={CommonStyles.continueButtonText}>Continue to Data Import</Text>
-                    <Ionicons name="arrow-forward" size={20} color="#ffffff" />
+                    <Ionicons name="arrow-forward" size={20} color={Colors.text.primary} />
                 </TouchableOpacity>
             </View>
         </ScrollView>

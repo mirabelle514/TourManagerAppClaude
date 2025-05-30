@@ -2,7 +2,8 @@ import React, { useRef, useState } from 'react';
 import { View, TouchableOpacity, Text, Image } from 'react-native';
 import { Camera, CameraType } from 'expo-camera';
 import { Ionicons } from '@expo/vector-icons';
-import { Colors } from '../../styles/theme';
+import { Colors, Typography, Spacing } from '../../styles/theme/index';
+import { FinancialStyles } from '../../styles/FinancialStyles';
 
 interface ReceiptCameraProps {
     onCapture: (uri: string) => void;
@@ -12,7 +13,7 @@ export const ReceiptCamera: React.FC<ReceiptCameraProps> = ({ onCapture }) => {
     const [hasPermission, setHasPermission] = useState<boolean | null>(null);
     const [cameraReady, setCameraReady] = useState(false);
     const [capturedUri, setCapturedUri] = useState<string | null>(null);
-    const cameraRef = useRef<Camera | null>(null);
+    const cameraRef = useRef<Camera>(null);
 
     React.useEffect(() => {
         (async () => {
@@ -49,7 +50,7 @@ export const ReceiptCamera: React.FC<ReceiptCameraProps> = ({ onCapture }) => {
                 <Camera
                     style={{ width: 300, height: 400, borderRadius: 12 }}
                     type={CameraType.back}
-                    ref={ref => (cameraRef.current = ref)}
+                    ref={cameraRef}
                     onCameraReady={() => setCameraReady(true)}
                     ratio="4:3"
                 >

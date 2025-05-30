@@ -38,15 +38,15 @@ export default function Step1AdminUser({ data, onUpdate, onNext, onPrev }: Step1
         <ScrollView style={CommonStyles.container} showsVerticalScrollIndicator={false}>
             <View style={CommonStyles.content}>
                 <View style={CommonStyles.header}>
-                    <Ionicons name="person-circle" size={64} color={Colors.accent.primary} />
+                    <Ionicons name="person-circle" size={64} color={Colors.accent.primary.main} />
                     <Text style={CommonStyles.title}>Admin User Setup</Text>
                     <Text style={CommonStyles.subtitle}>
                         Set up your admin account with full access to all Tour Manager features
                     </Text>
                 </View>
 
-                <View style={FormStyles.formSection}>
-                    <View style={FormStyles.inputGroup}>
+                <View style={FormStyles.form}>
+                    <View style={FormStyles.formGroup}>
                         <Text style={FormStyles.label}>Full Name *</Text>
                         <TextInput
                             style={FormStyles.input}
@@ -57,7 +57,7 @@ export default function Step1AdminUser({ data, onUpdate, onNext, onPrev }: Step1
                         />
                     </View>
 
-                    <View style={FormStyles.inputGroup}>
+                    <View style={FormStyles.formGroup}>
                         <Text style={FormStyles.label}>Email Address *</Text>
                         <TextInput
                             style={FormStyles.input}
@@ -70,7 +70,7 @@ export default function Step1AdminUser({ data, onUpdate, onNext, onPrev }: Step1
                         />
                     </View>
 
-                    <View style={FormStyles.inputGroup}>
+                    <View style={FormStyles.formGroup}>
                         <Text style={FormStyles.label}>Phone Number *</Text>
                         <TextInput
                             style={FormStyles.input}
@@ -82,7 +82,7 @@ export default function Step1AdminUser({ data, onUpdate, onNext, onPrev }: Step1
                         />
                     </View>
 
-                    <View style={FormStyles.inputGroup}>
+                    <View style={FormStyles.formGroup}>
                         <Text style={FormStyles.label}>Role/Title</Text>
                         <TextInput
                             style={FormStyles.input}
@@ -93,7 +93,7 @@ export default function Step1AdminUser({ data, onUpdate, onNext, onPrev }: Step1
                         />
                     </View>
 
-                    <View style={FormStyles.inputGroup}>
+                    <View style={FormStyles.formGroup}>
                         <Text style={FormStyles.label}>Company/Band Name</Text>
                         <TextInput
                             style={FormStyles.input}
@@ -109,19 +109,19 @@ export default function Step1AdminUser({ data, onUpdate, onNext, onPrev }: Step1
                     <Text style={CommonStyles.permissionsTitle}>Admin Permissions</Text>
                     <View style={CommonStyles.permissionsList}>
                         <View style={CommonStyles.permissionItem}>
-                            <Ionicons name="checkmark-circle" size={20} color={Colors.accent.primary} />
+                            <Ionicons name="checkmark-circle" size={20} color={Colors.accent.primary.main} />
                             <Text style={CommonStyles.permissionText}>Full system access</Text>
                         </View>
                         <View style={CommonStyles.permissionItem}>
-                            <Ionicons name="checkmark-circle" size={20} color={Colors.accent.primary} />
+                            <Ionicons name="checkmark-circle" size={20} color={Colors.accent.primary.main} />
                             <Text style={CommonStyles.permissionText}>User management & invitations</Text>
                         </View>
                         <View style={CommonStyles.permissionItem}>
-                            <Ionicons name="checkmark-circle" size={20} color={Colors.accent.primary} />
+                            <Ionicons name="checkmark-circle" size={20} color={Colors.accent.primary.main} />
                             <Text style={CommonStyles.permissionText}>Financial oversight & reporting</Text>
                         </View>
                         <View style={CommonStyles.permissionItem}>
-                            <Ionicons name="checkmark-circle" size={20} color={Colors.accent.primary} />
+                            <Ionicons name="checkmark-circle" size={20} color={Colors.accent.primary.main} />
                             <Text style={CommonStyles.permissionText}>Tour configuration & settings</Text>
                         </View>
                     </View>

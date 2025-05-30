@@ -2,10 +2,10 @@ import React from 'react';
 import { View, Text, TouchableOpacity, TextInput } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { CommonStyles } from '../../styles/CommonStyles';
-import { Colors } from '../../styles/theme';
+import { Colors, Typography, Spacing } from '../../styles/theme/index';
 import { FinancialStyles } from '../../styles/FinancialStyles';
 
-interface Expense {
+export interface Expense {
     id: string;
     date: string;
     venue: string;
@@ -18,16 +18,16 @@ interface Expense {
     paidBy: string;
 }
 
-interface ExpenseTrackerProps {
+export interface ExpenseTrackerProps {
     expenses: Expense[];
-    onAddExpense: (expense: Omit<Expense, 'id'>) => void;
     onDeleteExpense: (id: string) => void;
+    onAddExpense?: (expense: Expense) => void;
 }
 
 export const ExpenseTracker: React.FC<ExpenseTrackerProps> = ({
     expenses,
+    onDeleteExpense,
     onAddExpense,
-    onDeleteExpense
 }) => {
     const [showAddForm, setShowAddForm] = React.useState(false);
     const [newExpense, setNewExpense] = React.useState({
@@ -42,7 +42,7 @@ export const ExpenseTracker: React.FC<ExpenseTrackerProps> = ({
     const handleAddExpense = () => {
         if (!newExpense.description || !newExpense.amount) return;
 
-        onAddExpense({
+        onAddExpense?.({
             date: new Date().toISOString().split('T')[0],
             description: newExpense.description,
             amount: parseFloat(newExpense.amount),
@@ -147,7 +147,7 @@ export const ExpenseTracker: React.FC<ExpenseTrackerProps> = ({
                         </View>
                     </View>
                     <TouchableOpacity
-                        style={CommonStyles.deleteButton}
+                        style={FinancialStyles.deleteButton}
                         onPress={() => onDeleteExpense(expense.id)}
                     >
                         <Ionicons name="trash-outline" size={20} color={Colors.status.error} />

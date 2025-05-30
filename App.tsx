@@ -3,6 +3,13 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StatusBar } from 'expo-status-bar';
+import { ThemeProvider } from './src/styles/theme/ThemeProvider';
+import { RootStackParamList } from './src/types/navigation';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from './src/store/store';
 
 // Screens
 import LoginScreen from './src/screens/auth/LoginScreen';
@@ -19,7 +26,7 @@ import TeamScreen from './src/screens/main/TeamScreen';
 import ScheduleScreen from './src/screens/main/ScheduleScreen';
 import SettingsScreen from './src/screens/main/SettingsScreen';
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<RootStackParamList>();
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -53,83 +60,102 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer>
-      <StatusBar style="light" backgroundColor="#1a1a2e" />
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-          gestureEnabled: false, // Prevent going back during setup
-        }}
-        initialRouteName={
-          !isAuthenticated
-            ? "Login"
-            : !biometricSetupComplete
-              ? "BiometricSetup"
-              : !tourSetupComplete
-                ? "TourSetup"
-                : "MainApp"
-        }
-      >
-        {/* Authentication Flow */}
-        <Stack.Screen
-          name="Login"
-          component={LoginScreen}
-          options={{ gestureEnabled: false }}
-        />
+    <Provider store={store}>
+      <PersistGate loading={<LoadingScreen />} persistor={persistor}>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <SafeAreaProvider>
+            <ThemeProvider>
+              <NavigationContainer>
+                <StatusBar style="light" backgroundColor="#1a1a2e" />
+                <Stack.Navigator
+                  screenOptions={{
+                    headerShown: false,
+                    gestureEnabled: false, // Prevent going back during setup
+                  }}
+                  initialRouteName={
+                    !isAuthenticated
+                      ? "Login"
+                      : !biometricSetupComplete
+                        ? "BiometricSetup"
+                        : !tourSetupComplete
+                          ? "TourSetup"
+                          : "MainApp"
+                  }
+                >
+                  {/* Authentication Flow */}
+                  <Stack.Screen
+                    name="Login"
+                    component={LoginScreen}
+                    options={{ gestureEnabled: false }}
+                  />
 
-        {/* Biometric Setup Flow */}
-        <Stack.Screen
-          name="BiometricSetup"
-          component={BiometricSetupScreen}
-          options={{ gestureEnabled: false }}
-        />
+                  {/* Biometric Setup Flow */}
+                  <Stack.Screen
+                    name="BiometricSetup"
+                    component={BiometricSetupScreen}
+                    options={{ gestureEnabled: false }}
+                  />
 
-        {/* Tour Setup Flow */}
-        <Stack.Screen
-          name="TourSetup"
-          component={TourSetupWizard}
-          options={{ gestureEnabled: false }}
-        />
+                  {/* Tour Setup Flow */}
+                  <Stack.Screen
+                    name="TourSetup"
+                    component={TourSetupWizard}
+                    options={{ gestureEnabled: false }}
+                  />
 
-        {/* Main App */}
-        <Stack.Screen
-          name="MainApp"
-          component={MainAppScreen}
-          options={{ gestureEnabled: true }}
-        />
+                  {/* Main App */}
+                  <Stack.Screen
+                    name="MainApp"
+                    component={MainAppScreen}
+                    options={{ gestureEnabled: true }}
+                  />
 
-        {/* Feature Screens */}
-        <Stack.Screen
-          name="DaySheet"
-          component={DaySheetScreen}
-          options={{ gestureEnabled: true }}
-        />
-        <Stack.Screen
-          name="Financial"
-          component={FinancialScreen}
-          options={{ gestureEnabled: true }}
-        />
-        <Stack.Screen
-          name="Merchandise"
-          component={MerchandiseScreen}
-          options={{ gestureEnabled: true }}
-        />
-        <Stack.Screen
-          name="Team"
-          component={TeamScreen}
-          options={{ gestureEnabled: true }}
-        />
-        <Stack.Screen
-          name="Schedule"
-          component={ScheduleScreen}
-          options={{ gestureEnabled: true }}
-        />
-        <Stack.Screen
-          name="Settings"
-          component={SettingsScreen}
-          options={{ gestureEnabled: true }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+                  {/* Feature Screens */}
+                  <Stack.Screen
+                    name="DaySheet"
+                    component={DaySheetScreen}
+                    options={{ gestureEnabled: true }}
+                  />
+                  <Stack.Screen
+                    name="Financial"
+                    component={FinancialScreen}
+                    options={{
+                      title: 'Financial Overview',
+                      headerStyle: {
+                        backgroundColor: '#1a1a2e',
+                      },
+                      headerTintColor: '#fff',
+                      headerTitleStyle: {
+                        fontWeight: 'bold',
+                      },
+                    }}
+                  />
+                  <Stack.Screen
+                    name="Merchandise"
+                    component={MerchandiseScreen}
+                    options={{ gestureEnabled: true }}
+                  />
+                  <Stack.Screen
+                    name="Team"
+                    component={TeamScreen}
+                    options={{ gestureEnabled: true }}
+                  />
+                  <Stack.Screen
+                    name="Schedule"
+                    component={ScheduleScreen}
+                    options={{ gestureEnabled: true }}
+                  />
+                  <Stack.Screen
+                    name="Settings"
+                    component={SettingsScreen}
+                    options={{ gestureEnabled: true }}
+                  />
+                </Stack.Navigator>
+              </NavigationContainer>
+            </ThemeProvider>
+          </SafeAreaProvider>
+        </GestureHandlerRootView>
+      </PersistGate>
+    </Provider>
   );
 }

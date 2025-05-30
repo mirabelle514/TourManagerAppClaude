@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { CommonStyles } from '../../styles/CommonStyles';
-import { Colors } from '../../styles/theme';
+import { Colors, Typography, Spacing } from '../../styles/theme/index';
 import { FinancialStyles } from '../../styles/FinancialStyles';
 
 interface TaxCategory {
@@ -36,32 +36,32 @@ export const TaxReport: React.FC<TaxReportProps> = ({
                 </TouchableOpacity>
             </View>
 
-            <View style={CommonStyles.taxSummary}>
-                <Text style={CommonStyles.taxTotalLabel}>Total Taxable Amount</Text>
-                <Text style={CommonStyles.taxTotalValue}>${totalAmount.toFixed(2)}</Text>
+            <View style={FinancialStyles.taxSummary}>
+                <Text style={FinancialStyles.taxTotalLabel}>Total Taxable Amount</Text>
+                <Text style={FinancialStyles.taxTotalValue}>${totalAmount.toFixed(2)}</Text>
             </View>
 
-            <ScrollView style={CommonStyles.taxCategories}>
+            <ScrollView style={FinancialStyles.taxCategories}>
                 {categories.map((category) => (
                     <TouchableOpacity
                         key={category.name}
-                        style={CommonStyles.taxCategory}
+                        style={FinancialStyles.taxCategory}
                         onPress={() => onViewDetails(category.name)}
                     >
-                        <View style={CommonStyles.taxCategoryInfo}>
-                            <Text style={CommonStyles.taxCategoryName}>{category.name}</Text>
-                            <Text style={CommonStyles.taxCategoryAmount}>
+                        <View style={FinancialStyles.taxCategoryInfo}>
+                            <Text style={FinancialStyles.taxCategoryName}>{category.name}</Text>
+                            <Text style={FinancialStyles.taxCategoryAmount}>
                                 ${category.amount.toFixed(2)}
                             </Text>
                         </View>
-                        <View style={CommonStyles.taxCategoryProgress}>
+                        <View style={FinancialStyles.taxCategoryProgress}>
                             <View
                                 style={[
-                                    CommonStyles.taxCategoryProgressBar,
+                                    FinancialStyles.taxCategoryProgressBar,
                                     { width: `${category.percentage}%` }
                                 ]}
                             />
-                            <Text style={CommonStyles.taxCategoryPercentage}>
+                            <Text style={FinancialStyles.taxCategoryPercentage}>
                                 {category.percentage}%
                             </Text>
                         </View>
@@ -69,15 +69,15 @@ export const TaxReport: React.FC<TaxReportProps> = ({
                 ))}
             </ScrollView>
 
-            <View style={CommonStyles.taxNotes}>
-                <Text style={CommonStyles.taxNoteTitle}>Important Notes:</Text>
-                <Text style={CommonStyles.taxNoteText}>
+            <View style={FinancialStyles.taxNotes}>
+                <Text style={FinancialStyles.taxNoteTitle}>Important Notes:</Text>
+                <Text style={FinancialStyles.taxNoteText}>
                     • All amounts are in USD and include applicable taxes
                 </Text>
-                <Text style={CommonStyles.taxNoteText}>
+                <Text style={FinancialStyles.taxNoteText}>
                     • Business expenses are categorized for tax purposes
                 </Text>
-                <Text style={CommonStyles.taxNoteText}>
+                <Text style={FinancialStyles.taxNoteText}>
                     • Export report for detailed breakdown
                 </Text>
             </View>

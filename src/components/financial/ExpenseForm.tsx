@@ -1,103 +1,110 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { Colors } from '../../styles/theme';
-import { CommonStyles } from '../../styles/CommonStyles';
+import React from 'react';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import { Colors } from '../../styles/theme/color';
+import { TaxCategory } from './TaxCategoryFilter';
 
-export interface ExpenseFormValues {
+export interface ExpenseFormData {
     description: string;
     amount: string;
     category: string;
-    taxCategory: 'business' | 'meals' | 'travel' | 'equipment' | 'other';
+    taxCategory: TaxCategory;
     venue: string;
     paidBy: string;
 }
 
-interface ExpenseFormProps {
-    initialValues?: ExpenseFormValues;
-    onSave: (values: ExpenseFormValues) => void;
+export interface ExpenseFormProps {
+    onSave: (values: ExpenseFormData) => void;
     onCancel: () => void;
 }
 
-export const ExpenseForm: React.FC<ExpenseFormProps> = ({ initialValues, onSave, onCancel }) => {
-    const [values, setValues] = useState<ExpenseFormValues>(
-        initialValues || {
-            description: '',
-            amount: '',
-            category: '',
-            taxCategory: 'business',
-            venue: '',
-            paidBy: ''
-        }
-    );
+export const ExpenseForm: React.FC<ExpenseFormProps> = ({ onSave, onCancel }) => {
+    const [formData, setFormData] = React.useState<ExpenseFormData>({
+        description: '',
+        amount: '',
+        category: '',
+        taxCategory: 'business',
+        venue: '',
+        paidBy: '',
+    });
 
-    const taxCategories = [
-        { id: 'business', label: 'Business', color: Colors.status.success },
-        { id: 'meals', label: 'Meals', color: Colors.status.warning },
-        { id: 'travel', label: 'Travel', color: Colors.status.info },
-        { id: 'equipment', label: 'Equipment', color: Colors.status.error },
-        { id: 'other', label: 'Other', color: Colors.text.secondary },
-    ];
+    const handleSubmit = () => {
+        onSave(formData);
+    };
 
     return (
-        <View style={CommonStyles.card}>
-            <Text style={CommonStyles.cardTitle}>Expense Details</Text>
+        <View style={styles.container}>
             <TextInput
-                style={CommonStyles.input}
+                style={styles.input}
                 placeholder="Description"
-                value={values.description}
-                onChangeText={text => setValues({ ...values, description: text })}
+                value={formData.description}
+                onChangeText={(text) => setFormData({ ...formData, description: text })}
             />
             <TextInput
-                style={CommonStyles.input}
+                style={styles.input}
                 placeholder="Amount"
-                value={values.amount}
-                onChangeText={text => setValues({ ...values, amount: text })}
+                value={formData.amount}
+                onChangeText={(text) => setFormData({ ...formData, amount: text })}
                 keyboardType="numeric"
             />
             <TextInput
-                style={CommonStyles.input}
+                style={styles.input}
                 placeholder="Category"
-                value={values.category}
-                onChangeText={text => setValues({ ...values, category: text })}
+                value={formData.category}
+                onChangeText={(text) => setFormData({ ...formData, category: text })}
             />
             <TextInput
-                style={CommonStyles.input}
+                style={styles.input}
                 placeholder="Venue"
-                value={values.venue}
-                onChangeText={text => setValues({ ...values, venue: text })}
+                value={formData.venue}
+                onChangeText={(text) => setFormData({ ...formData, venue: text })}
             />
             <TextInput
-                style={CommonStyles.input}
+                style={styles.input}
                 placeholder="Paid By"
-                value={values.paidBy}
-                onChangeText={text => setValues({ ...values, paidBy: text })}
+                value={formData.paidBy}
+                onChangeText={(text) => setFormData({ ...formData, paidBy: text })}
             />
-            <View style={{ flexDirection: 'row', marginVertical: 8 }}>
-                {taxCategories.map(cat => (
-                    <TouchableOpacity
-                        key={cat.id}
-                        style={{
-                            backgroundColor: values.taxCategory === cat.id ? cat.color : cat.color + '20',
-                            paddingHorizontal: 10,
-                            paddingVertical: 6,
-                            borderRadius: 12,
-                            marginRight: 8,
-                        }}
-                        onPress={() => setValues({ ...values, taxCategory: cat.id as any })}
-                    >
-                        <Text style={{ color: values.taxCategory === cat.id ? '#fff' : cat.color, fontWeight: '600', fontSize: 13 }}>{cat.label}</Text>
-                    </TouchableOpacity>
-                ))}
-            </View>
-            <View style={CommonStyles.buttonRow}>
-                <TouchableOpacity style={[CommonStyles.button, CommonStyles.cancelButton]} onPress={onCancel}>
-                    <Text style={CommonStyles.buttonText}>Cancel</Text>
+            <View style={styles.buttonContainer}>
+                <TouchableOpacity style={styles.cancelButton} onPress={onCancel}>
+                    <Text style={styles.buttonText}>Cancel</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={[CommonStyles.button, CommonStyles.saveButton]} onPress={() => onSave(values)}>
-                    <Text style={CommonStyles.buttonText}>Save</Text>
+                <TouchableOpacity style={styles.saveButton} onPress={handleSubmit}>
+                    <Text style={styles.buttonText}>Save</Text>
                 </TouchableOpacity>
             </View>
         </View>
     );
 };
+
+const styles = StyleSheet.create({
+    container: {
+        padding: 16,
+    },
+    input: {
+        backgroundColor: Colors.background.secondary,
+        borderRadius: 8,
+        padding: 12,
+        marginBottom: 12,
+        color: Colors.text.primary,
+    },
+    buttonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        gap: 12,
+    },
+    cancelButton: {
+        padding: 12,
+        borderRadius: 8,
+        backgroundColor: Colors.error.main,
+    },
+    saveButton: {
+        padding: 12,
+        borderRadius: 8,
+        backgroundColor: Colors.accent.primary.main,
+    },
+    buttonText: {
+        color: Colors.text.primary,
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+});

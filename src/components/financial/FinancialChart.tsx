@@ -1,9 +1,7 @@
 import React from 'react';
 import { View, Dimensions } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
-import { CommonStyles } from '../../styles/CommonStyles';
-import { Colors } from '../../styles/theme';
-import { FinancialStyles } from '../../styles/FinancialStyles';
+import { Colors, Typography, Spacing } from '../../styles/theme/index';
 
 interface FinancialChartProps {
     data: {

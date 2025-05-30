@@ -2,7 +2,8 @@ import React from 'react';
 import { View, Text, TouchableOpacity, TextInput } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { CommonStyles } from '../../styles/CommonStyles';
-import { Colors } from '../../styles/theme';
+import { Colors, Typography, Spacing } from '../../styles/theme/index';
+import { FinancialStyles } from '../../styles/FinancialStyles';
 
 interface Income {
     id: string;

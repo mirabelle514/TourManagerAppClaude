@@ -10,14 +10,15 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { CommonStyles } from '../styles/CommonStyles';
-import { Colors } from '../styles/theme';
+import { Colors } from '../styles/theme/color';
 import { RootStackParamList } from '../types/navigation';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
+
+type MainAppScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'MainApp'>;
 
 export default function MainAppScreen() {
-    const navigation = useNavigation<NavigationProp>();
+    const navigation = useNavigation<MainAppScreenNavigationProp>();
 
     const navigateToScreen = (screenName: keyof RootStackParamList) => {
         navigation.navigate(screenName);
@@ -25,7 +26,7 @@ export default function MainAppScreen() {
 
     return (
         <SafeAreaView style={CommonStyles.container}>
-            <StatusBar barStyle="light-content" backgroundColor={Colors.background.header} />
+            <StatusBar barStyle="light-content" backgroundColor={Colors.background.primary} />
 
             <View style={CommonStyles.header}>
                 <Text style={CommonStyles.title}>Tour Manager</Text>
@@ -34,7 +35,7 @@ export default function MainAppScreen() {
 
             <ScrollView style={CommonStyles.content}>
                 <View style={CommonStyles.welcomeCard}>
-                    <Ionicons name="checkmark-circle" size={48} color={Colors.accent.primary} />
+                    <Ionicons name="checkmark-circle" size={48} color={Colors.accent.primary.main} />
                     <Text style={CommonStyles.welcomeTitle}>Setup Complete!</Text>
                     <Text style={CommonStyles.welcomeText}>
                         Your tour management app is now configured and ready to use.
@@ -47,7 +48,7 @@ export default function MainAppScreen() {
                         style={CommonStyles.featureCard}
                         onPress={() => navigateToScreen('DaySheet')}
                     >
-                        <Ionicons name="calendar" size={32} color={Colors.accent.primary} />
+                        <Ionicons name="calendar" size={32} color={Colors.accent.primary.main} />
                         <Text style={CommonStyles.featureTitle}>Day Sheets</Text>
                         <Text style={CommonStyles.featureDesc}>Manage daily tour operations</Text>
                     </TouchableOpacity>
@@ -56,7 +57,7 @@ export default function MainAppScreen() {
                         style={CommonStyles.featureCard}
                         onPress={() => navigateToScreen('Financial')}
                     >
-                        <Ionicons name="cash" size={32} color={Colors.accent.primary} />
+                        <Ionicons name="cash" size={32} color={Colors.accent.primary.main} />
                         <Text style={CommonStyles.featureTitle}>Financial</Text>
                         <Text style={CommonStyles.featureDesc}>Track expenses and profits</Text>
                     </TouchableOpacity>
@@ -65,7 +66,7 @@ export default function MainAppScreen() {
                         style={CommonStyles.featureCard}
                         onPress={() => navigateToScreen('Merchandise')}
                     >
-                        <Ionicons name="storefront" size={32} color={Colors.accent.primary} />
+                        <Ionicons name="storefront" size={32} color={Colors.accent.primary.main} />
                         <Text style={CommonStyles.featureTitle}>Merchandise</Text>
                         <Text style={CommonStyles.featureDesc}>Inventory and sales tracking</Text>
                     </TouchableOpacity>
@@ -74,7 +75,7 @@ export default function MainAppScreen() {
                         style={CommonStyles.featureCard}
                         onPress={() => navigateToScreen('Team')}
                     >
-                        <Ionicons name="people" size={32} color={Colors.accent.primary} />
+                        <Ionicons name="people" size={32} color={Colors.accent.primary.main} />
                         <Text style={CommonStyles.featureTitle}>Team</Text>
                         <Text style={CommonStyles.featureDesc}>Crew communication hub</Text>
                     </TouchableOpacity>

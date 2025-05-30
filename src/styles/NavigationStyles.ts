@@ -1,25 +1,36 @@
-import { StyleSheet } from 'react-native';
-import { Colors, Typography, Spacing } from './theme';
+import { StyleSheet, ViewStyle, TextStyle } from 'react-native';
+import { Theme } from './theme/ThemeProvider';
 
 export const NavigationStyles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: Theme.colors.background.primary,
+    },
+    header: {
+        backgroundColor: Theme.colors.background.secondary,
+        borderBottomWidth: 1,
+        borderBottomColor: Theme.colors.border.light,
+        elevation: 0,
+        shadowOpacity: 0,
+    },
+    headerTitle: {
+        fontSize: Theme.typography.sizes.lg,
+        fontWeight: Theme.typography.weights.semibold,
+        color: Theme.colors.text.primary,
+    },
     tabBar: {
-        backgroundColor: Colors.background.secondary,
-        borderTopColor: Colors.border.light,
+        backgroundColor: Theme.colors.background.secondary,
         borderTopWidth: 1,
+        borderTopColor: Theme.colors.border.light,
+        height: 60,
+        paddingBottom: Theme.spacing.sm,
+        paddingTop: Theme.spacing.sm,
     },
-    tabItem: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingVertical: Spacing.sm,
+    tabBarLabel: {
+        fontSize: Theme.typography.sizes.xs,
+        fontWeight: Theme.typography.weights.medium,
     },
-    tabLabel: {
-        fontSize: Typography.sizes.xs,
-        marginTop: Spacing.xs,
-    },
-    activeTab: {
-        color: Colors.primary,
-    },
-    inactiveTab: {
-        color: Colors.text.secondary,
+    tabBarIcon: {
+        marginBottom: Theme.spacing.xs,
     },
 });

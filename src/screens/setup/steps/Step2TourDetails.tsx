@@ -42,15 +42,15 @@ export default function Step2TourDetails({ data, onUpdate, onNext, onPrev }: Ste
         <ScrollView style={CommonStyles.container} showsVerticalScrollIndicator={false}>
             <View style={CommonStyles.content}>
                 <View style={CommonStyles.header}>
-                    <Ionicons name="musical-notes" size={64} color={Colors.accent.primary} />
+                    <Ionicons name="musical-notes" size={64} color={Colors.accent.primary.main} />
                     <Text style={CommonStyles.title}>Tour Details</Text>
                     <Text style={CommonStyles.subtitle}>
                         Configure your tour information and basic settings
                     </Text>
                 </View>
 
-                <View style={FormStyles.formSection}>
-                    <View style={FormStyles.inputGroup}>
+                <View style={FormStyles.form}>
+                    <View style={FormStyles.formGroup}>
                         <Text style={FormStyles.label}>Tour Name *</Text>
                         <TextInput
                             style={FormStyles.input}
@@ -61,7 +61,7 @@ export default function Step2TourDetails({ data, onUpdate, onNext, onPrev }: Ste
                         />
                     </View>
 
-                    <View style={FormStyles.inputGroup}>
+                    <View style={FormStyles.formGroup}>
                         <Text style={FormStyles.label}>Band/Artist Name *</Text>
                         <TextInput
                             style={FormStyles.input}
@@ -73,7 +73,7 @@ export default function Step2TourDetails({ data, onUpdate, onNext, onPrev }: Ste
                     </View>
 
                     <View style={CommonStyles.row}>
-                        <View style={FormStyles.halfInput}>
+                        <View style={FormStyles.formGroup}>
                             <Text style={FormStyles.label}>Start Date</Text>
                             <TextInput
                                 style={FormStyles.input}
@@ -83,7 +83,7 @@ export default function Step2TourDetails({ data, onUpdate, onNext, onPrev }: Ste
                                 placeholderTextColor={Colors.text.secondary}
                             />
                         </View>
-                        <View style={FormStyles.halfInput}>
+                        <View style={FormStyles.formGroup}>
                             <Text style={FormStyles.label}>End Date</Text>
                             <TextInput
                                 style={FormStyles.input}
@@ -95,7 +95,7 @@ export default function Step2TourDetails({ data, onUpdate, onNext, onPrev }: Ste
                         </View>
                     </View>
 
-                    <View style={FormStyles.inputGroup}>
+                    <View style={FormStyles.formGroup}>
                         <Text style={FormStyles.label}>Genre/Style</Text>
                         <TextInput
                             style={FormStyles.input}
@@ -106,7 +106,7 @@ export default function Step2TourDetails({ data, onUpdate, onNext, onPrev }: Ste
                         />
                     </View>
 
-                    <View style={FormStyles.inputGroup}>
+                    <View style={FormStyles.formGroup}>
                         <Text style={FormStyles.label}>Expected Number of Venues</Text>
                         <TextInput
                             style={FormStyles.input}
@@ -118,7 +118,7 @@ export default function Step2TourDetails({ data, onUpdate, onNext, onPrev }: Ste
                         />
                     </View>
 
-                    <View style={FormStyles.inputGroup}>
+                    <View style={FormStyles.formGroup}>
                         <Text style={FormStyles.label}>Tour Description</Text>
                         <TextInput
                             style={[FormStyles.input, FormStyles.textArea]}
@@ -134,7 +134,7 @@ export default function Step2TourDetails({ data, onUpdate, onNext, onPrev }: Ste
                 </View>
 
                 <View style={InfoCard.infoCard}>
-                    <Ionicons name="information-circle" size={24} color={Colors.accent.primary} />
+                    <Ionicons name="information-circle" size={24} color={Colors.accent.primary.main} />
                     <View style={InfoCard.infoCardContent}>
                         <Text style={InfoCard.infoCardTitle}>Tour Configuration</Text>
                         <Text style={InfoCard.infoCardText}>

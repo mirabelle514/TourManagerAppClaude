@@ -1,15 +1,13 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { CommonStyles } from '../../styles/CommonStyles';
-import { Colors } from '../../styles/theme';
+import { View, Text, StyleSheet } from 'react-native';
+import { Colors } from '../../styles/theme/color';
 
 interface ProfitLossCardProps {
-    date: string;
     income: number;
     expenses: number;
     profit: number;
-    settlements: {
+    date?: string;
+    settlements?: Array<{
         id: string;
         date: string;
         venue: string;
@@ -19,104 +17,181 @@ interface ProfitLossCardProps {
         expenses: number;
         netProfit: number;
         paymentStatus: 'pending' | 'received' | 'partial';
-    }[];
+    }>;
 }
 
 export const ProfitLossCard: React.FC<ProfitLossCardProps> = ({
-    date,
     income,
     expenses,
     profit,
-    settlements
+    date,
+    settlements,
 }) => {
-    const formattedDate = new Date(date).toLocaleDateString('en-US', {
-        weekday: 'short',
-        month: 'short',
-        day: 'numeric'
-    });
+    const formatCurrency = (amount: number) => {
+        return new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+        }).format(amount);
+    };
 
     return (
-        <View style={CommonStyles.card}>
-            <View style={CommonStyles.cardHeader}>
-                <Text style={CommonStyles.cardTitle}>{formattedDate}</Text>
-                <Text style={[
-                    CommonStyles.profitText,
-                    { color: profit >= 0 ? Colors.status.success : Colors.status.error }
-                ]}>
-                    {profit >= 0 ? '+' : ''}${profit.toLocaleString()}
+        <View style={styles.container}>
+            <View style={styles.header}>
+                <Text style={styles.title}>
+                    {date ? `Financial Summary - ${date}` : 'Financial Summary'}
                 </Text>
             </View>
 
-            <View style={CommonStyles.statsRow}>
-                <View style={CommonStyles.statItem}>
-                    <Text style={CommonStyles.statLabel}>Income</Text>
-                    <Text style={[CommonStyles.statValue, { color: Colors.status.success }]}>
-                        ${income.toLocaleString()}
+            <View style={styles.content}>
+                <View style={styles.row}>
+                    <Text style={styles.label}>Income</Text>
+                    <Text style={[styles.value, styles.income]}>
+                        {formatCurrency(income)}
                     </Text>
                 </View>
-                <View style={CommonStyles.statItem}>
-                    <Text style={CommonStyles.statLabel}>Expenses</Text>
-                    <Text style={[CommonStyles.statValue, { color: Colors.status.error }]}>
-                        ${expenses.toLocaleString()}
+
+                <View style={styles.row}>
+                    <Text style={styles.label}>Expenses</Text>
+                    <Text style={[styles.value, styles.expenses]}>
+                        {formatCurrency(expenses)}
+                    </Text>
+                </View>
+
+                <View style={[styles.row, styles.profitRow]}>
+                    <Text style={styles.label}>Net Profit</Text>
+                    <Text
+                        style={[
+                            styles.value,
+                            styles.profit,
+                            { color: profit >= 0 ? Colors.status.success : Colors.status.error },
+                        ]}
+                    >
+                        {formatCurrency(profit)}
                     </Text>
                 </View>
             </View>
 
-            {settlements.map((settlement) => (
-                <View key={settlement.id} style={CommonStyles.settlementItem}>
-                    <View style={CommonStyles.settlementHeader}>
-                        <Text style={CommonStyles.settlementVenue}>{settlement.venue}</Text>
-                        <View style={[
-                            CommonStyles.statusBadge,
-                            { backgroundColor: getStatusColor(settlement.paymentStatus) }
-                        ]}>
-                            <Text style={CommonStyles.statusText}>
-                                {settlement.paymentStatus.charAt(0).toUpperCase() + settlement.paymentStatus.slice(1)}
-                            </Text>
+            {settlements && settlements.length > 0 && (
+                <View style={styles.settlements}>
+                    <Text style={styles.settlementsTitle}>Settlements</Text>
+                    {settlements.map((settlement) => (
+                        <View key={settlement.id} style={styles.settlement}>
+                            <Text style={styles.venue}>{settlement.venue}</Text>
+                            <View style={styles.settlementDetails}>
+                                <Text style={styles.settlementText}>
+                                    Guarantee: {formatCurrency(settlement.guarantee)}
+                                </Text>
+                                <Text style={styles.settlementText}>
+                                    Ticket Sales: {formatCurrency(settlement.ticketSales)}
+                                </Text>
+                                <Text style={styles.settlementText}>
+                                    Merchandise: {formatCurrency(settlement.merchandise)}
+                                </Text>
+                                <Text style={styles.settlementText}>
+                                    Expenses: {formatCurrency(settlement.expenses)}
+                                </Text>
+                                <Text
+                                    style={[
+                                        styles.settlementText,
+                                        styles.netProfit,
+                                        {
+                                            color:
+                                                settlement.netProfit >= 0
+                                                    ? Colors.status.success
+                                                    : Colors.status.error,
+                                        },
+                                    ]}
+                                >
+                                    Net: {formatCurrency(settlement.netProfit)}
+                                </Text>
+                            </View>
                         </View>
-                    </View>
-                    <View style={CommonStyles.settlementDetails}>
-                        <View style={CommonStyles.settlementRow}>
-                            <Text style={CommonStyles.settlementLabel}>Guarantee:</Text>
-                            <Text style={CommonStyles.settlementValue}>${settlement.guarantee.toLocaleString()}</Text>
-                        </View>
-                        <View style={CommonStyles.settlementRow}>
-                            <Text style={CommonStyles.settlementLabel}>Ticket Sales:</Text>
-                            <Text style={CommonStyles.settlementValue}>${settlement.ticketSales.toLocaleString()}</Text>
-                        </View>
-                        <View style={CommonStyles.settlementRow}>
-                            <Text style={CommonStyles.settlementLabel}>Merchandise:</Text>
-                            <Text style={CommonStyles.settlementValue}>${settlement.merchandise.toLocaleString()}</Text>
-                        </View>
-                        <View style={CommonStyles.settlementRow}>
-                            <Text style={CommonStyles.settlementLabel}>Expenses:</Text>
-                            <Text style={CommonStyles.settlementValue}>${settlement.expenses.toLocaleString()}</Text>
-                        </View>
-                        <View style={[CommonStyles.settlementRow, CommonStyles.settlementTotal]}>
-                            <Text style={CommonStyles.settlementTotalLabel}>Net Profit:</Text>
-                            <Text style={[
-                                CommonStyles.settlementTotalValue,
-                                { color: settlement.netProfit >= 0 ? Colors.status.success : Colors.status.error }
-                            ]}>
-                                ${settlement.netProfit.toLocaleString()}
-                            </Text>
-                        </View>
-                    </View>
+                    ))}
                 </View>
-            ))}
+            )}
         </View>
     );
 };
 
-const getStatusColor = (status: string) => {
-    switch (status) {
-        case 'received':
-            return Colors.status.success + '20';
-        case 'partial':
-            return Colors.status.warning + '20';
-        case 'pending':
-            return Colors.status.error + '20';
-        default:
-            return Colors.text.secondary + '20';
-    }
-};
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: Colors.background.secondary,
+        borderRadius: 12,
+        padding: 16,
+        marginBottom: 16,
+    },
+    header: {
+        marginBottom: 16,
+    },
+    title: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: Colors.text.primary,
+    },
+    content: {
+        gap: 12,
+    },
+    row: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    profitRow: {
+        borderTopWidth: 1,
+        borderTopColor: Colors.border.light,
+        paddingTop: 12,
+        marginTop: 4,
+    },
+    label: {
+        fontSize: 16,
+        color: Colors.text.secondary,
+    },
+    value: {
+        fontSize: 16,
+        fontWeight: '600',
+    },
+    income: {
+        color: Colors.status.success,
+    },
+    expenses: {
+        color: Colors.status.error,
+    },
+    profit: {
+        fontWeight: 'bold',
+    },
+    settlements: {
+        marginTop: 16,
+        paddingTop: 16,
+        borderTopWidth: 1,
+        borderTopColor: Colors.border.light,
+    },
+    settlementsTitle: {
+        fontSize: 16,
+        fontWeight: '600',
+        color: Colors.text.primary,
+        marginBottom: 12,
+    },
+    settlement: {
+        marginBottom: 12,
+        padding: 12,
+        backgroundColor: Colors.background.primary,
+        borderRadius: 8,
+    },
+    venue: {
+        fontSize: 16,
+        fontWeight: '600',
+        color: Colors.text.primary,
+        marginBottom: 8,
+    },
+    settlementDetails: {
+        gap: 4,
+    },
+    settlementText: {
+        fontSize: 14,
+        color: Colors.text.secondary,
+    },
+    netProfit: {
+        fontWeight: '600',
+        marginTop: 4,
+    },
+});

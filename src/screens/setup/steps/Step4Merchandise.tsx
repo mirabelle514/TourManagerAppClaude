@@ -23,12 +23,12 @@ export default function Step4Merchandise({ data, onUpdate, onNext, onPrev }: any
         <ScrollView style={CommonStyles.container}>
             <View style={CommonStyles.content}>
                 <View style={CommonStyles.header}>
-                    <Ionicons name="storefront" size={64} color={Colors.accent.primary} />
+                    <Ionicons name="storefront" size={64} color={Colors.accent.primary.main} />
                     <Text style={CommonStyles.title}>Merchandise Settings</Text>
                     <Text style={CommonStyles.subtitle}>Configure inventory tracking and sales management</Text>
                 </View>
 
-                <View style={FormStyles.formSection}>
+                <View style={FormStyles.form}>
                     <Text style={FormStyles.label}>Track Merchandise</Text>
 
                     <TouchableOpacity style={CommonStyles.settingItem} onPress={() => toggleSetting('trackTShirts')}>
@@ -39,7 +39,7 @@ export default function Step4Merchandise({ data, onUpdate, onNext, onPrev }: any
                         <Ionicons
                             name={settings.trackTShirts ? "checkbox" : "square-outline"}
                             size={24}
-                            color={settings.trackTShirts ? Colors.accent.primary : Colors.text.secondary}
+                            color={settings.trackTShirts ? Colors.accent.primary.main : Colors.text.secondary}
                         />
                     </TouchableOpacity>
 
@@ -51,7 +51,7 @@ export default function Step4Merchandise({ data, onUpdate, onNext, onPrev }: any
                         <Ionicons
                             name={settings.trackRecords ? "checkbox" : "square-outline"}
                             size={24}
-                            color={settings.trackRecords ? Colors.accent.primary : Colors.text.secondary}
+                            color={settings.trackRecords ? Colors.accent.primary.main : Colors.text.secondary}
                         />
                     </TouchableOpacity>
 
@@ -63,7 +63,7 @@ export default function Step4Merchandise({ data, onUpdate, onNext, onPrev }: any
                         <Ionicons
                             name={settings.trackDigital ? "checkbox" : "square-outline"}
                             size={24}
-                            color={settings.trackDigital ? Colors.accent.primary : Colors.text.secondary}
+                            color={settings.trackDigital ? Colors.accent.primary.main : Colors.text.secondary}
                         />
                     </TouchableOpacity>
                 </View>

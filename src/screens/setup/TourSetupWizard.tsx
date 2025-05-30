@@ -99,7 +99,10 @@ export default function TourSetupWizard({ navigation }: TourSetupWizardProps) {
             case 2:
                 return <Step2TourDetails {...stepProps} />;
             case 3:
-                return <Step3Contacts {...stepProps} />;
+                return <Step3Contacts
+                    {...stepProps}
+                    onUpdate={(data) => updateSetupData('contacts', data.contacts)}
+                />;
             case 4:
                 return <Step4Merchandise {...stepProps} />;
             case 5:
