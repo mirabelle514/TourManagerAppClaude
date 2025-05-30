@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import * as Contacts from 'expo-contacts';
 import { CommonStyles } from '../../../styles';
 import { Colors } from '../../../styles/theme/color';
+import { useTheme } from 'path/to/ThemeProvider';
 
 interface Contact {
     id: string;

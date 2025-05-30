@@ -9,7 +9,7 @@ import {
     RefreshControl,
     Platform,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { MaterialIcons as Icon } from '@expo/vector-icons';
 import { Colors, useTheme } from '../../styles/theme';
 import { useLocation } from '../../utils/hooks/useLocation';
 import { usePermissions } from '../../utils/hooks/usePermissions';
@@ -121,7 +121,7 @@ export const VenueCard: React.FC<VenueCardProps> = ({
 
     return (
         <ScrollView
-            style={[CommonStyles.container, { backgroundColor: theme.colors.surface }]}
+            style={[CommonStyles.container, { backgroundColor: Colors.background.primary }]}
             refreshControl={
                 <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }
@@ -129,7 +129,7 @@ export const VenueCard: React.FC<VenueCardProps> = ({
             {/* Venue Header */}
             <View style={[CommonStyles.header, { borderBottomColor: Colors.border.light }]}>
                 <View style={CommonStyles.headerContent}>
-                    <Text style={[CommonStyles.venueName, { color: theme.colors.primary }]}>
+                    <Text style={[CommonStyles.venueName, { color: Colors.accent.primary.main }]}>
                         {venue.name}
                     </Text>
                     <TouchableOpacity onPress={handleNavigation} style={CommonStyles.addressContainer}>
@@ -139,7 +139,7 @@ export const VenueCard: React.FC<VenueCardProps> = ({
                         </Text>
                     </TouchableOpacity>
                     {distance && (
-                        <Text style={[CommonStyles.distance, { color: Colors.accent.primary }]}>
+                        <Text style={[CommonStyles.distance, { color: Colors.accent.primary.main }]}>
                             {distance} away
                         </Text>
                     )}
@@ -149,17 +149,17 @@ export const VenueCard: React.FC<VenueCardProps> = ({
                 <View style={CommonStyles.quickActions}>
                     <TouchableOpacity
                         onPress={() => handlePhoneCall(venue.contactPhone)}
-                        style={[CommonStyles.actionButton, { backgroundColor: theme.colors.primary }]}
+                        style={[CommonStyles.actionButton, { backgroundColor: Colors.accent.primary.main }]}
                     >
-                        <Icon name="phone" size={20} color={theme.colors.surface} />
+                        <Icon name="phone" size={20} color={Colors.text.primary} />
                     </TouchableOpacity>
 
                     {canManageGuestList && (
                         <TouchableOpacity
                             onPress={onGuestListPress}
-                            style={[CommonStyles.actionButton, { backgroundColor: theme.colors.secondary }]}
+                            style={[CommonStyles.actionButton, { backgroundColor: Colors.accent.primary.main }]}
                         >
-                            <Icon name="people" size={20} color={theme.colors.surface} />
+                            <Icon name="people" size={20} color={Colors.text.primary} />
                         </TouchableOpacity>
                     )}
                 </View>
@@ -198,10 +198,10 @@ export const VenueCard: React.FC<VenueCardProps> = ({
 
                 <View style={CommonStyles.scheduleItem}>
                     <View style={CommonStyles.scheduleTime}>
-                        <Text style={[CommonStyles.timeText, { color: theme.colors.primary }]}>
+                        <Text style={[CommonStyles.timeText, { color: Colors.accent.primary.main }]}>
                             {formatTime(schedule.loadIn)}
                         </Text>
-                        <Text style={[CommonStyles.countdown, { color: Colors.accent.primary }]}>
+                        <Text style={[CommonStyles.countdown, { color: Colors.accent.primary.main }]}>
                             {countdownToLoadIn}
                         </Text>
                     </View>
@@ -231,7 +231,7 @@ export const VenueCard: React.FC<VenueCardProps> = ({
                 </View>
 
                 <View style={CommonStyles.scheduleItem}>
-                    <Text style={[CommonStyles.timeText, { color: Colors.primary }]}>
+                    <Text style={[CommonStyles.timeText, { color: Colors.accent.primary.main }]}>
                         {formatTime(schedule.showTime)}
                     </Text>
                     <Text style={[CommonStyles.scheduleLabel, { color: Colors.text.primary }]}>
@@ -254,7 +254,7 @@ export const VenueCard: React.FC<VenueCardProps> = ({
                         onPress={() => handlePhoneCall(venue.contactPhone)}
                         style={CommonStyles.phoneButton}
                     >
-                        <Text style={[CommonStyles.phoneText, { color: theme.colors.primary }]}>
+                        <Text style={[CommonStyles.phoneText, { color: Colors.accent.primary.main }]}>
                             {venue.contactPhone}
                         </Text>
                     </TouchableOpacity>
@@ -319,7 +319,7 @@ export const VenueCard: React.FC<VenueCardProps> = ({
                         <TouchableOpacity
                             onPress={() => handlePhoneCall(settlement.contactPhone)}
                         >
-                            <Text style={[CommonStyles.settlementValue, { color: theme.colors.primary }]}>
+                            <Text style={[CommonStyles.settlementValue, { color: Colors.accent.primary.main }]}>
                                 {settlement.contactName} ({settlement.contactPhone})
                             </Text>
                         </TouchableOpacity>
@@ -348,9 +348,9 @@ export const VenueCard: React.FC<VenueCardProps> = ({
                     {onSettlementPress && (
                         <TouchableOpacity
                             onPress={onSettlementPress}
-                            style={[CommonStyles.settlementButton, { backgroundColor: theme.colors.primary }]}
+                            style={[CommonStyles.settlementButton, { backgroundColor: Colors.accent.primary.main }]}
                         >
-                            <Text style={[CommonStyles.settlementButtonText, { color: theme.colors.surface }]}>
+                            <Text style={[CommonStyles.settlementButtonText, { color: Colors.text.primary }]}>
                                 View Settlement Details
                             </Text>
                         </TouchableOpacity>
@@ -421,7 +421,7 @@ export const VenueCard: React.FC<VenueCardProps> = ({
                     <Text style={[CommonStyles.travelItem, { color: Colors.text.secondary }]}>
                         {venue.nextVenue.distance} • {venue.nextVenue.driveTime}
                     </Text>
-                    <Text style={[CommonStyles.travelItem, { color: Colors.accent.primary }]}>
+                    <Text style={[CommonStyles.travelItem, { color: Colors.accent.primary.main }]}>
                         Next Load-In: {formatTime(venue.nextVenue.loadInTime)}
                     </Text>
                 </View>
@@ -433,8 +433,8 @@ export const VenueCard: React.FC<VenueCardProps> = ({
                     onPress={onNotesPress}
                     style={[CommonStyles.notesButton, { borderColor: Colors.border.light }]}
                 >
-                    <Icon name="note-add" size={20} color={Colors.primary} />
-                    <Text style={[CommonStyles.notesButtonText, { color: Colors.primary }]}>
+                    <Icon name="note-add" size={20} color={Colors.accent.primary.main} />
+                    <Text style={[CommonStyles.notesButtonText, { color: Colors.accent.primary.main }]}>
                         Tour Manager Notes
                     </Text>
                 </TouchableOpacity>

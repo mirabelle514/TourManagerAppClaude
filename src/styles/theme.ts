@@ -37,6 +37,11 @@ interface Colors {
         focus: string;
         error: string;
     };
+    accent: {
+        primary: {
+            main: string;
+        };
+    };
     shadow: Shadow;
     transparent: string;
 }
@@ -73,6 +78,11 @@ export const Colors: Colors = {
         focus: '#007AFF',
         error: '#FF3B30',
     },
+    accent: {
+        primary: {
+            main: '#007AFF',
+        },
+    },
     shadow: {
         color: '#000000',
         opacity: 0.1,
@@ -80,4 +90,10 @@ export const Colors: Colors = {
         radius: 4,
     },
     transparent: 'transparent',
-} as const; 
+} as const;
+
+export const useTheme = () => {
+    return {
+        colors: Colors,
+    };
+}; 
